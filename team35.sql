@@ -30,9 +30,6 @@ CREATE TABLE user(
 	role_id INT NOT NULL DEFAULT 99						-- 회원 권한 등급
 );
 
--- 비밀번호 : 1q2w3e4r!@
-insert into user (login_id, user_name, password, email, tel, addr1, addr2, postcode, birth, role_id) VALUES ('admin', '관리자', '$2a$10$LEclL83IcxKcJT7/RX34j./XrDz4BudorZpdUqL0giJCChr1Fa5Xy', 'admin@tsherpa.com', '010-8524-2580', '기본주소', '상세주소', '00101', '1990-11-09', 1);
-
 CREATE VIEW userList AS(
 	SELECT u.user_id AS user_id, u.active AS ACTIVE, u.login_id AS login_id, u.user_name AS user_name, u.password AS PASSWORD, u.role_id AS role_id, r.role AS roleNm
 	FROM user u
