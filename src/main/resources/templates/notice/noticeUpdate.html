@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>메인페이지</title>
+    <th:block th:insert="~{layout/head :: head}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<th:block th:insert="~{layout/header :: header}"></th:block>
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">공지사항</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="../">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="#">공지사항</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">수정하기</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- noticeUpdate start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="container" >
+            <form th:action="@{/notice/update}" method="post">
+                <div >
+                    <div class="container">
+                        <div class="mb-3">
+                            <label for="title" class="form-label" style="font-weight: bold !important; font-size: 20px;">제목</label>
+                            <input type="hidden" name="no" id="no" th:value="${notice.no }" >
+                            <input type="text" name="title" id="title" placeholder="제목 입력" th:value="${notice.title }" maxlength="98"  class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="content" class="form-label" style="font-weight: bold !important; font-size: 20px;">내용</label>
+                            <textarea name="content" id="content" class="form-control" placeholder="내용 입력" rows="8" cols="100" maxlength="800" required  th:text="${notice.content}"></textarea>
+                        </div>
+                    </div>
+                    <div style="width: 100%; margin-top: 30px;">
+                        <button class="btn btn-light btn-lg" style="width:200px; float: right; background-color: #ab7442; font-weight: bold; color: #fff;"><a href="/notice/list" style="color: #fff;">목록</a></button>
+                        <input type="submit" class="btn btn-light btn-lg" value="수정" style="width:200px; float: right; background-color: #4f5665; font-weight: bold; color: #fff;" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- noticeUpdate end -->
+
+<th:block th:insert="~{layout/footer :: footer}"></th:block>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
