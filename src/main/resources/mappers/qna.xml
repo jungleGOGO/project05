@@ -10,4 +10,33 @@
     <select id="getCount" resultType="integer">
         select COUNT(*) from qna
     </select>
+
+    <select id="qnaDetail" resultType="com.tsherpa.team35.entity.Qna">
+        select * from qna where qno=#{qno}
+    </select>
+
+    <select id="questionDetail" resultType="com.tsherpa.team35.entity.Qna">
+        select * from qna where par=#{par} and lev=0
+    </select>
+
+    <select id="answerDetail" resultType="com.tsherpa.team35.entity.Qna">
+        select * from qna where par=#{par} and lev=1
+    </select>
+
+    <insert id="questionInsert">
+        insert into qna values (default, #{title}, #{content}, #{author}, default, 0, default)
+    </insert>
+
+    <update id="parUpdate">
+        update qna set par=qno where par=0 and lev=0
+    </update>
+
+    <update id="qnaEdit">
+        update qna set title=#{title}, content=#{content} where qno=#{qno}
+    </update>
+
+    <delete id="qnaDelete">
+        delete from qna where qno=#{qno} or par=#{qno}
+    </delete>
+
  </mapper>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>QnA 상세보기 </title>
+    <th:block th:insert="~{layout/head :: head}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+<th:block th:insert="~{layout/header :: header}"></th:block>
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5">
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">QnA 상세보기</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="../">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="#">QnA</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">상세보기</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <table class="table project-table table-centered table-nowrap table-bordered">
+            <tbody>
+            <tr>
+                <th class="text-center">제목</th>
+                <td colspan="3" th:text="${detail.title}"></td>
+            </tr>
+            <tr>
+                <th class="text-center">작성일</th>
+                <td th:text="${#dates.format(detail.resdate,'yyyy-MM-dd')}"></td>
+                <th class="text-center">작성자</th>
+                <td colspan="3" th:text="${detail.author}"></td>
+            </tr>
+            <tr>
+                <td colspan="6" style="font-size: 15px;" class="p-4" th:text="${detail.content}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="btn-group float-right mb-3">
+            <th:block sec:authorize="isAuthenticated()">
+                <th:block sec:authorize="hasRole('EMP') && ${detail.lev == 0 } || hasRole('ADMIN') && ${detail.lev == 0 } ">
+                    <a th:href="@{/qna/answerInsert(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="답변등록"></a>
+                    <a th:href="@{/qna/list(page=${curPage})}" class="btn btn-outline-dark" th:text="목록"></a>
+                    <a th:href="@{/qna/edit(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="수정"></a>
+                    <a th:href="@{/qna/delete(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="삭제"></a>
+                </th:block>
+                <th:block sec:authorize="hasRole('EMP') && ${detail.lev == 1 } || hasRole('ADMIN') && ${detail.lev == 1 } ">
+                    <a th:href="@{/qna/list(page=${curPage})}" class="btn btn-outline-dark" th:text="목록"></a>
+                    <a th:href="@{/qna/edit(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="수정"></a>
+                    <a th:href="@{/qna/delete(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="삭제"></a>
+                </th:block>
+                <th:block sec:authorize="hasRole('USER') && principal.getUsername()!= detail.author">
+                    <a th:href="@{/qna/list(page=${curPage})}" class="btn btn-outline-dark" th:text="목록"></a>
+                </th:block>
+                <th:block sec:authorize="hasRole('USER') && principal.getUsername()== detail.author">
+                    <a th:href="@{/qna/list(page=${curPage})}" class="btn btn-outline-dark" th:text="목록"></a>
+                    <a th:href="@{/qna/edit(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="수정"></a>
+                    <a th:href="@{/qna/delete(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="삭제"></a>
+                </th:block>
+            </th:block>
+        </div>
+    </div>
+</div>
+
+
+
+<th:block th:insert="~{layout/footer :: footer}"></th:block>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

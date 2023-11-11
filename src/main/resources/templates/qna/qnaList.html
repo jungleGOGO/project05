@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QnA</title>
     <th:block th:insert="~{layout/head :: head}"></th:block>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <style>
+        .qnaTitle {color:#000000; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:700px; }
+    </style>
 </head>
 <body>
 <th:block th:insert="~{layout/header :: header}"></th:block>
@@ -38,22 +40,18 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr th:each="qna : ${list}">
                     <td class="has-text-centered" th:text="${qna.qno}"></td>
                     <th:block th:if="${qna.lev==0}">
-                        <!-- 비회원일때 -->
-                        <td th:if="${empty sid}">${qna.title}</td>
-                        <td th:if="${!empty sid}"><a href="${path}/qna/detail.do?qno=${qna.qno}" style="color: #000000;" th:text="${qna.title}"></a></td>
+                        <th:block sec:authorize="isAnonymous()"><td class="qnatTtle" th:text="${qna.title}"></td></th:block>
+                        <th:block sec:authorize="isAuthenticated()"><td><a class="qnatTtle" th:href="@{/qna/detail(qno=${qna.qno})}" style="color: #000000;" th:text="${qna.title}"></a></td></th:block>
                     </th:block>
                     <th:block th:if="${qna.lev==1}">
-                        <td th:if="${empty sid}" th:text="&nbsp;&nbsp;&nbsp;&nbsp;⌞${qna.title}"></td>
-                        <td th:if="${!empty sid}"><a href="${path}/qna/detail.do?qno=${qna.qno}" style="color: #000000;" th:text="&nbsp;&nbsp;&nbsp;&nbsp;⌞${qna.title}"></a></td>
-                    </td:if>
-                    <td class="has-text-centered">${qna.author}</td>
-                    <td class="has-text-centered">
-                        <fmt:parseDate value="${qna.resdate }" var="resdate" pattern="yyyy-MM-dd HH:mm:ss" />
-                        <fmt:formatDate value="${resdate }" pattern="yyyy-MM-dd" />
-                    </td>
+                        <th:block sec:authorize="isAnonymous()"><td class="qnatTtle" th:text="'&nbsp;&nbsp;&nbsp;&nbsp;⌞[답변]'+${qna.title}"></td></th:block>
+                        <th:block sec:authorize="isAuthenticated()"><td><a class="qnatTtle" href="@{/qna/detail?(qno=${qna.qno})}" style="color: #000000;" th:text="'&nbsp;&nbsp;&nbsp;&nbsp;⌞[답변]'+${qna.title}"></a></td></th:block>
+                    </th:block>
+                    <td class="has-text-centered" th:text="${qna.author}"></td>
+                    <td class="has-text-centered" th:text="${#dates.format(qna.resdate,'yyyy-MM-dd')}"></td>
                 </tr>
             </tbody>
         </table>

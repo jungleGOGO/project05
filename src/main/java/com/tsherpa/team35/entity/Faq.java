@@ -7,8 +7,8 @@ import java.util.Date;
 @Data
 public class Faq {
   private int fno;
-  private String title;
-  private String content;
+  private String question;
   private String author;
-  private Date regdate;
+  private String answer;
+  private int cnt;
 }
