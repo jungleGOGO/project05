@@ -11,4 +11,12 @@ public interface QnaMapper {
 
     List<Qna> getList(Page page);
     int getCount(Page page);
+    Qna qnaDetail(int qno);
+    Qna questionDetail(int par);
+    Qna answerDetail(int par);
+    void questionInsert(Qna qna);
+    void answerInsert(Qna qna);
+    void parUpdate(Qna qna);
+    void qnaEdit(Qna qna);
+    void qnaDelete(int qno);
 }

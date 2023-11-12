@@ -4,12 +4,13 @@
     <title>FAQ</title>
     <th:block th:insert="~{layout/head :: head}"></th:block>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/faq.css}">
 </head>
 <body>
 <th:block th:insert="~{layout/header :: header}"></th:block>
 
 <!-- Page Header Start -->
-<div class="container-fluid page-header py-5 mb-5">
+<div class="container-fluid page-header py-5 mb-5" style="margin-bottom:0px !important;">
     <div class="container py-5">
         <h1 class="display-3 text-white mb-3 animated slideInDown">FAQ</h1>
         <nav aria-label="breadcrumb animated slideInDown">
@@ -26,30 +27,34 @@
 <!-- faqList start-->
 <section class="bg-light">
     <div class="container">
-        <div class="accordion" id="accordionExample"  th:each="faq: ${list}">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <span th:text="${faq.title}"></span>
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <span th:text="${faq.content}"></span>
-                    </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="text-center mb-2-3 mb-lg-6">
+                    <h2 class="h1 mb-0 text-secondary">자주 묻는 질문</h2>
+                </div>
+                <div id="accordion" class="accordion-style">
+                    <th:block th:each="faq : ${list}">
+                        <div class="card mb-3">
+                            <div class="card-header" th:id="'heading' + ${faq.fno}">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" data-bs-toggle="collapse"
+                                            th:data-bs-target="'#collapse' + ${faq.fno}" aria-expanded="false"
+                                            th:aria-controls="'collapse' + ${faq.fno}">
+                                        <span class="text-theme-secondary me-2">Q.</span> [[${faq.question}]]
+                                    </button>
+                                </h5>
+                            </div>
+                            <div th:id="'collapse' + ${faq.fno}" class="collapse"
+                                 th:aria-labelledby="'heading' + ${faq.fno}" style="background-color: #ffffff;">
+                                <div class="card-body">[[${faq.answer}]]</div>
+                            </div>
+                        </div>
+                    </th:block>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<script>
-    $(document).ready(function(){
-        $(".faqlist li").click(function(){
-            $(this).find(".message-body").slideToggle(500);
-            $(this).find(".message-header").toggleClass("on");
-        });
-    });
-</script>
 <!-- faqList end-->
 
 <th:block th:insert="~{layout/footer :: footer}"></th:block>
