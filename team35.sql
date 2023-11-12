@@ -89,3 +89,22 @@ INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 보면서 메모를 어떻
 INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 효과적으로 검색하고 필요한 내용을 찾는 방법이 뭐가 있나요?','동영상을 검색하기 위해 키워드를 사용하고, 정확한 제목 또는 주제를 입력하며, 검색 결과를 필터링하는 방법을 사용하여 원하는 내용을 빠르게 찾을 수 있습니다.','admin', DEFAULT, 1,10);
 
 SELECT * FROM qna;
+
+CREATE TABLE notice(
+   no INT PRIMARY KEY AUTO_INCREMENT,
+   title VARCHAR(300) NOT NULL,
+   content VARCHAR(1000) NOT NULL,
+   author INT,
+   regdate DATETIME DEFAULT CURRENT_TIME,
+   cnt INT DEFAULT 0,
+   FOREIGN KEY(author) REFERENCES user(user_id) ON DELETE CASCADE
+);
+
+INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목1  입니다.','여기는 샘플 글 1의 내용입니다.',1,DEFAULT, DEFAULT);
+INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목2  입니다.','여기는 샘플 글 2의 내용입니다.',1,DEFAULT, DEFAULT);
+INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목3  입니다.','여기는 샘플 글 3의 내용입니다.',1,DEFAULT, DEFAULT);
+INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목4  입니다.','여기는 샘플 글 4의 내용입니다.',1,DEFAULT, DEFAULT);
+INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목5  입니다.','여기는 샘플 글 5의 내용입니다.',1,DEFAULT, DEFAULT);
+INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목6  입니다.','여기는 샘플 글 6의 내용입니다.',1,DEFAULT, DEFAULT);
+
+SELECT * FROM notice;
