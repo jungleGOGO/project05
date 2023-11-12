@@ -94,11 +94,26 @@ public class QnaCtrl {
 
     }
 
+    @GetMapping("/qna/answerInsert")
+    public String getAnswerInsert(HttpServletRequest request, Model model) throws Exception {
+        int qno = Integer.parseInt(request.getParameter("qno"));
+        Qna qna = qnaService.qnaDetail(qno);
+        model.addAttribute("qna", qna);
+        return "/qna/answerInsert";
+    }
+
+
+    @PostMapping("/qna/answerInsert")
+    public String getAnswerInsertPro(Qna qna, HttpServletRequest request, Model model) throws Exception {
+        qnaService.answerInsert(qna);
+        return "redirect:/qna/list";
+    }
+
     @GetMapping("/qna/delete")
     public String getQnaDelete(HttpServletRequest request, Model model) throws Exception {
         int qno = Integer.parseInt(request.getParameter("qno"));
         qnaService.qnaDelete(qno);
-        return "redirect:list";
+        return "redirect:/qna/list";
     }
 
 }

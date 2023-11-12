@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>질문글 작성하기 </title>
+    <title>답변글 작성하기 </title>
     <th:block th:insert="~{layout/head :: head}"></th:block>
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
@@ -12,7 +12,7 @@
 <!-- Page Header Start -->
 <div class="container-fluid page-header py-5 mb-5">
     <div class="container py-5">
-        <h1 class="display-3 text-white mb-3 animated slideInDown">질문글 작성하기</h1>
+        <h1 class="display-3 text-white mb-3 animated slideInDown">답변글 작성하기</h1>
         <nav aria-label="breadcrumb animated slideInDown">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a class="text-white" href="../">Home</a></li>
@@ -26,7 +26,7 @@
 
 <div class="container-xxl py-5">
     <div class="container">
-        <form th:action="@{/qna/insert}" autocomplete="off" th:object="${qna}" method="post">
+        <form th:action="@{/qna/answerInsert}" method="post">
             <div class="col-12">
                 <div class="card w-100">
                     <div class="card-body">
@@ -35,12 +35,14 @@
                                 <tbody>
                                 <tr>
                                     <th class="text-center" style="vertical-align: middle; width: 15%;">제목</th>
-                                    <td><input type="text" th:field="*{title}" placeholder="제목을 입력하세요" class="pl-2 form-control" required autofocus></td>
+                                    <td>
+                                        <input type="hidden" th:value="${detail.qno}" name="par" id="par">
+                                        <input type="text" name="title" id="title" placeholder="제목을 입력하세요" class="pl-2" required autofocus>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <th class="text-center" style="vertical-align: middle; width: 15%;">내용</th>
                                     <td colspan="6" style="font-size: 15px;">
-                                        <textarea th:field="*{content}" cols="100" rows="8" maxlength="800" class="single-textarea form-control" style="height: 400px; border: 1px solid #cbcbcb" placeholder="질문 내용을 입력하세요"></textarea>
+                                        <textarea name="content" id="content" cols="100" rows="8" maxlength="800" class="single-textarea" style="height: 400px; border: 1px solid #cbcbcb" placeholder="질문 내용을 입력하세요"></textarea>
                                         <script>
                                             $(document).ready(function () { $("#content").cleditor(); });
                                         </script>
@@ -49,7 +51,7 @@
                                 </tbody>
                             </table>
                             <div>
-                                <input type="submit" class="btn btn-dark" style="height: 100%;float: right;}" value="등록">
+                                <input type="submit" class="btn btn-dark" style="height: 100%" value="등록">
                             </div>
                         </div>
                     </div>
@@ -58,7 +60,9 @@
         </form>
     </div>
 </div>
+
 <th:block th:insert="~{layout/footer :: footer}"></th:block>
 <script th:src="@{/js/main.js}"></script>
+
 </body>
 </html>

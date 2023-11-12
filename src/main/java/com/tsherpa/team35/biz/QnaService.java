@@ -20,8 +20,10 @@ public class QnaService {
     public Qna questionDetail(int par) { return qnaMapper.questionDetail(par); }
     public Qna answerDetail(int par) { return qnaMapper.answerDetail(par); }
     public void questionInsert(Qna qna) { qnaMapper.questionInsert(qna); }
+    public void answerInsert(Qna qna) { qnaMapper.answerInsert(qna); }
     public void parUpdate(Qna qna) { qnaMapper.parUpdate(qna); }
     public void qnaEdit(Qna qna) { qnaMapper.qnaEdit(qna); }
     public void qnaDelete(int qno) { qnaMapper.qnaDelete(qno); }
+
 }
 

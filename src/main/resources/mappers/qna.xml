@@ -27,6 +27,10 @@
         insert into qna values (default, #{title}, #{content}, #{author}, default, 0, default)
     </insert>
 
+    <insert id="answerInsert">
+        insert into qna values (default, #{title}, #{content}, '관리자' , default, 1, #{par})
+    </insert>
+
     <update id="parUpdate">
         update qna set par=qno where par=0 and lev=0
     </update>
