@@ -15,6 +15,8 @@ public class QnaService {
     private QnaMapper qnaMapper;
 
     public List<Qna> getList(Page page) { return qnaMapper.getList(page); }
+    public List<Qna> noAnswerList(Page page) { return qnaMapper.noAnswerList(page); }
+    public int noAnswerCount(Page page) { return qnaMapper.noAnswerCount(page);}
     public int getCount(Page page) { return qnaMapper.getCount(page);}
     public Qna qnaDetail(int qno) { return qnaMapper.qnaDetail(qno); }
     public Qna questionDetail(int par) { return qnaMapper.questionDetail(par); }

@@ -84,8 +84,7 @@ CREATE TABLE qna(
                     author VARCHAR(16),   								-- 작성자
                     resdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- 등록일
                     lev INT DEFAULT 0, 									-- 질문(0), 답변(1)
-                    par INT DEFAULT 0,													-- 질문(자신 레코드의 qno), 답변(질문의 글번호)
-                    FOREIGN KEY(author) REFERENCES user(id) ON DELETE CASCADE);
+                    par INT DEFAULT 0);													-- 질문(자신 레코드의 qno), 답변(질문의 글번호)
 
 -- 질문글
 INSERT INTO qna VALUES (DEFAULT, '어떤 주제의 강의를 들어야 할까요?', '공부하고자 하는 분야에 적합한 강의 주제를 선택하기 위한 조언이 필요합니다.', 'test111' ,DEFAULT, DEFAULT, 1);
@@ -110,6 +109,5 @@ INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 활용하여 스스로 학
 INSERT INTO qna VALUES (DEFAULT, '강의 동영상을 더 깊이 이해하기 위한 질문 및 논의 점을 어떻게 찾을 수 있을까요?','동영상을 더 깊이 이해하기 위해 관련 서적을 찾거나, 동영상에서 제기된 질문을 따라가며 더 많은 정보를 탐구할 수 있습니다.','admin', DEFAULT, 1,8);
 INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 보면서 메모를 어떻게 작성하고 정리할 수 있을까요?','메모를 작성하고 정리하기 위해 중요한 내용을 요약하고, 주요 포인트를 강조하며, 메모를 주기적으로 정리하는 것이 도움이 됩니다.','admin', DEFAULT, 1,9);
 INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 효과적으로 검색하고 필요한 내용을 찾는 방법이 뭐가 있나요?','동영상을 검색하기 위해 키워드를 사용하고, 정확한 제목 또는 주제를 입력하며, 검색 결과를 필터링하는 방법을 사용하여 원하는 내용을 빠르게 찾을 수 있습니다.','admin', DEFAULT, 1,10);
-
 
 

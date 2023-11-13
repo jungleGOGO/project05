@@ -27,6 +27,19 @@
         insert into qna values (default, #{title}, #{content}, #{author}, default, 0, default)
     </insert>
 
+    <select id="noAnswerList" resultType="com.tsherpa.team35.entity.Qna">
+        <![CDATA[
+        select qno, title, author, resdate from qna where par in (select par from qna group by par having count(par) < 2)
+        order BY qno desc limit #{postStart}, #{postCount}
+        ]]>
+    </select>
+
+    <select id="noAnswerCount" resultType="integer">
+        <![CDATA[
+        select count(*) from qna where par in (select par from qna group by par having count(par)<2)
+        ]]>
+    </select>
+
     <insert id="answerInsert">
         insert into qna values (default, #{title}, #{content}, '관리자' , default, 1, #{par})
     </insert>

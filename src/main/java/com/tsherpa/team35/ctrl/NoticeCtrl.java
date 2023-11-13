@@ -50,35 +50,5 @@ public class NoticeCtrl {
         return "notice/noticeDetail";
     }
 
-    @GetMapping("/notice/insert")
-    public String NoticeInsertForm(Notice notice, Model model) {
-        return "notice/noticeInsert";
-    }
-
-    @PostMapping("/notice/insert")
-    public String NoticeInsertPro(Notice param) {
-        noticeService.noticeInsert(param);
-        return "redirect:notice/list";
-    }
-
-    @GetMapping("/notice/update")
-    public String noticeUpdateForm(@RequestParam("no") int no, Model model){
-        Notice notice = noticeService.getNotice(no);
-        model.addAttribute("notice", notice);
-        return "/notice/noticeUpdate";
-    }
-
-    @PostMapping("/notice/update")
-    public String noticeUpdate(Notice param, Model model){
-        noticeService.noticeUpdate(param);
-        return "redirect:/notice/list";
-    }
-
-    @GetMapping("/notice/delete")
-    public String noticeDelete(@RequestParam("no") int no, Model model){
-        noticeService.noticeDelete(no);
-        return "redirect:/notice/list";
-    }
-
 
 }

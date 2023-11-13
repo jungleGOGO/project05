@@ -1,33 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>메인페이지</title>
-    <th:block th:insert="~{layout/head :: head}"></th:block>
-    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 수정하기</title>
+    <link rel="shortcut icon" th:href="@{/image/common/logo.ico}">
+    <link rel="stylesheet" th:href="@{/css/styles.min.css}" />
+    <script src="https://kit.fontawesome.com/153ada4eea.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<th:block th:insert="~{layout/header :: header}"></th:block>
-
-<!-- Page Header Start -->
-<div class="container-fluid page-header py-5 mb-5">
-    <div class="container py-5">
-        <h1 class="display-3 text-white mb-3 animated slideInDown">공지사항</h1>
-        <nav aria-label="breadcrumb animated slideInDown">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a class="text-white" href="../">Home</a></li>
-                <li class="breadcrumb-item"><a class="text-white" href="#">공지사항</a></li>
-                <li class="breadcrumb-item text-white active" aria-current="page">수정하기</li>
-            </ol>
-        </nav>
-    </div>
-</div>
-<!-- Page Header End -->
-
-<!-- noticeUpdate start -->
-<div class="container-xxl py-5">
-    <div class="container">
-        <div class="container" >
-            <form th:action="@{/notice/update}" method="post">
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <th:block th:insert="~{layout/adminSide :: adminSide}"></th:block>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper" style="background-color: #e6e6fa4d;">
+        <!--  Header Start -->
+        <th:block th:insert="~{layout/adminHeader :: adminHeader}"></th:block>
+        <!--  Header End -->
+        <div class="container-fluid">
+            <div class="container">
+                <h2>공지사항 수정<i class="fa-solid fa-bell" style="color: #1e1e1f;"></i></h2>
+            </div>
+            <form th:action="@{/admin/noticeUpdate}" method="post">
                 <div >
                     <div class="container">
                         <div class="mb-3">
@@ -41,7 +36,6 @@
                         </div>
                     </div>
                     <div style="width: 100%; margin-top: 30px;">
-                        <button class="btn btn-light btn-lg" style="width:200px; float: right; background-color: #ab7442; font-weight: bold; color: #fff;"><a href="/notice/list" style="color: #fff;">목록</a></button>
                         <input type="submit" class="btn btn-light btn-lg" value="수정" style="width:200px; float: right; background-color: #4f5665; font-weight: bold; color: #fff;" />
                     </div>
                 </div>
@@ -49,9 +43,5 @@
         </div>
     </div>
 </div>
-<!-- noticeUpdate end -->
-
-<th:block th:insert="~{layout/footer :: footer}"></th:block>
-<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

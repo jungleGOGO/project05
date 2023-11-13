@@ -10,6 +10,8 @@ import java.util.List;
 public interface QnaMapper {
 
     List<Qna> getList(Page page);
+    List<Qna> noAnswerList(Page page);
+    int noAnswerCount(Page page);
     int getCount(Page page);
     Qna qnaDetail(int qno);
     Qna questionDetail(int par);
