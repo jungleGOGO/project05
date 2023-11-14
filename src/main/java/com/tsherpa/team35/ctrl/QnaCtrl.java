@@ -1,6 +1,7 @@
 package com.tsherpa.team35.ctrl;
 
 import com.tsherpa.team35.biz.QnaService;
+import com.tsherpa.team35.biz.UserService;
 import com.tsherpa.team35.entity.Qna;
 import com.tsherpa.team35.entity.User;
 import com.tsherpa.team35.util.Page;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -22,6 +24,9 @@ public class QnaCtrl {
 
     @Autowired
     private QnaService qnaService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/qna/list")
     public String getList(HttpServletRequest request, Model model){
@@ -43,73 +48,55 @@ public class QnaCtrl {
     }
 
     @GetMapping("/qna/detail")
-    public String getQna(@RequestParam("qno")int qno, Model model){
+    public String getQna(@RequestParam("qno")int qno,Principal principal, Model model){
 
-        Qna detail = qnaService.qnaDetail(qno);
-        model.addAttribute("detail", detail);
-        
-        return "qna/qnaDetail";
-    }
+            Qna detail = qnaService.qnaDetail(qno);
+            model.addAttribute("detail", detail);
+            return "qna/qnaDetail";
 
-    @GetMapping("/qna/insert")
-    public ModelAndView qnaInsert(){
 
-        ModelAndView modelAndView = new ModelAndView();
-        Qna qna = new Qna();
-
-        modelAndView.addObject("qna", qna);
-        modelAndView.setViewName("qna/qnaInsert");
-        return modelAndView;
-    }
-
-    @PostMapping("/qna/insert")
-    public ModelAndView qnaInsertPro(Qna qna, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        qnaService.questionInsert(qna);
-        qnaService.parUpdate(qna);
-        modelAndView.setViewName("redirect:/qna/list");
-
-        return modelAndView;
     }
 
 
-    @GetMapping("/qna/edit")
-    public String qnaUpdateForm(@RequestParam("qno") int qno, Model model){
-        Qna qna = qnaService.qnaDetail(qno);
-        model.addAttribute("qna", qna);
+    @GetMapping("/qna/questionInsert")
+    public String getQuestionInsert() throws Exception {
+        return "qna/qnaInsert";
+    }
 
+
+    @PostMapping("/qna/questionInsert")
+    public String getQuestionInsertPro(HttpServletRequest request, Principal principal) throws Exception {
+
+        String sid = principal != null ? principal.getName() : "";
+
+        Qna dto = new Qna();
+        dto.setTitle(request.getParameter("title"));
+        dto.setContent(request.getParameter("content"));
+        dto.setAuthor(sid);
+        qnaService.questionInsert(dto);
+        return "redirect:/qna/list";
+    }
+
+    @GetMapping("edit")
+    public String getQnaEdit(HttpServletRequest request, Model model) throws Exception {
+        int qno = Integer.parseInt(request.getParameter("qno"));
+        Qna dto = qnaService.qnaDetail(qno);
+        model.addAttribute("dto", dto);
         return "qna/qnaEdit";
     }
 
-    @PostMapping("/qna/edit")
-    public String getQnaEditPro(HttpServletRequest request) throws Exception {
-
+    @PostMapping("edit")
+    public String getQnaEditPro(HttpServletRequest request, Model model) throws Exception {
         int qno = Integer.parseInt(request.getParameter("qno"));
         Qna dto = new Qna();
         dto.setQno(qno);
         dto.setTitle(request.getParameter("title"));
         dto.setContent(request.getParameter("content"));
         qnaService.qnaEdit(dto);
-        return "redirect:detail?qno=" + qno + "&page=1";
-
-    }
-
-    @GetMapping("/qna/answerInsert")
-    public String getAnswerInsert(HttpServletRequest request, Model model) throws Exception {
-        int qno = Integer.parseInt(request.getParameter("qno"));
-        Qna qna = qnaService.qnaDetail(qno);
-        model.addAttribute("qna", qna);
-        return "/qna/answerInsert";
-    }
-
-
-    @PostMapping("/qna/answerInsert")
-    public String getAnswerInsertPro(Qna qna, HttpServletRequest request, Model model) throws Exception {
-        qnaService.answerInsert(qna);
         return "redirect:/qna/list";
     }
 
-    @GetMapping("/qna/delete")
+    @GetMapping("delete.do")
     public String getQnaDelete(HttpServletRequest request, Model model) throws Exception {
         int qno = Integer.parseInt(request.getParameter("qno"));
         qnaService.qnaDelete(qno);

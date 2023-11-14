@@ -30,6 +30,15 @@
 <!-- QnA start -->
 <div class="container-xxl py-5">
     <div class="container">
+        <div>
+            <th:block sec:authorize="isAuthenticated()">
+            <th:block sec:authorize="hasRole('USER') || hasRole('TEACHER') || hasRole('EMP')">
+            <div class="button-group" style="float:right; margin-bottom: 20px;">
+                <a class="btn btn-primary px-4" th:href="@{/qna/questionInsert}" style="width: 90px; font-size: 13px; font-weight: bold; background-color: #ab7442; border:none;">글쓰기</a>
+            </div>
+            </th:block>
+            </th:block>
+        </div>
         <table class="table">
             <thead>
             <tr>
@@ -43,12 +52,10 @@
                 <tr th:each="qna : ${list}">
                     <td class="has-text-centered" th:text="${qna.qno}"></td>
                     <th:block th:if="${qna.lev==0}">
-                        <th:block sec:authorize="isAnonymous()"><td class="qnatTtle" th:text="${qna.title}"></td></th:block>
-                        <th:block sec:authorize="isAuthenticated()"><td><a class="qnatTtle" th:href="@{/qna/detail(qno=${qna.qno})}" style="color: #000000;" th:text="${qna.title}"></a></td></th:block>
+                        <td><a class="qnatTtle" th:href="@{/qna/detail(qno=${qna.qno})}" style="color: #000000;" th:text="${qna.title}"></a></td>
                     </th:block>
                     <th:block th:if="${qna.lev==1}">
-                        <th:block sec:authorize="isAnonymous()"><td class="qnatTtle" th:text="'&nbsp;&nbsp;&nbsp;&nbsp;⌞[답변]'+${qna.title}"></td></th:block>
-                        <th:block sec:authorize="isAuthenticated()"><td><a class="qnatTtle" href="@{/qna/detail?(qno=${qna.qno})}" style="color: #000000;" th:text="'&nbsp;&nbsp;&nbsp;&nbsp;⌞[답변]'+${qna.title}"></a></td></th:block>
+                        <td><a class="qnatTtle" th:href="@{/qna/detail(qno=${qna.qno})}" style="color: #000000;" th:text="'&nbsp;&nbsp;&nbsp;&nbsp;⌞'+${qna.title}"></a></td>
                     </th:block>
                     <td class="has-text-centered" th:text="${qna.author}"></td>
                     <td class="has-text-centered" th:text="${#dates.format(qna.resdate,'yyyy-MM-dd')}"></td>

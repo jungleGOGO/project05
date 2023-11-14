@@ -5,6 +5,7 @@ import com.tsherpa.team35.per.QnaMapper;
 import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,7 +22,11 @@ public class QnaService {
     public Qna qnaDetail(int qno) { return qnaMapper.qnaDetail(qno); }
     public Qna questionDetail(int par) { return qnaMapper.questionDetail(par); }
     public Qna answerDetail(int par) { return qnaMapper.answerDetail(par); }
-    public void questionInsert(Qna qna) { qnaMapper.questionInsert(qna); }
+    @Transactional
+    public void questionInsert(Qna qna) {
+        qnaMapper.questionInsert(qna);
+        qnaMapper.parUpdate(qna);
+    }
     public void answerInsert(Qna qna) { qnaMapper.answerInsert(qna); }
     public void parUpdate(Qna qna) { qnaMapper.parUpdate(qna); }
     public void qnaEdit(Qna qna) { qnaMapper.qnaEdit(qna); }

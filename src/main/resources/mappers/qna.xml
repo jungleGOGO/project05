@@ -30,7 +30,7 @@
     <select id="noAnswerList" resultType="com.tsherpa.team35.entity.Qna">
         <![CDATA[
         select qno, title, author, resdate from qna where par in (select par from qna group by par having count(par) < 2)
-        order BY qno desc limit #{postStart}, #{postCount}
+        order BY qno desc LIMIT #{postStart}, #{postCount}
         ]]>
     </select>
 

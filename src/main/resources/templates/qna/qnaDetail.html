@@ -46,17 +46,6 @@
 
         <div class="btn-group float-right mb-3">
             <th:block sec:authorize="isAuthenticated()">
-                <th:block sec:authorize="hasRole('EMP') && ${detail.lev == 0 } || hasRole('ADMIN') && ${detail.lev == 0 } ">
-                    <a th:href="@{/qna/answerInsert(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="답변등록"></a>
-                    <a th:href="@{/qna/list(page=${curPage})}" class="btn btn-outline-dark" th:text="목록"></a>
-                    <a th:href="@{/qna/edit(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="수정"></a>
-                    <a th:href="@{/qna/delete(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="삭제"></a>
-                </th:block>
-                <th:block sec:authorize="hasRole('EMP') && ${detail.lev == 1 } || hasRole('ADMIN') && ${detail.lev == 1 } ">
-                    <a th:href="@{/qna/list(page=${curPage})}" class="btn btn-outline-dark" th:text="목록"></a>
-                    <a th:href="@{/qna/edit(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="수정"></a>
-                    <a th:href="@{/qna/delete(qno=${detail.qno})}" class="btn btn-outline-dark" th:text="삭제"></a>
-                </th:block>
                 <th:block sec:authorize="hasRole('USER') && principal.getUsername()!= detail.author">
                     <a th:href="@{/qna/list(page=${curPage})}" class="btn btn-outline-dark" th:text="목록"></a>
                 </th:block>
