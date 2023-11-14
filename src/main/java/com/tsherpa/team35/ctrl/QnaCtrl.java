@@ -49,9 +49,12 @@ public class QnaCtrl {
 
     @GetMapping("/qna/detail")
     public String getQna(@RequestParam("qno")int qno,Principal principal, Model model){
+            String sid = principal != null ? principal.getName() : "";
+            model.addAttribute("sid", sid);
 
             Qna detail = qnaService.qnaDetail(qno);
             model.addAttribute("detail", detail);
+
             return "qna/qnaDetail";
 
 
@@ -77,15 +80,15 @@ public class QnaCtrl {
         return "redirect:/qna/list";
     }
 
-    @GetMapping("edit")
+    @GetMapping("/qna/edit")
     public String getQnaEdit(HttpServletRequest request, Model model) throws Exception {
         int qno = Integer.parseInt(request.getParameter("qno"));
-        Qna dto = qnaService.qnaDetail(qno);
-        model.addAttribute("dto", dto);
+        Qna detail = qnaService.qnaDetail(qno);
+        model.addAttribute("detail", detail);
         return "qna/qnaEdit";
     }
 
-    @PostMapping("edit")
+    @PostMapping("/qna/edit")
     public String getQnaEditPro(HttpServletRequest request, Model model) throws Exception {
         int qno = Integer.parseInt(request.getParameter("qno"));
         Qna dto = new Qna();
@@ -96,7 +99,7 @@ public class QnaCtrl {
         return "redirect:/qna/list";
     }
 
-    @GetMapping("delete.do")
+    @GetMapping("/qna/delete")
     public String getQnaDelete(HttpServletRequest request, Model model) throws Exception {
         int qno = Integer.parseInt(request.getParameter("qno"));
         qnaService.qnaDelete(qno);

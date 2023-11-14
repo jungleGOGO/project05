@@ -29,12 +29,14 @@ CREATE TABLE user(
                      visited INT DEFAULT 0,									-- 회원 방문 횟수
                      role_id INT NOT NULL DEFAULT 99						-- 회원 권한 등급
 );
-
+SELECT * FROM user;
 -- 비밀번호 : 1q2w3e4r!@
 insert into user (login_id, user_name, password, email, tel, addr1, addr2, postcode, birth, role_id) VALUES ('admin', '관리자', '$2a$10$LEclL83IcxKcJT7/RX34j./XrDz4BudorZpdUqL0giJCChr1Fa5Xy', 'admin@tsherpa.com', '010-8524-2580', '기본주소', '상세주소', '00101', '1990-11-09', 1);
 
 CREATE VIEW userList AS(SELECT u.user_id AS user_id, u.active AS ACTIVE, u.login_id AS login_id, u.user_name AS user_name, u.password AS PASSWORD, u.role_id AS role_id, r.role AS roleNm FROM user u
                                 LEFT JOIN role r ON u.role_id = r.role_id);
+
+SELECT * FROM user;
 
 CREATE TABLE notice(
                        no INT PRIMARY KEY AUTO_INCREMENT,
@@ -80,7 +82,7 @@ INSERT INTO faq(question, answer) VALUES('책은 정기적으로 업데이트되
 CREATE TABLE qna(
                     qno int PRIMARY KEY AUTO_INCREMENT,   			-- 번호
                     title VARCHAR(100) NOT NULL,   					-- 제목
-                    content VARCHAR(1000) NOT NULL,   				-- 내용`
+                    content VARCHAR(10000) NOT NULL,   				-- 내용`
                     author VARCHAR(16),   								-- 작성자
                     resdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- 등록일
                     lev INT DEFAULT 0, 									-- 질문(0), 답변(1)
@@ -110,4 +112,4 @@ INSERT INTO qna VALUES (DEFAULT, '강의 동영상을 더 깊이 이해하기 �
 INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 보면서 메모를 어떻게 작성하고 정리할 수 있을까요?','메모를 작성하고 정리하기 위해 중요한 내용을 요약하고, 주요 포인트를 강조하며, 메모를 주기적으로 정리하는 것이 도움이 됩니다.','admin', DEFAULT, 1,9);
 INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 효과적으로 검색하고 필요한 내용을 찾는 방법이 뭐가 있나요?','동영상을 검색하기 위해 키워드를 사용하고, 정확한 제목 또는 주제를 입력하며, 검색 결과를 필터링하는 방법을 사용하여 원하는 내용을 빠르게 찾을 수 있습니다.','admin', DEFAULT, 1,10);
 
-
+SELECT * FROM qna;
