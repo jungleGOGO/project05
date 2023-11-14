@@ -48,7 +48,7 @@
                                 <tr th:each="question, qnaStat : ${noAnswerList}">
                                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0" th:text="${qnaStat.index}"></h6></td>
                                     <td class="border-bottom-0">
-                                        <a th:text="${question.title}" th:href="@{/qna/detail(no = ${question.qno})}" id="title" ></a>
+                                        <a th:text="${question.title}" th:href="@{/qna/detail(qno = ${question.qno})}" id="title" ></a>
                                     </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </td>
                                     <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal" th:text="${question.author}"></p>
@@ -57,7 +57,7 @@
                                         <p class="mb-0 fw-normal" th:text="${#dates.format(question.resdate, 'yyyy-MM-dd')}"></p>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <a class="badge bg-primary rounded-3 fw-semibold" th:href="@{/admin/noticeDelete(no = ${notice.no})}">답변추가</a>
+                                        <a class="badge bg-primary rounded-3 fw-semibold" th:href="@{/admin/answerInsert(qno = ${question.qno})}">답변추가</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -66,8 +66,8 @@
 
                         <div style="margin-top: 30px;">
                             <ul class="pagination justify-content-center mb-0">
-                                <li th:if="${curPage > 5}" class="page-item">
-                                    <a th:href="@{|/admin/questionList?page=${page.blockStartNum - 1}|}" class="page-link">
+                                <li th:if="${curPage > 1}" class="page-item">
+                                    <a th:href="@{|/admin/questionList?page=${curPage - 1}|}" class="page-link">
                                         <i class="fa-solid fa-arrow-left"></i>
                                     </a>
                                 </li>
@@ -76,8 +76,8 @@
                                         <a th:href="@{|/admin/questionList?page=${i}|}" class="page-link" aria-label="Page ${i}" aria-current="${i == curPage}" th:text="${i}"></a>
                                     </li>
                                 </th:block>
-                                <li th:if="${page.blockLastNum < page.totalPageCount}" class="page-item">
-                                    <a th:href="@{|/admin/questionList?page=${page.blockLastNum + 1}|}" class="page-link">
+                                <li th:if="${curPage < page.totalPageCount}" class="page-item">
+                                    <a th:href="@{|/admin/questionList?page=${curPage + 1}|}" class="page-link">
                                         <i class="fa-solid fa-arrow-right"></i>
                                     </a>
                                 </li>

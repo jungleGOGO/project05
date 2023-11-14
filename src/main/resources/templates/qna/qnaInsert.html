@@ -26,7 +26,7 @@
 
 <div class="container-xxl py-5">
     <div class="container">
-        <form th:action="@{/qna/insert}" autocomplete="off" th:object="${qna}" method="post">
+        <form th:action="@{/qna/questionInsert}" method="post">
             <div class="col-12">
                 <div class="card w-100">
                     <div class="card-body">
@@ -35,12 +35,12 @@
                                 <tbody>
                                 <tr>
                                     <th class="text-center" style="vertical-align: middle; width: 15%;">제목</th>
-                                    <td><input type="text" th:field="*{title}" placeholder="제목을 입력하세요" class="pl-2 form-control" required autofocus></td>
+                                    <td><input type="text" id="title" name="title" placeholder="제목을 입력하세요" class="form-control" required autofocus></td>
                                 </tr>
                                 <tr>
-                                    <th class="text-center" style="vertical-align: middle; width: 15%;">내용</th>
+                                    <th class="text-center " style="vertical-align: middle; width: 15%;">내용</th>
                                     <td colspan="6" style="font-size: 15px;">
-                                        <textarea th:field="*{content}" cols="100" rows="8" maxlength="800" class="single-textarea form-control" style="height: 400px; border: 1px solid #cbcbcb" placeholder="질문 내용을 입력하세요"></textarea>
+                                        <textarea name="content" id="content" cols="100" rows="8" maxlength="800" class="single-textarea form-control" style="height: 400px; border: 1px solid #cbcbcb" placeholder="질문 내용을 입력하세요"></textarea>
                                         <script>
                                             $(document).ready(function () { $("#content").cleditor(); });
                                         </script>
@@ -48,8 +48,8 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <div>
-                                <input type="submit" class="btn btn-dark" style="height: 100%;float: right;}" value="등록">
+                            <div class="btn-group mr-3" style="float: right;">
+                                <input type="submit" class="btn btn-dark" style="height: 100%" value="등록">
                             </div>
                         </div>
                     </div>
