@@ -144,12 +144,11 @@ CREATE TABLE photos(
 
 CREATE TABLE report (
     report_id INT PRIMARY KEY AUTO_INCREMENT, -- 신고 번호
-    board_bno INT, -- 게시글 번호
+    market_no INT, -- 게시글 번호
     login_id  VARCHAR(255),
     reporter VARCHAR(16), -- 신고자
-    reason VARCHAR(255), -- 이유
+    reason VARCHAR(report), -- 이유
     report_date DATETIME DEFAULT CURRENT_TIMESTAMP    
 );
 
 SELECT * FROM report;
-
