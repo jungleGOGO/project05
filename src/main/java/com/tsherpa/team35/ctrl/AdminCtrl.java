@@ -98,19 +98,19 @@ public class AdminCtrl {
         return "/admin/qnaMgmt";
     }
 
-    @GetMapping("/qna/answerInsert")
+    @GetMapping("/admin/answerInsert")
     public String getAnswerInsert(HttpServletRequest request, Model model) throws Exception {
         int qno = Integer.parseInt(request.getParameter("qno"));
-        Qna qna = qnaService.qnaDetail(qno);
-        model.addAttribute("qna", qna);
-        return "/qna/answerInsert";
+        Qna detail = qnaService.qnaDetail(qno);
+        model.addAttribute("detail", detail);
+        return "admin/qnaAnswer";
     }
 
 
-    @PostMapping("/qna/answerInsert")
+    @PostMapping("/admin/answerInsert")
     public String getAnswerInsertPro(Qna qna, HttpServletRequest request, Model model) throws Exception {
         qnaService.answerInsert(qna);
-        return "redirect:/qna/list";
+        return "redirect:/admin/questionList";
     }
 
 

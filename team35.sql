@@ -45,7 +45,6 @@ CREATE TABLE notice(
                        author INT,
                        regdate DATETIME DEFAULT CURRENT_TIME,
                        cnt INT DEFAULT 0,
-                       FOREIGN KEY(author) REFERENCES user(user_id) ON DELETE CASCADE
 );
 
 INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목1  입니다.','여기는 샘플 글 1의 내용입니다.',1,DEFAULT, DEFAULT);
@@ -113,3 +112,44 @@ INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 보면서 메모를 어떻
 INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 효과적으로 검색하고 필요한 내용을 찾는 방법이 뭐가 있나요?','동영상을 검색하기 위해 키워드를 사용하고, 정확한 제목 또는 주제를 입력하며, 검색 결과를 필터링하는 방법을 사용하여 원하는 내용을 빠르게 찾을 수 있습니다.','admin', DEFAULT, 1,10);
 
 SELECT * FROM qna;
+
+CREATE TABLE market(
+                       market_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호
+                       title VARCHAR(100) NOT NULL,	-- 제목
+                       price int NOT NULL,		-- 가격
+                       content VARCHAR(5000) NOT null,	-- 설명
+                       login_id VARCHAR(255) NOT null,	-- 작성자 id
+                       active int NOT NULL DEFAULT 0,	-- 거래 상태(거래 완료 여부)
+                       conditions int NOT NULL,	-- 상품 상태(최상 상 중 하)
+                       regdate DATETIME DEFAULT CURRENT_TIMESTAMP	-- 등록일
+);
+
+CREATE TABLE request(
+                        req_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호
+                        title VARCHAR(100) NOT NULL,	-- 제목
+                        price int NOT NULL,		-- 가격
+                        content VARCHAR(5000),	-- 설명
+                        login_id VARCHAR(255) NOT NULL,	-- 작성자 id
+                        active varchar(20) NOT NULL,	-- 거래 상태(거래 완료 여부)
+                        regdate DATETIME DEFAULT CURRENT_TIMESTAMP	-- 등록일
+);
+
+CREATE TABLE photos(
+                       photo_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                       market_no INT,
+                       saveFolder VARCHAR(300) NOT NULL,
+                       originFile VARCHAR(300) NOT NULL,
+                       saveFile VARCHAR(300) NOT NULL
+);
+
+CREATE TABLE report (
+    report_id INT PRIMARY KEY AUTO_INCREMENT, -- 신고 번호
+    board_bno INT, -- 게시글 번호
+    login_id  VARCHAR(255),
+    reporter VARCHAR(16), -- 신고자
+    reason VARCHAR(255), -- 이유
+    report_date DATETIME DEFAULT CURRENT_TIMESTAMP    
+);
+
+SELECT * FROM report;
+
