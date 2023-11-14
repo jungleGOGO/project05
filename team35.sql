@@ -13,7 +13,7 @@ INSERT INTO ROLE VALUES(DEFAULT, 'TEACHER');
 INSERT INTO ROLE VALUES(99, 'USER');
 
 CREATE TABLE user(
-	user_id INT PRIMARY KEY AUTO_INCREMENT,			-- 회원 번호 : 자동증가
+	user_id int PRIMARY KEY AUTO_INCREMENT,			-- 회원 번호 : 자동증가
 	active INT DEFAULT 1, 									-- 회원 상태 [ 0 : 탈퇴, 1 : 활동중, 2: 활동 정지]
 	login_id VARCHAR(255) NOT NULL,						-- 회원 로그인 아이디
 	user_name VARCHAR(255) NOT NULL,						-- 회원 이름
