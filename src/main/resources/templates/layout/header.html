@@ -41,13 +41,15 @@
                         <a th:href="@{/logout}" class="nav-item nav-link">로그아웃</a>
                         <th:block sec:authorize="hasRole('USER') || hasRole('TEACHER') || hasRole('EMP')">
                             <a href="#" class="nav-item nav-link">마이페이지</a>
+                            <a th:href="@{/book/insert}" class="nav-item nav-link">판매하기</a>
+                            <a th:href="@{/book/insert}" class="nav-item nav-link">삽니다</a>
                         </th:block>
                         <th:block sec:authorize="hasRole('EMP') || hasRole('ADMIN')">
                             <a href="#" class="nav-item nav-link">관리자 홈페이지</a>
                         </th:block>
                     </th:block>
                 </div>
-                <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">상품보기<i class="fa fa-arrow-right ms-3"></i></a>
+                <a th:href="@{/market/marketList}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">상품보기<i class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </nav>
         <!-- Navbar End -->
