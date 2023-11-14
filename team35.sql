@@ -31,12 +31,10 @@ CREATE TABLE user(
 );
 
 CREATE VIEW userList AS(
-                       SELECT u.user_id AS user_id, u.active AS ACTIVE, u.login_id AS login_id, u.user_name AS user_name, u.password AS PASSWORD, u.role_id AS role_id, r.role AS roleNm
-                       FROM user u
-                                LEFT JOIN role r ON u.role_id = r.role_id
-                           );
-
-
+	SELECT u.user_id AS user_id, u.active AS ACTIVE, u.login_id AS login_id, u.user_name AS user_name, u.password AS PASSWORD, u.role_id AS role_id, r.role AS roleNm
+	FROM user u
+	LEFT JOIN role r ON u.role_id = r.role_id
+);
 CREATE TABLE market(
                        market_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호
                        title VARCHAR(100) NOT NULL,	-- 제목
