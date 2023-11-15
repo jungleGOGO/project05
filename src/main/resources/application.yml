@@ -42,3 +42,5 @@ logging:
 
 itemImgLocation: C:/team35/item
 uploadPath: file:///C:/team35
+#itemImgLocation: /Users/juncheol/Desktop/file/item
+#uploadPath: /Users/juncheol/Desktop/file

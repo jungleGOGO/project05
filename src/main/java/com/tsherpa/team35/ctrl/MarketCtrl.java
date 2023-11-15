@@ -52,6 +52,7 @@ public class MarketCtrl {
     public String write(Market market, @RequestParam("upfile") MultipartFile[] files, HttpServletRequest req, Model model, RedirectAttributes rttr, Principal principal) throws Exception {
         String sid = principal != null ? principal.getName() : "";
         String realPath = "C://upload";           // 업로드 경로 설정
+//        String realPath = "/Users/juncheol/Desktop/fileupload";    // 업로드 경로 설정
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
         String saveFolder = realPath + "/" + today;
 
