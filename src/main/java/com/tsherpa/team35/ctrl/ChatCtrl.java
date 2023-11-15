@@ -1,17 +1,23 @@
 package com.tsherpa.team35.ctrl;
 
 import com.tsherpa.team35.biz.ChatService;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.stereotype.Component;
 
-@Controller
-@Log4j2
-@RequestMapping("/chat")
+import javax.websocket.OnOpen;
+import javax.websocket.server.ServerEndpoint;
+import java.security.Principal;
+
+@Component
+@ServerEndpoint(value = "/socket")
 public class ChatCtrl {
 
     @Autowired
     private ChatService chatService;
+
+    @OnOpen // socket 연결 시
+    public void onOpen(Principal principal) {
+        //sessionList.add(session);
+    }
 
 }
