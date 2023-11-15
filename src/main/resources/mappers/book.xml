@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tsherpa.team35.per.BookMapper">
+    <select id="BookList" resultType="com.tsherpa.team35.entity.Book">
+        select * from Book
+    </select>
+
+    <insert id="BookInsert">
+        insert into Book(isbn, image,title,author,publisher,pubdate)values(#{isbn},#{image},#{title},#{author},#{publisher},#{pubdate})
+    </insert>
+
+    <select id="BookDetail" resultType="com.tsherpa.team35.entity.Book">
+        select * from notice where seq=#{seq}
+    </select>
+
+    <update id="BookUpdate">
+        update notice set (#{id},#{title},#{content})
+    </update>
+
+    <delete id="BookDelete">
+        delete * from notice where seq=#{seq}
+    </delete>
+
+</mapper>

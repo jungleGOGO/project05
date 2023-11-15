@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: 8088
 
 spring:
   profile:
@@ -23,6 +23,7 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 100MB
+      location: C://upload
   messages:
     basename: messages
     encoding: UTF-8
