@@ -90,7 +90,7 @@
                             </table>
                         </div>
 
-                        <div style="margin-top: 30px;">
+                        <div style="margin-top: 30px;" th:if="${!list.isEmpty()}">
                             <ul class="pagination justify-content-center mb-0">
                                 <li th:if="${curPage > 1}" class="page-item">
                                     <a th:href="@{|/admin/userList?page=${curPage - 1}|}" class="page-link">

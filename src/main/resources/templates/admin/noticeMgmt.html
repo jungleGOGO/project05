@@ -64,11 +64,14 @@
                                         <a class="badge bg-primary rounded-3 fw-semibold" th:href="@{/admin/noticeUpdate(no=${notice.no})}">수정</a>
                                     </td>
                                 </tr>
+                                <tr th:if="${list.isEmpty()}">
+                                    <td colspan="6">공지사항이 없습니다.</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <div style="margin-top: 30px;">
+                        <div style="margin-top: 30px;" th:if="${!list.isEmpty()}">
                             <ul class="pagination justify-content-center mb-0">
                                 <li th:if="${curPage > 5}" class="page-item">
                                     <a th:href="@{|/admin/noticeAdmin?page=${page.blockStartNum - 1}|}" class="page-link">
