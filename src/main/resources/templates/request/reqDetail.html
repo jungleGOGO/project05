@@ -102,7 +102,8 @@
               <hr>
               <div class="col-12" style="margin-left: 70px;">
                 <button class="btn btn-primary w-25 py-3" type="button">찜하기</button>
-                <a th:href="'javascript:void(0);'" th:attr="onclick='openChildWindow(\'' + ${request.reqNo} + '\', \'' + ${request.loginId} + '\',  \'' + ${request.title} + '\')'" class="btn btn-primary w-25 py-3">신고하기</a>  <a class="btn btn-primary w-25 py-3" th:href="@{/request/requestList}" type="button">목록</a>
+                <a th:href="'javascript:void(0);'" th:attr="onclick='openChildWindow(\'' + ${request.reqNo} + '\')'" class="btn btn-primary w-25 py-3">신고하기</a>
+                <a class="btn btn-primary w-25 py-3" th:href="@{/request/requestList}" type="button">목록</a>
               </div>
               <div class="col-12" style="margin-left: 70px;">
                 <a class="btn btn-primary w-25 py-3" th:href="@{/request/edit(reqNo=${request.reqNo})}" type="button">수정하기</a>
@@ -130,8 +131,8 @@
   </div>
 </div>
 <script th:inline="javascript">
-  function openChildWindow(reqNo, loginId, title) {
-    var child = window.open("/report/getReportReq?reqNo=" + reqNo + "&reporter=" + loginId + "&title=" +title, "child", "width=900, height=800");
+  function openChildWindow(reqNo) {
+    var child = window.open("/report/getReportReq?reqNo=" + reqNo, "child", "width=900, height=800");
   }
 </script>
 

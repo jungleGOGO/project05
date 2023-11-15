@@ -54,14 +54,14 @@
                                         <p class="mb-0 fw-normal" th:text="${mk.loginId}"></p>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <p class="mb-0 fw-normal" th:text="${#dates.format(mk.reportDate, 'yyyy-MM-dd')}"></p>
+                                        <p class="mb-0 fw-normal" th:text="${mk.reportCount}"></p>
                                     </td>
                                     <td class="border-bottom-0">
                                         <a class="badge bg-primary rounded-3 fw-semibold" >삭제</a>
                                     </td>
                                 </tr>
                                 <tr th:if="${market.isEmpty()}">
-                                    <td colspan="6">공지사항이 없습니다.</td>
+                                    <td colspan="6">신고 내역이 없습니다.</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-12 d-flex align-items-stretch" style="margin-top:30px;" th:if="${!market.isEmpty()}">
+            <div class="col-lg-12 d-flex align-items-stretch" style="margin-top:30px;" >
                 <div class="card w-100">
                     <div class="card-body p-4">
                         <h5 class="card-title fw-semibold mb-4">신고 목록[삽니다]</h5>
@@ -99,13 +99,13 @@
                                 <tr th:each="r, reqStat : ${req}">
                                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0" th:text="${reqStat.index}"></h6></td>
                                     <td class="border-bottom-0">
-                                        <a th:text="${mk.title}" th:href="@{/request/reqDetail(reqNo=${r.reqNo})}" id="rtitle" ></a>
+                                        <a th:text="${r.title}" th:href="@{/request/reqDetail(reqNo=${r.reqNo})}" id="rtitle" ></a>
                                     </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </td>
                                     <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal" th:text="${r.loginId}"></p>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <p class="mb-0 fw-normal" th:text="${#dates.format(r.reportDate, 'yyyy-MM-dd')}"></p>
+                                        <p class="mb-0 fw-normal" th:text="${r.reportCount}"></p>
                                     </td>
                                     <td class="border-bottom-0">
                                         <a class="badge bg-primary rounded-3 fw-semibold" >삭제</a>

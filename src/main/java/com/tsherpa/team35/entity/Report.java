@@ -18,4 +18,5 @@ public class Report {
     private String reporter;
     private String reason;
     private Date reportDate;
+    private int reportCount;
 }

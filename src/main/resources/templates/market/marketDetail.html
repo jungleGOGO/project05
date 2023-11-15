@@ -101,7 +101,7 @@
                 <input type="hidden" class="form-control border-0" id="reporter" name="reporter" th:value="${mar.loginId}" readonly style="height: 55px;">
                 <input type="hidden" class="form-control border-0" id="title" name="title" th:value="${mar.title}" readonly style="height: 55px;">
                 <button class="btn btn-primary w-25 py-3" type="submit">찜하기</button>
-                <a th:href="'javascript:void(0);'" th:attr="onclick='openChildWindow(\'' + ${mar.marketNo} + '\', \'' + ${mar.loginId} + '\',  \'' + ${mar.title} + '\')'" class="btn btn-primary w-25 py-3">신고하기</a>
+                <a th:href="'javascript:void(0);'" th:attr="onclick='openChildWindow(\'' + ${mar.marketNo} + '\')'" class="btn btn-primary w-25 py-3">신고하기</a>
                 <button class="btn btn-primary w-25 py-3" type="submit">목록</button>
               </div>
             </div>
@@ -112,8 +112,8 @@
   </div>
 </div>
 <script th:inline="javascript">
-  function openChildWindow(marketNo, loginId, title) {
-    var child = window.open("/report/getReportMar?marketNo=" + marketNo + "&reporter=" + loginId+ "&title=" +title, "child" , "width=900, height=800");
+  function openChildWindow(marketNo) {
+    var child = window.open("/report/getReportMar?marketNo=" + marketNo, "child", "width=900, height=800");
   }
 </script>
 
