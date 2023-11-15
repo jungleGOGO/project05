@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tsherpa.team35.per.RequestMapper">
+    <resultMap id="User" type="com.tsherpa.team35.entity.Request">
+        <result property="loginId" column="login_id" />
+        <result property="reqNo" column="req_no" />
+
+    </resultMap>
+
+    <insert id="requestInsert" >
+        insert into request(login_id, title, content,price,addr,bookTitle,bookAuthor,publisher,isbn,pubdate,discount,bookImage)
+        values(#{loginId}, #{title}, #{content}, #{price}, #{addr},#{bookTitle},#{bookAuthor},#{publisher},#{isbn},#{pubdate},#{discount},#{bookImage})
+        <selectKey resultType="int" keyProperty="reqNo" order="AFTER" >
+            SELECT LAST_INSERT_ID() AS reqNo
+        </selectKey>
+    </insert>
+
+    <select id="requestList" resultType="com.tsherpa.team35.entity.Request">
+        select * from request order by regdate desc
+    </select>
+
+    <select id="requestDetail" resultType="com.tsherpa.team35.entity.Request">
+        select * from request where req_no=#{reqNO}
+    </select>
+
+    <select id="getMoreRequests" resultType="com.tsherpa.team35.entity.Request">
+        SELECT * FROM request
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <update id="requestEdit">
+        update request set title=#{title}, content=#{content}, price=#{price},addr=#{addr} where req_no=#{reqNo}
+    </update>
+
+    <update id="requestEditAll">
+        update request set title=#{title}, content=#{content}, price=#{price},addr=#{addr},bookTitle=#{bookTitle},bookAuthor=#{bookAuthor},publisher=#{publisher},isbn=#{isbn},pubdate=#{pubdate},discount=#{discount},bookImage=#{bookImage} where req_no=#{reqNo}
+    </update>
+
+    <delete id="requestDelete">
+        delete from request where req_no=#{reqNo}
+    </delete>
+
+<!--    유저의 다른 요청사항-->
+    <select id="allRequest" resultType="com.tsherpa.team35.entity.Request">
+        select * from request where login_id = #{loginId} order by regdate desc
+    </select>
+
+</mapper>
