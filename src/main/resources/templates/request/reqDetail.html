@@ -69,6 +69,7 @@
               <div class="col-12 col-sm-6">
                 <label for="title" class="form-label">제목</label>
                 <input type="text" class="form-control border-0" id="title" th:value="${request.title}" readonly style="height: 55px;">
+                <input type="text" class="form-control border-0" id="reqNo" th:value="${request.reqNo}" readonly style="height: 55px;">
               </div>
               <div class="col-12 col-sm-6">
                 <label for="price" class="form-label">희망가격</label>
@@ -81,6 +82,7 @@
               <div class="col-12 col-sm-6">
                 <label for="loginId" class="form-label">작성자</label>
                 <input type="text" class="form-control border-0" id="loginId" th:value="${request.loginId}" readonly style="height: 55px;">
+                <input type="hidden" class="form-control border-0" id="reporter" th:value="${request.loginId}" readonly style="height: 55px;">
               </div>
               <div class="col-12 col-sm-6">
                 <label for="addr" class="form-label">거래희망지역</label>
@@ -100,7 +102,7 @@
               <hr>
               <div class="col-12" style="margin-left: 70px;">
                 <button class="btn btn-primary w-25 py-3" type="button">찜하기</button>
-                <button class="btn btn-primary w-25 py-3" type="button">신고하기</button>
+                <button class="btn btn-primary w-25 py-3" type="button" onclick="report()">신고하기</button>
                 <a class="btn btn-primary w-25 py-3" th:href="@{/request/requestList}" type="button">목록</a>
               </div>
               <div class="col-12" style="margin-left: 70px;">
@@ -128,7 +130,14 @@
     </div>
   </div>
 </div>
-
+<script th:inline="javascript">
+  function report() {
+    var reqNo = $("#reqNo").val();
+    var reporter = $("#reporter").val();
+    var child;
+    child=window.open("/report/getReportReq?reqNo="+ reqNo + "&reporter="+ reporter, "width=700, height=900");
+  }
+</script>
 
 
 

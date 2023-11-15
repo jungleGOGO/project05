@@ -13,8 +13,12 @@
         <result property="reportDate" column="report_date" />
     </resultMap>
 
-    <insert id="reportInsert">
-        insert into report values (default, #{marketNo}, #{loginId}, #{reporter}, #{reason}, default)
+    <insert id="reportMarInsert">
+        insert into report (marketNo, loginId, reporter, reason) values (#{marketNo}, #{loginId}, #{reporter}, #{reason})
+    </insert>
+
+    <insert id="reportReqInsert">
+        insert into report (reqNo, loginId, reporter, reason) values (#{reqNo}, #{loginId}, #{reporter}, #{reason})
     </insert>
 
     <select id="reportMarketList" resultType="com.tsherpa.team35.entity.Report">

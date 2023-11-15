@@ -10,7 +10,8 @@ import java.util.List;
 @Component
 @Mapper
 public interface ReportMapper {
-    void reportInsert(Report report);
+    void reportMarInsert(Report report);
+    void reportReqInsert(Report report);
     List<Report> reportMarketList();
     List<Report> reportReqList();
     int reportTotalMar();
