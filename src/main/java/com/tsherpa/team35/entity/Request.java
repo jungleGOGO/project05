@@ -8,16 +8,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Request {
-    private int req_no;
+    private int reqNo;
     private String title;
-    private int price;
+    private String price;
     private String content;
-    private int user_id;
+    private String loginId;
     private String active;
     private String regdate;
-    private String addr1;
-    private String addr2;
-    private String postcode;
+    private String addr;
+    private String isbn;
+    private String bookImage;
+    private String bookTitle;
+    private String bookAuthor;
+    private String publisher;
+    private String pubdate;
+    private String discount;
+
+    public void setReqNo(int reqNo) {
+        this.reqNo = reqNo;
+    }
 }
 
 

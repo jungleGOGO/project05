@@ -129,16 +129,25 @@ CREATE TABLE market(
 );
 
 CREATE TABLE request(
-    req_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호
-    title VARCHAR(100) NOT NULL,	-- 제목
-    price int NOT NULL,		-- 가격
-    content VARCHAR(5000),	-- 설명
-    login_id VARCHAR(255) NOT NULL,	-- 작성자 id
-    active varchar(20) NOT NULL,	-- 거래 상태(거래 완료 여부)
-    regdate DATETIME DEFAULT CURRENT_TIMESTAMP	-- 등록일
+                        req_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호
+                        title VARCHAR(100) NOT NULL,	-- 제목
+                        price int NOT NULL,		-- 가격
+                        content VARCHAR(5000),	-- 설명
+                        login_id VARCHAR(255) NOT NULL,	-- 작성자 id
+                        active INT NOT NULL DEFAULT 0 ,	-- 거래 상태(거래 완료 여부)
+                        regdate DATETIME DEFAULT CURRENT_TIMESTAMP,	-- 등록일
+                        addr VARCHAR(200) NOT NULL,
+                        bookTitle VARCHAR(255) NOT NULL,
+                        bookAuthor VARCHAR(255) NOT NULL,
+                        publisher VARCHAR(255) NOT NULL,
+                        bookImage VARCHAR(255) NOT NULL,
+                        isbn VARCHAR(255) NOT NULL,
+                        pubdate VARCHAR(255) NOT NULL,
+                        discount VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE photos(
+<<<<<<< HEAD
    photo_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
    market_no INT,
    saveFolder VARCHAR(300) NOT NULL,
@@ -159,3 +168,28 @@ SELECT * FROM report;
 
 
 
+=======
+                       photo_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                       market_no INT,
+                       saveFolder VARCHAR(300) NOT NULL,
+                       originFile VARCHAR(300) NOT NULL,
+                       saveFile VARCHAR(300) NOT NULL
+);
+
+
+INSERT INTO request (title, price, content, login_id, addr, bookTitle, bookAuthor, publisher, bookImage, isbn, pubdate, discount)
+VALUES
+('책 제목 1', 5000, '책 설명 1', 'user1', '주소 1', '도서 1', '저자 1', '출판사 1', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1234567890', '2022-01-01', '10'),
+('책 제목 2', 7000, '책 설명 2', 'user2', '주소 2', '도서 2', '저자 2', '출판사 2', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '0987654321', '2022-02-01', '15'),
+('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20')
+>>>>>>> 6f92a6285940102932466180879720bcb5e833e4
