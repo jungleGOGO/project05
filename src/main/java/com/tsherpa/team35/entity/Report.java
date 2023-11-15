@@ -12,6 +12,8 @@ import java.util.Date;
 public class Report {
     private int reportId;
     private int marketNo;
+    private int reqNo;
+    private String title;
     private String loginId;
     private String reporter;
     private String reason;
