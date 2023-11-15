@@ -2,8 +2,10 @@ package com.tsherpa.team35.ctrl;
 
 import com.tsherpa.team35.biz.NoticeService;
 import com.tsherpa.team35.biz.QnaService;
+import com.tsherpa.team35.biz.ReportService;
 import com.tsherpa.team35.entity.Notice;
 import com.tsherpa.team35.entity.Qna;
+import com.tsherpa.team35.entity.Report;
 import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,9 @@ public class AdminCtrl {
 
     @Autowired
     private QnaService qnaService;
+
+    @Autowired
+    private ReportService reportService;
 
     @GetMapping("/admin/dashboard")
     public String getDashboard() {
@@ -81,7 +86,7 @@ public class AdminCtrl {
 
     @GetMapping("/admin/questionList")
     public String questionList(HttpServletRequest request, Model model){
-        //Page
+
         int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
         Page page = new Page();
         int total = qnaService.noAnswerCount(page);
@@ -99,7 +104,7 @@ public class AdminCtrl {
     }
 
     @GetMapping("/admin/answerInsert")
-    public String getAnswerInsert(HttpServletRequest request, Model model) throws Exception {
+    public String getAnswerInsert(HttpServletRequest request, Model model) {
         int qno = Integer.parseInt(request.getParameter("qno"));
         Qna detail = qnaService.qnaDetail(qno);
         model.addAttribute("detail", detail);
@@ -108,11 +113,21 @@ public class AdminCtrl {
 
 
     @PostMapping("/admin/answerInsert")
-    public String getAnswerInsertPro(Qna qna, HttpServletRequest request, Model model) throws Exception {
+    public String getAnswerInsertPro(Qna qna, HttpServletRequest request, Model model) {
         qnaService.answerInsert(qna);
         return "redirect:/admin/questionList";
     }
 
+    @GetMapping("/admin/reportList")
+    public String getReportList(HttpServletRequest request, Model model) {
+
+        List<Report> market = reportService.reportMarketList();
+        List<Report> req = reportService.reportReqList();
+        model.addAttribute("market", market);
+        model.addAttribute("req", req);
+
+        return "admin/reportMgmt";
+    }
 
 
 }

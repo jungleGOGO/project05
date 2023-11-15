@@ -4,8 +4,8 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tsherpa.team35.per.MarketMapper">
     <insert id="marketInsert" >
-        insert into market(login_id, title, content,price,conditions)
-        values(#{loginId}, #{title}, #{content}, #{price}, #{conditions})
+        insert into market(login_id, title, content,price,conditions,selected_address,detail_address,xdata,ydata)
+        values(#{loginId}, #{title}, #{content}, #{price}, #{conditions},#{selectedAddress},#{detailAddress},#{xdata},#{ydata})
         <selectKey resultType="int" keyProperty="market_no" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>

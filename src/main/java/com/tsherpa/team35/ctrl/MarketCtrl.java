@@ -51,38 +51,40 @@ public class MarketCtrl {
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     public String write(Market market, @RequestParam("upfile") MultipartFile[] files, HttpServletRequest req, Model model, RedirectAttributes rttr, Principal principal) throws Exception {
         String sid = principal != null ? principal.getName() : "";
-            String realPath = "";           // 업로드 경로 설정
-            String today = new SimpleDateFormat("yyMMdd").format(new Date());
-            String saveFolder = realPath + today;
-        System.out.println("=============================");
-        System.out.println("saveFolder");
-            File folder = new File(saveFolder);
-            if(!folder.exists()) {                                  // 폴더가 존재하지 않으면 폴더 생성
-                folder.mkdirs();
+        String realPath = "C://upload";           // 업로드 경로 설정
+//        String realPath = "/Users/juncheol/Desktop/fileupload";    // 업로드 경로 설정
+        String today = new SimpleDateFormat("yyMMdd").format(new Date());
+        String saveFolder = realPath + "/" + today;
+
+        File folder = new File(realPath, today);
+        if(!folder.exists()) {                                  // 폴더가 존재하지 않으면 폴더 생성
+            folder.mkdirs();
+        }
+
+        List<Photos> fileInfoList = new ArrayList<>();        // 첨부파일 정보를 리스트로 생성
+        for(MultipartFile file : files) {
+            Photos fileInfo = new Photos();
+            String originalFileName = file.getOriginalFilename(); // 첨부파일의 실제 파일명
+            if(!originalFileName.isEmpty()) {
+                String saveFileName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf("."));     // 파일 이름을 랜덤으로 설정
+                fileInfo.setSaveFile(today);
+                fileInfo.setOriginFile(originalFileName);
+                fileInfo.setSaveFile(saveFileName);
+                fileInfo.setSaveFolder(saveFolder);
+                file.transferTo(new File(folder, saveFileName));    // 파일을 업로드 폴더에 저장
             }
-            List<Photos> fileInfoList = new ArrayList<>();        // 첨부파일 정보를 리스트로 생성
-            for(MultipartFile file : files) {
-                Photos fileInfo = new Photos();
-                String originalFileName = file.getOriginalFilename(); // 첨부파일의 실제 파일명
-                if(!originalFileName.isEmpty()) {
-                    String saveFileName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf("."));     // 파일 이름을 랜덤으로 설정
-                    fileInfo.setSaveFile(today);
-                    fileInfo.setOriginFile(originalFileName);
-                    fileInfo.setSaveFile(saveFileName);
-                    fileInfo.setSaveFolder(saveFolder);
-                    file.transferTo(new File(folder, saveFileName));    // 파일을 업로드 폴더에 저장
-                }
-                fileInfoList.add(fileInfo);
-            }
-            market.setFileInfoList(fileInfoList);
-            market.setLoginId(sid);
-            try {
-           marketService.marketInsert(market);
-                rttr.addFlashAttribute("msg", "자료실에 글을 등록하였습니다");
-            } catch(Exception e) {
-                e.printStackTrace();
-                rttr.addFlashAttribute("msg", "글 작성 중 문제가 발생했습니다");
-            }
+            fileInfoList.add(fileInfo);
+        }
+        market.setFileInfoList(fileInfoList);
+        market.setLoginId(sid);
+
+        try {
+            marketService.marketInsert(market);
+            rttr.addFlashAttribute("msg", "자료실에 글을 등록하였습니다");
+        } catch(Exception e) {
+            e.printStackTrace();
+            rttr.addFlashAttribute("msg", "글 작성 중 문제가 발생했습니다");
+        }
 
         return "redirect:/market/marketList";
     }

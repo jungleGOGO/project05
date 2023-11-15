@@ -23,7 +23,7 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 100MB
-      location: C:/upload
+      location: C://upload
   messages:
     basename: messages
     encoding: UTF-8
@@ -42,3 +42,5 @@ logging:
 
 itemImgLocation: C:/team35/item
 uploadPath: file:///C:/team35
+#itemImgLocation: /Users/juncheol/Desktop/file/item
+#uploadPath: /Users/juncheol/Desktop/file

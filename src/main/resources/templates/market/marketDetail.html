@@ -98,7 +98,7 @@
                 <hr>
               <div class="col-12" style="margin-left: 70px;">
                 <!--<input type="hidden" id="marketNo" name="marketNo" th:value="{market.marketNo}">-->
-                <!--<input type="hidden" id="sid" name="sid" th:value="{sid}">-->
+                <!--<input type="hidden" id="reporter" name="reporter" th:value="{market.loginId}">-->
                 <button class="btn btn-primary w-25 py-3" type="submit">찜하기</button>
                 <button type="button" class="btn btn-primary w-25 py-3" onclick="report()">신고하기</button>
                 <button class="btn btn-primary w-25 py-3" type="submit">목록</button>
@@ -113,10 +113,9 @@
 <script th:inline="javascript">
   function report() {
     var marketNo = $("#marketNo").val();
-    var sid = $("#sid").val();
+    var reporter = $("#reporter").val();
     var child;
-    // child = window.open("/report/getReport?marketNo=" + marketNo + "&loginId=" + sid, "", "width=700, height=900");
-    child=window.open("/report/getReport?marketNo="+ 1 + "&loginId="+ kimhkk, "width=700, height=900");
+    child=window.open("/report/getReportMar?marketNo="+ marketNo + "&reporter="+ reporter, "width=700, height=900");
   }
 </script>
 
