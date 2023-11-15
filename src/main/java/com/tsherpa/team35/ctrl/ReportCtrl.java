@@ -34,4 +34,6 @@ public class ReportCtrl {
 
         return "report/ReportInsert";
     }
+
+
 }
