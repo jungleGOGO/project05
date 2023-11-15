@@ -28,6 +28,23 @@
 <div class="container mt-5">
     <h2 class="mb-4">중고거래 게시글 작성</h2>
     <form th:action="@{/market/insert}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <input class="form-control form-control-user" type="file" multiple="multiple"
+                   name="upfile" id="product_detail_image" onchange="setDetailImage(event);" accept="image/*"  oninput="fileMax(this)">
+        <script>
+            function fileMax(input) {
+                var files = input.files;
+
+                if (files.length > 10) {
+                    alert("최대 10개의 파일까지만 선택할 수 있습니다.");
+                    input.value = ""; // 파일 선택을 초기화합니다.
+                }
+            }
+
+        </script>
+        </div>
+        <div id="images_container"></div>
+
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력하세요" required>
@@ -53,14 +70,135 @@
             <textarea class="form-control" id="content" name="content" rows="4" placeholder="내용을 입력하세요" required></textarea>
         </div>
 
-        <!-- 가격 입력 -->
+        <!-- 위치 입력 -->
+        <div id="map" style="width:100%;height:400px; position: relative; overflow: hidden; background: rgb(248, 249, 250);" tabindex="0">
+            <div class="search" style="z-index: 999999; position: relative;">
+                <input id="address" type="text" placeholder="검색할 주소" value="" />
+                <input id="submit" type="button" value="주소 검색" />
+            </div>
+        </div>
+        <div>
+            <input type="text" value="" placeholder="선택 위치" id="selectedAddress" name="selectedAddress" style="width: 450px" readonly>
+            <input type="text" value="" placeholder="상세 위치" id="detailAddress" name="detailAddress" style="width: 200px"><br>
+            <input type="hidden" value="" placeholder="" id="xdata" name="xdata"> <!-- hidden -->
+            <input type="hidden" value="" placeholder="" id="ydata" name="ydata"> <!-- hidden -->
+            <br>
+        </div>
+
+        <!--            <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9rw0o1zqhd"></script>-->
+        <!--            <script th:src="@{https://oapi.map.naver.com/openapi/v3/maps.js(ncpClientId=9rw0o1zqhd)}" type="text/javascript"></script>-->
+        <!--            <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9rw0o1zqhd&callback=CALLBACK_FUNCTION"></script>-->
+        <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9rw0o1zqhd&submodules=geocoder"></script>
+        <script>
+            var map, marker; //지도, 마커
+            var latitude, longitude; // 위도, 경도 저장 전역변수
+
+            function initMap(lat, lng) {
+                latitude = lat; // 위도 y  Latitude
+                longitude = lng; // 경도 x  Longitude
+
+                // 지도 생성
+                map = new naver.maps.Map('map', {
+                    center: new naver.maps.LatLng(latitude, longitude),
+                    zoom: 17 // 지도 기본 확대 정도
+                });
+
+                // 마커 생성
+                marker = new naver.maps.Marker({
+                    map: map
+                });
 
 
-    <div class="form-group">
-        <input class="form-control form-control-user" type="file" multiple="multiple"
-               name="upfile" id="product_detail_image" onchange="setDetailImage(event);">
-    </div>
-    <div id="images_container"></div>
+                naver.maps.Event.addListener(map, 'click', function (e) {
+                    marker.setPosition(e.coord); //클릭한 위치로 마커 표시
+                    searchCoordinateToAddress(e.coord); // 클락한 위치 주소 검색
+                });
+
+                // '주소 검색' 버튼 클릭
+                document.getElementById('submit').addEventListener('click', function() {
+                    var address = document.getElementById('address').value;
+                    searchAddressToCoordinate(address);
+                });
+                // 주소 검색시 엔터 눌렀을때 처리
+                document.getElementById('address').addEventListener('keydown', function(e) {
+                    if (e.keyCode === 13) { // Enter Key
+                        e.preventDefault();
+                        searchAddressToCoordinate(this.value);
+                    }
+                });
+            }
+
+            //현재 위치 가져와서 이동(장치에 GPS없으면 IP주소로 대략적인 위치 검색함)
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        initMap(position.coords.latitude, position.coords.longitude);  // 현재 위치로 지도 생성
+                    }, function (error) {
+                        console.error('Geolocation error:', error);
+                        initMap(37.4787123, 126.8864278); // 현재 위치 못찾을 때 기본 위치 : 마리오 아울렛2관
+                    });
+                } else {
+                    console.error('Geolocation is not supported by this browser.');
+                    initMap(37.4787123, 126.8864278); // 현재 위치 못찾을 때 기본 위치 : 마리오 아울렛2관
+                }
+            }
+
+            //좌표값으로 주소 찾기
+            function searchCoordinateToAddress(latlng) {
+                naver.maps.Service.reverseGeocode({
+                    coords: latlng, // 클릭한 위치
+                    orders: [
+                        naver.maps.Service.OrderType.ADDR,
+                        naver.maps.Service.OrderType.ROAD_ADDR
+                    ].join(',')
+                }, function(status, response) {
+                    if (status !== naver.maps.Service.Status.OK) {
+                        console.error('Reverse Geocode Error:', status);
+                        return alert('Something Wrong!');
+                    }
+
+
+                    var address = response.v2.address;
+                    // 도로명 주소가 있으면 사용하고, 없으면 지번 주소 사용. 둘 다 없으면 '주소를 찾을 수 없음' 표시
+                    var displayAddress = address.roadAddress || address.jibunAddress || '주소를 찾을 수 없음';
+
+                    document.getElementById('selectedAddress').value = displayAddress; // input 태그에 값 넣기
+                    document.getElementById('xdata').value = latlng._lng; // input 태그에 값 넣기
+                    document.getElementById('ydata').value = latlng._lat; // input 태그에 값 넣기
+                    // console.log("좌표값: ", latlng); //출력 확인용 테스트
+                    // console.log("x값: ", latlng._lng); //출력 확인용 테스트
+                    // console.log("y값: ", latlng._lat); //출력 확인용 테스트
+                    // console.log("Address: ", displayAddress); //출력 확인용 테스트
+                });
+            }
+
+            // [검색기능] 주소값으로 좌표값 찾고, 지도 이동
+            function searchAddressToCoordinate(address) {
+                naver.maps.Service.geocode({
+                    query: address
+                }, function(status, response) {
+                    if (status !== naver.maps.Service.Status.OK) {
+                        console.error('Geocode Error:', status);
+                        return alert('주소 검색 결과가 없습니다.');
+                    }
+
+                    if (response.v2.meta.totalCount === 0) {
+                        return alert('검색된 주소가 없습니다.');
+                    }
+
+                    var item = response.v2.addresses[0];
+                    var point = new naver.maps.LatLng(item.y, item.x);
+
+                    map.setCenter(point); //검색한 곳으로 지도 이동
+                    // marker.setPosition(point); // 마커 표시
+                });
+            }
+
+            getLocation(); // 호출(현재위치 찾고 지도 호출)
+        </script>
+
+
+
 
         <button type="submit" class="btn btn-dark">작성하기</button>
     </form>
