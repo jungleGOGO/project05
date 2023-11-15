@@ -10,4 +10,16 @@
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
+
+    <select id="marketList" resultType="com.tsherpa.team35.entity.Market">
+        select * from market order by regdate desc
+    </select>
+
+    <select id="marketDetail" resultType="com.tsherpa.team35.entity.Market">
+        select * from market where market_no=#{marketNO}
+    </select>
+
+    <delete id="marketDelete">
+        delete from market where market_no=#{marketNo}
+    </delete>
 </mapper>

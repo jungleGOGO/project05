@@ -27,6 +27,8 @@ public class MarketCtrl {
 
     @GetMapping("/marketList")
     public String list(Model model)throws Exception{
+        List<Market> marketList = marketService.marketList();
+        model.addAttribute("marketList",marketList);
         return "market/marketList";
     }
 
@@ -37,7 +39,7 @@ public class MarketCtrl {
     }
 
     @GetMapping("/reqInsert")
-    public String requestInsert(Model model)throws Exception{
+    public String marketInsert(Model model)throws Exception{
 
         return "market/reqInsert";
     }

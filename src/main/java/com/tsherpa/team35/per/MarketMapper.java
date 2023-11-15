@@ -10,5 +10,5 @@ import java.util.List;
 @Mapper
 public interface MarketMapper {
     public void marketInsert(Market market) throws Exception;
-    public List<Market> dataRoomList() throws Exception;
+    public List<Market> marketList() throws Exception;
 }

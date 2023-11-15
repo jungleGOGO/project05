@@ -36,14 +36,18 @@ CREATE VIEW userList AS(
 	LEFT JOIN role r ON u.role_id = r.role_id
 );
 CREATE TABLE market(
-    market_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호
+	market_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호 	
     title VARCHAR(100) NOT NULL,	-- 제목
     price int NOT NULL,		-- 가격
-    content VARCHAR(5000) NOT null,	-- 설명
-    login_id VARCHAR(255) NOT null,	-- 작성자 id
-    active int NOT NULL DEFAULT 0,	-- 거래 상태(거래 완료 여부)
-    conditions int NOT NULL,	-- 상품 상태(최상 상 중 하)
-    regdate DATETIME DEFAULT CURRENT_TIMESTAMP	-- 등록일
+    content VARCHAR(5000),	-- 설명
+    login_id INT NOT NULL,	-- 작성자 id
+    active varchar(20) NOT NULL,	-- 거래 상태(거래 완료 여부)
+    conditions varchar(20) NOT NULL,	-- 상품 상태(최상 상 중 하)
+    regdate DATETIME DEFAULT CURRENT_TIMESTAMP,	-- 등록일
+    selected_address VARCHAR(200),     -- 선택 주소
+    detail_address VARCHAR(100),        -- 상세 주소
+    xdata DOUBLE,                      -- x
+    ydata DOUBLE                      -- y
 );
 
 CREATE TABLE request(
