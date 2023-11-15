@@ -19,4 +19,8 @@ public class Market {
     private String conditions;
     private String regdate;
     private List<Photos> fileInfoList;
+    private String selectedAddress;
+    private String detailAddress;
+    private double xdata;
+    private double ydata;
 }
