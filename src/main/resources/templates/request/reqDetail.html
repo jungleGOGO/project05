@@ -68,7 +68,7 @@
             <div class="row g-3">
               <div class="col-12 col-sm-6">
                 <label for="title" class="form-label">제목</label>
-                <input type="text" class="form-control border-0" id="title" th:value="${request.title}" readonly style="height: 55px;">
+                <input type="hidden" class="form-control border-0" id="title" name="title" th:value="${request.title}" readonly style="height: 55px;">
                 <input type="text" class="form-control border-0" id="reqNo" th:value="${request.reqNo}" readonly style="height: 55px;">
               </div>
               <div class="col-12 col-sm-6">
@@ -82,7 +82,7 @@
               <div class="col-12 col-sm-6">
                 <label for="loginId" class="form-label">작성자</label>
                 <input type="text" class="form-control border-0" id="loginId" th:value="${request.loginId}" readonly style="height: 55px;">
-                <input type="hidden" class="form-control border-0" id="reporter" th:value="${request.loginId}" readonly style="height: 55px;">
+                <input type="hidden" class="form-control border-0" id="reporter" name="reporter" th:value="${request.loginId}" readonly style="height: 55px;">
               </div>
               <div class="col-12 col-sm-6">
                 <label for="addr" class="form-label">거래희망지역</label>
@@ -102,8 +102,7 @@
               <hr>
               <div class="col-12" style="margin-left: 70px;">
                 <button class="btn btn-primary w-25 py-3" type="button">찜하기</button>
-                <button class="btn btn-primary w-25 py-3" type="button" onclick="report()">신고하기</button>
-                <a class="btn btn-primary w-25 py-3" th:href="@{/request/requestList}" type="button">목록</a>
+                <a th:href="'javascript:void(0);'" th:attr="onclick='openChildWindow(\'' + ${request.reqNo} + '\', \'' + ${request.loginId} + '\',  \'' + ${request.title} + '\')'" class="btn btn-primary w-25 py-3">신고하기</a>  <a class="btn btn-primary w-25 py-3" th:href="@{/request/requestList}" type="button">목록</a>
               </div>
               <div class="col-12" style="margin-left: 70px;">
                 <a class="btn btn-primary w-25 py-3" th:href="@{/request/edit(reqNo=${request.reqNo})}" type="button">수정하기</a>
@@ -131,14 +130,10 @@
   </div>
 </div>
 <script th:inline="javascript">
-  function report() {
-    var reqNo = $("#reqNo").val();
-    var reporter = $("#reporter").val();
-    var child;
-    child=window.open("/report/getReportReq?reqNo="+ reqNo + "&reporter="+ reporter, "width=700, height=900");
+  function openChildWindow(reqNo, loginId, title) {
+    var child = window.open("/report/getReportReq?reqNo=" + reqNo + "&reporter=" + loginId + "&title=" +title, "child", "width=900, height=800");
   }
 </script>
-
 
 
 <th:block th:insert="~{layout/footer :: footer}"></th:block>

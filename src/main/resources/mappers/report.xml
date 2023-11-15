@@ -14,11 +14,11 @@
     </resultMap>
 
     <insert id="reportMarInsert">
-        insert into report (marketNo, loginId, reporter, reason) values (#{marketNo}, #{loginId}, #{reporter}, #{reason})
+        insert into report (marketNo, loginId, title, reporter, reason) values (#{marketNo}, #{loginId}, #{title}, #{reporter}, #{reason})
     </insert>
 
     <insert id="reportReqInsert">
-        insert into report (reqNo, loginId, reporter, reason) values (#{reqNo}, #{loginId}, #{reporter}, #{reason})
+        insert into report (reqNo, loginId, title, reporter, reason) values (#{reqNo}, #{loginId}, #{title} , #{reporter}, #{reason})
     </insert>
 
     <select id="reportMarketList" resultType="com.tsherpa.team35.entity.Report">

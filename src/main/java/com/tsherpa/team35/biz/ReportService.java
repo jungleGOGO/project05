@@ -15,7 +15,7 @@ public class ReportService {
     private ReportMapper reportMapper;
 
     public void reportMarInsert(Report report) { reportMapper.reportMarInsert(report); }
-    public void reportReqInsert(Report report) { reportMapper.reportReqInsert(report);};
+    public void reportReqInsert(Report report) { reportMapper.reportReqInsert(report); }
     public List<Report> reportMarketList() { return reportMapper.reportMarketList(); }
     public List<Report> reportReqList() { return reportMapper.reportReqList(); }
     public int reportTotalMar() { return reportMapper.reportTotalMar(); }

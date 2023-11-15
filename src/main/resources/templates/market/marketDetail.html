@@ -97,10 +97,11 @@
               </div>
                 <hr>
               <div class="col-12" style="margin-left: 70px;">
-                <!--<input type="hidden" id="marketNo" name="marketNo" th:value="{market.marketNo}">-->
-                <!--<input type="hidden" id="reporter" name="reporter" th:value="{market.loginId}">-->
+                <input type="hidden" id="marketNo" name="marketNo" th:value="${mar.marketNo}">
+                <input type="hidden" class="form-control border-0" id="reporter" name="reporter" th:value="${mar.loginId}" readonly style="height: 55px;">
+                <input type="hidden" class="form-control border-0" id="title" name="title" th:value="${mar.title}" readonly style="height: 55px;">
                 <button class="btn btn-primary w-25 py-3" type="submit">찜하기</button>
-                <button type="button" class="btn btn-primary w-25 py-3" onclick="report()">신고하기</button>
+                <a th:href="'javascript:void(0);'" th:attr="onclick='openChildWindow(\'' + ${mar.marketNo} + '\', \'' + ${mar.loginId} + '\',  \'' + ${mar.title} + '\')'" class="btn btn-primary w-25 py-3">신고하기</a>
                 <button class="btn btn-primary w-25 py-3" type="submit">목록</button>
               </div>
             </div>
@@ -111,11 +112,8 @@
   </div>
 </div>
 <script th:inline="javascript">
-  function report() {
-    var marketNo = $("#marketNo").val();
-    var reporter = $("#reporter").val();
-    var child;
-    child=window.open("/report/getReportMar?marketNo="+ marketNo + "&reporter="+ reporter, "width=700, height=900");
+  function openChildWindow(marketNo, loginId, title) {
+    var child = window.open("/report/getReportMar?marketNo=" + marketNo + "&reporter=" + loginId+ "&title=" +title, "child" , "width=900, height=800");
   }
 </script>
 

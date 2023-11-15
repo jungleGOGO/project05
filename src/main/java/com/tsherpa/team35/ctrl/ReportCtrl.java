@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 @Controller
-@CrossOrigin(origins = "*")
 public class ReportCtrl {
 
     @Autowired
@@ -43,63 +42,50 @@ public class ReportCtrl {
     }
 
     @PostMapping("report/reportMarPro")
-    @ResponseBody
-    public String reportMarPro (HttpServletResponse response, HttpServletRequest request, Principal principal){
+    public String reportMarPro (HttpServletRequest request, Principal principal){
 
         String sid = principal != null ? principal.getName() : "";
         int marketNo = Integer.parseInt(request.getParameter("marketNo"));
         String reporter = request.getParameter("reporter");
         String reason = request.getParameter("reason");
+        String title=request.getParameter("title");
 
         Report report = new Report();
         report.setReporter(reporter);
         report.setLoginId(sid);
+        report.setTitle(title);
         report.setReason(reason);
         report.setMarketNo(marketNo);
 
-        try {
-            reportService.reportMarInsert(report);
-            System.out.println("성공");
-            return "success";
-        } catch (Exception e) {
-            System.out.println("실패");
-            return "error";
-        }
+        reportService.reportMarInsert(report);
 
+        return "report/reportSuc";
     }
 
     @PostMapping("report/reportReqPro")
-    @ResponseBody
-    public String reportReqPro (@RequestParam("reqNo") int reqNo,@RequestParam("reporter") String reporter, @RequestParam("reason") String reason, Principal principal){
+    public String reportReqPro (HttpServletRequest request, Principal principal){
 
         String sid = principal != null ? principal.getName() : "";
-
-        System.out.println(reqNo);
-        System.out.println(reporter);
-        System.out.println(reason);
-        System.out.println(sid);
+        int reqNo = Integer.parseInt(request.getParameter("reqNo"));
+        String reporter = request.getParameter("reporter");
+        String reason = request.getParameter("reason");
+        String title=request.getParameter("title");
 
         Report report = new Report();
         report.setReporter(reporter);
         report.setLoginId(sid);
+        report.setTitle(title);
         report.setReason(reason);
         report.setReqNo(reqNo);
 
-        boolean result = false;
+        reportService.reportReqInsert(report);
 
-        try {
-            reportService.reportReqInsert(report);
-            System.out.println("성공");
-            result=true;
-            //return result;
-
-        } catch (Exception e) {
-            System.out.println("실패");
-            result=false;
-            //return result;
-        }
-        return "return";
+        return "report/reportSuc";
     }
 
+    @GetMapping("/report/reportSuc")
+    public String reportSuc(){
+        return "report/reportSuc";
+    }
 
 }
