@@ -97,8 +97,10 @@
               </div>
                 <hr>
               <div class="col-12" style="margin-left: 70px;">
+                <!--<input type="hidden" id="marketNo" name="marketNo" th:value="{market.marketNo}">-->
+                <!--<input type="hidden" id="reporter" name="reporter" th:value="{market.loginId}">-->
                 <button class="btn btn-primary w-25 py-3" type="submit">찜하기</button>
-                <button class="btn btn-primary w-25 py-3" type="submit">신고하기</button>
+                <button type="button" class="btn btn-primary w-25 py-3" onclick="report()">신고하기</button>
                 <button class="btn btn-primary w-25 py-3" type="submit">목록</button>
               </div>
             </div>
@@ -108,6 +110,15 @@
     </div>
   </div>
 </div>
+<script th:inline="javascript">
+  function report() {
+    var marketNo = $("#marketNo").val();
+    var reporter = $("#reporter").val();
+    var child;
+    // child=window.open("/report/getReport?marketNo="+ marketNo + "&reporter="+ reporter, "width=700, height=900");
+    child=window.open("/report/getReport?marketNo="+ 1 + "&reporter="+ kimhkk, "width=700, height=900");
+  }
+</script>
 
 
 <th:block th:insert="~{layout/footer :: footer}"></th:block>
