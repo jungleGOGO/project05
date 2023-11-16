@@ -12,6 +12,7 @@
         </selectKey>
     </insert>
 
+
     <select id="marketList" resultType="com.tsherpa.team35.entity.Market">
         select * from market order by regdate desc
     </select>
@@ -36,4 +37,5 @@
     <delete id="marketDelete">
         delete from market where marketNo=#{marketNo}
     </delete>
+
 </mapper>
