@@ -10,11 +10,14 @@ import java.util.List;
 @Component
 @Mapper
 public interface ReportMapper {
-    void reportInsert(Report report);
-    List<Report> reportMarketList();
-    List<Report> reportReqList();
-    int reportTotalMar();
-    int reportTotalReq();
+    void reportMarInsert(Report report);
+    void reportReqInsert(Report report);
+    List<Report> reportMarketList(Page page);
+    List<Report> reportReqList(Page page);
+    int reportTotalMar(Page page);
+    int reportTotalReq(Page page);
     int reportCountMar(int marketNo);
     int reportCountReq(int reqNo);
+    List<Report> reasonReqList(int reqNo);
+    List<Report> reasonMarList(int marketNo);
 }
