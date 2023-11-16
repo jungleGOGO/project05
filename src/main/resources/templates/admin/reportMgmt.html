@@ -154,7 +154,7 @@
                             <a th:href="@{|/admin/reportList?page2=${i}|}" class="page-link" aria-label="Page ${i}" aria-current="${i == curPage}" th:text="${i}"></a>
                         </li>
                     </th:block>
-                    <li th:if="${curPage < page.totalPageCount}" class="page-item">
+                    <li th:if="${curPage < page2.totalPageCount}" class="page-item">
                         <a th:href="@{|/admin/reportList?page2=${curPage + 1}|}" class="page-link">
                             <i class="fa-solid fa-arrow-right"></i>
                         </a>
