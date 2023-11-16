@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -19,6 +22,9 @@ public class NoticeCtrl {
 
     @Autowired
     private NoticeService noticeService;
+
+    @Autowired
+    HttpSession session;
 
     @GetMapping("/notice/list")
     public String NoticeList(HttpServletRequest request, Model model) {
@@ -41,10 +47,35 @@ public class NoticeCtrl {
     }
 
     @GetMapping("/notice/detail")
-    public String NoticeDetail (@RequestParam("no") int no, Model model) {
+    public String NoticeDetail (@RequestParam("no") int no,  HttpServletRequest request, Principal principal, Model model) {
+
+        String sid = principal != null ? principal.getName() : "";
+
+        session.setAttribute("sid", sid);
+
+        Cookie[] cookieFromRequest = request.getCookies();
+        String cookieValue = null;
+        for(int i=0; i<cookieFromRequest.length; i++) {
+            // 요청 정보로부터 쿠키를 가져옴
+            cookieValue = cookieFromRequest[0].getValue();
+        }
+        // 쿠키 세션 입력
+        if(session.getAttribute(no + ":cookie") == null) {
+            session.setAttribute(no + ":cookie", no + ":" + cookieValue);
+        } else {
+            session.setAttribute(no + ":cookie ex", session.getAttribute(no + ":cookie"));
+            if(!session.getAttribute(no + ":cookie").equals(no + ":" + cookieValue)) {
+                session.setAttribute(no+":cookie", no + ":" + cookieValue);
+            }
+        }
+
+        // 쿠키와 세션이 없는 경우 조회수 카운트
+        if(!session.getAttribute(no + ":cookie").equals(session.getAttribute(no + ":cookie ex"))) {
+            noticeService.cntUpdate(no);
+        }
+
 
         Notice notice = noticeService.getNotice(no);
-        noticeService.cntUpdate(no);
         model.addAttribute("notice", notice);
 
         return "notice/noticeDetail";

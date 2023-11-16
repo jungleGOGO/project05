@@ -147,9 +147,30 @@ public class AdminCtrl {
     @GetMapping("/admin/reportList")
     public String getReportList(HttpServletRequest request, Model model) {
 
-        List<Report> market = reportService.reportMarketList();
-        List<Report> req = reportService.reportReqList();
+        int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+
+        Page page = new Page();
+        int total = reportService.reportTotalReq(page);
+
+        page.makeBlock(curPage, total);
+        page.makeLastPageNum(total);
+        page.makePostStart(curPage, total);
+        model.addAttribute("curPage", curPage);     // 현재 페이지
+        model.addAttribute("page", page);
+
+        List<Report> market = reportService.reportMarketList(page);
         model.addAttribute("market", market);
+
+        Page page2 = new Page();
+        int total2 = reportService.reportTotalMar(page2);
+
+        page2.makeBlock(curPage, total2);
+        page2.makeLastPageNum(total2);
+        page2.makePostStart(curPage, total2);
+        model.addAttribute("curPage", curPage);     // 현재 페이지
+        model.addAttribute("page2", page2);
+
+        List<Report> req = reportService.reportReqList(page2);
         model.addAttribute("req", req);
 
         return "admin/reportMgmt";

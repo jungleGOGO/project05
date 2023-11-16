@@ -12,6 +12,7 @@
         <result property="reason" column="reason" />
         <result property="reportDate" column="report_date" />
         <result property="reportCount" column="report_count" />
+        <result property="reasonCount" column="reason_count" />
     </resultMap>
 
     <insert id="reportMarInsert">
@@ -38,7 +39,7 @@
                  JOIN report a ON (sub.market_no = a.market_no)
                  JOIN market b ON (a.market_no = b.market_no)
         GROUP BY b.title
-        ORDER BY a.report_date DESC;
+        ORDER BY a.report_date DESC LIMIT #{postStart}, #{postCount}
     </select>
 
     <select id="reportReqList" resultType="com.tsherpa.team35.entity.Report">
@@ -57,7 +58,8 @@
                  JOIN report a ON (sub.req_no = a.req_no)
                  JOIN request b ON (a.req_no = b.req_no)
         GROUP BY b.title
-        ORDER BY a.report_date DESC;</select>
+        ORDER BY a.report_date DESC LIMIT #{postStart}, #{postCount}
+        </select>
 
     <select id="reportTotalMar">
         select COUNT(*) from report where market_no
@@ -73,6 +75,18 @@
 
     <select id="reportCountReq">
         select count(*) from report where req_no=#{reqNo}
+    </select>
+
+    <select id="reasonReqList" resultType="com.tsherpa.team35.entity.Report">
+        SELECT a.req_no, b.title, a.reason, sub.reason_count FROM (SELECT reason, COUNT(reason) AS reason_count FROM report GROUP BY reason) AS sub
+        JOIN report a ON(sub.reason=a.reason) JOIN request b ON (a.req_no=b.req_no)
+        WHERE b.req_no=#{reqNo} GROUP BY b.title  ORDER BY a.report_date
+    </select>
+
+    <select id="reasonMarList" resultType="com.tsherpa.team35.entity.Report">
+        SELECT a.market_no, b.title, a.reason, sub.reason_count FROM (SELECT reason, COUNT(reason) AS reason_count FROM report GROUP BY reason) AS sub
+        JOIN report a ON(sub.reason=a.reason) JOIN market b ON (a.market_no=b.market_no)
+        WHERE b.market_no=#{marketNo} GROUP BY b.title  ORDER BY a.report_date
     </select>
 
 </mapper>
