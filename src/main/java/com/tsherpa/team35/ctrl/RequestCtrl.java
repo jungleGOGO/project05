@@ -3,11 +3,9 @@ package com.tsherpa.team35.ctrl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tsherpa.team35.biz.ReportService;
 import com.tsherpa.team35.biz.RequestService;
-import com.tsherpa.team35.entity.Book;
-import com.tsherpa.team35.entity.BookVO;
-import com.tsherpa.team35.entity.NaverResultVO;
-import com.tsherpa.team35.entity.Request;
+import com.tsherpa.team35.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +27,9 @@ import java.util.List;
 public class RequestCtrl {
     @Autowired
     private RequestService requestService;
+
+    @Autowired
+    private ReportService reportService;
 
     @GetMapping("/reqList")
     public String reqList(Model model)throws Exception{
@@ -139,6 +140,9 @@ public class RequestCtrl {
         List<Request> requestList = requestService.allRequest();
         model.addAttribute("requestList",requestList);
         model.addAttribute("request",request);
+
+        List<Report> list = reportService.reasonReqList(reqNo);
+        model.addAttribute("list", list);
         return "request/reqDetail";
     }
 
