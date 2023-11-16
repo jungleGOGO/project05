@@ -51,4 +51,6 @@ public class MarketService {
         mainphotoMapper.mainphotoDelete(marketNo);
     }
 
+
+
 }

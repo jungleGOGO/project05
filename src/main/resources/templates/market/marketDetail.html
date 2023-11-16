@@ -63,7 +63,21 @@
   <div class="container quote px-lg-0">
     <div class="row g-0 mx-lg-0">
       <div class="col-lg-6 quote-text py-5 wow fadeIn" data-wow-delay="0.5s" style="margin-left: 600px;">
-        <img src="/image/main/quote.jpg" style="object-fit: cover;" alt="">
+          <div id="myCarousel" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                  <div th:each="photo, status : ${photosList}" class="carousel-item" th:classappend="${status.index == 0} ? 'active'">
+                      <img th:src="${'/market/detailImage?saveFile='+photo.getSaveFile()+'&originFile='+photo.getOriginFile()+'&saveFolder='+photo.getSaveFolder()}" class="d-block w-100" style="object-fit: cover;" alt="">
+                  </div>
+              </div>
+              <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+              </a>
+          </div>
         <div class="p-lg-5 pe-lg-0">
           <div class="section-title text-start">
             <h1 class="display-5 mb-4">상세보기</h1>
@@ -181,7 +195,17 @@
     var child = window.open("/report/getReportMar?marketNo=" + marketNo, "child", "width=900, height=800");
   }
 </script>
+<script>
+    $(document).ready(function(){
+        // Initialize Bootstrap Carousel
+        $('#myCarousel').carousel();
 
+        // Set interval for automatic sliding (optional)
+        $('#myCarousel').carousel({
+            interval: 3000 // Set the interval in milliseconds (e.g., 3000 = 3 seconds)
+        });
+    });
+</script>
 
 <th:block th:insert="~{layout/footer :: footer}"></th:block>
 <script th:src="@{/js/main.js}"></script>
