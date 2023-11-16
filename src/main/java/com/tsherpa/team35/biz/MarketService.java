@@ -43,5 +43,11 @@ public class MarketService {
         return marketMapper.mainlistForDetailVOList(marketNo);
     }
 
+    @Transactional
+    public void marketDelete(int marketNo) throws Exception{
+        marketMapper.marketDelete(marketNo);
+        photosMapper.photosDelete(marketNo);
+        mainphotoMapper.mainphotoDelete(marketNo);
+    }
 
 }

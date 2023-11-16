@@ -163,8 +163,12 @@
                 <input type="hidden" class="form-control border-0" id="title" name="title" th:value="${market.title}" readonly style="height: 55px;">
                 <button class="btn btn-primary w-25 py-3" type="submit">찜하기</button>
                 <a th:href="'javascript:void(0);'" th:attr="onclick='openChildWindow(\'' + ${market.marketNo} + '\')'" class="btn btn-primary w-25 py-3">신고하기</a>
-                <button class="btn btn-primary w-25 py-3" type="submit">목록</button>
+                  <a class="btn btn-primary w-25 py-3" th:href="@{/request/requestList}" type="button">목록</a>
               </div>
+                <div class="col-12" style="margin-left: 70px;">
+                    <a class="btn btn-primary w-25 py-3" th:href="@{/market/edit(marketNo=${market.marketNo})}" type="button">수정하기</a>
+                    <a class="btn btn-primary w-25 py-3" th:href="@{/market/delete(marketNo=${market.marketNo})}" type="button">삭제하기</a>
+                </div>
             </div>
           </form>
         </div>
