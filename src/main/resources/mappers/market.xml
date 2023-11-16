@@ -10,4 +10,8 @@
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
+
+    <select id="getMarket" resultType="com.tsherpa.team35.entity.Market">
+        select * from market WHERE market_no = #{no};
+    </select>
 </mapper>

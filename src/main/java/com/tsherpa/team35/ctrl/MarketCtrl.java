@@ -51,10 +51,13 @@ public class MarketCtrl {
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     public String write(Market market, @RequestParam("upfile") MultipartFile[] files, HttpServletRequest req, Model model, RedirectAttributes rttr, Principal principal) throws Exception {
         String sid = principal != null ? principal.getName() : "";
-        String realPath = "C://upload";           // 업로드 경로 설정
-//        String realPath = "/Users/juncheol/Desktop/fileupload";    // 업로드 경로 설정
+//        String realPath = "C://upload";           // 업로드 경로 설정
+        String realPath = "/Users/juncheol/Desktop/fileupload";    // 업로드 경로 설정
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
         String saveFolder = realPath + "/" + today;
+
+
+
 
         File folder = new File(realPath, today);
         if(!folder.exists()) {                                  // 폴더가 존재하지 않으면 폴더 생성
@@ -65,6 +68,7 @@ public class MarketCtrl {
         for(MultipartFile file : files) {
             Photos fileInfo = new Photos();
             String originalFileName = file.getOriginalFilename(); // 첨부파일의 실제 파일명
+            System.out.println("파일명 : "+originalFileName);
             if(!originalFileName.isEmpty()) {
                 String saveFileName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf("."));     // 파일 이름을 랜덤으로 설정
                 fileInfo.setSaveFile(today);
@@ -90,7 +94,10 @@ public class MarketCtrl {
     }
 
     @GetMapping("/detail")
-    public String marketDetail(){
+    public String marketDetail(@RequestParam("no") int no, Model model){
+
+        Market market = marketService.getMarket(no);
+        model.addAttribute("market",market);
         return "market/marketDetail";
     }
 

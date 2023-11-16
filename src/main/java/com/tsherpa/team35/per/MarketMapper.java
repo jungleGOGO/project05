@@ -11,4 +11,6 @@ import java.util.List;
 public interface MarketMapper {
     public void marketInsert(Market market) throws Exception;
     public List<Market> dataRoomList() throws Exception;
+
+    public Market getMarket(int no);
 }
