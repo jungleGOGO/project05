@@ -270,7 +270,7 @@ CREATE TABLE report (
                         title varchar(100),-- 게시글 번호
                         login_id  VARCHAR(255),
                         reporter VARCHAR(16), -- 신고자
-                        reason VARCHAR(report), -- 이유
+                        reason VARCHAR(300), -- 이유
     report_date DATETIME DEFAULT CURRENT_TIMESTAMP    
 );
 

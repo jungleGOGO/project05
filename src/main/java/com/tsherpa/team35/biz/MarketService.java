@@ -51,8 +51,4 @@ public class MarketService {
         mainphotoMapper.mainphotoDelete(marketNo);
     }
 
-    public Market getMarket(@Param("no") int no) {
-        return marketMapper.getMarket(no);
-    }
-
 }
