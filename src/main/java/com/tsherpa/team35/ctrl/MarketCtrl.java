@@ -1,6 +1,7 @@
 package com.tsherpa.team35.ctrl;
 
 import com.tsherpa.team35.biz.MarketService;
+import com.tsherpa.team35.biz.PhotosService;
 import com.tsherpa.team35.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,8 @@ import java.util.UUID;
 public class MarketCtrl {
     @Autowired
     MarketService marketService;
+    @Autowired
+    PhotosService photosService;
     @Value("${spring.servlet.multipart.location}")
     String uploadFolder;
 
@@ -78,7 +81,7 @@ public class MarketCtrl {
     public String write(Market market, @RequestParam("upfile") MultipartFile[] repImage,@RequestParam("detailFile") MultipartFile[] detailImages ,HttpServletRequest req, Model model, RedirectAttributes rttr, Principal principal) throws Exception {
         String sid = principal != null ? principal.getName() : "";
 
-        String realPath = "C://upload";
+        String realPath = "C://upload/";
         System.out.println(realPath);           // 업로드 경로 설정
 //        String realPath = "/Users/juncheol/Desktop/fileupload";    // 업로드 경로 설정
 
@@ -86,8 +89,8 @@ public class MarketCtrl {
         String repImageSaveFolder = "rep_images/" + today;
         String detailImageSaveFolder = "detail_images/" + today;
 
-        File repImageFolder = new File(repImageSaveFolder);
-        File detailImageFolder = new File(detailImageSaveFolder);
+        File repImageFolder = new File(realPath, repImageSaveFolder);
+        File detailImageFolder = new File(realPath, detailImageSaveFolder);
 
 
         if (!repImageFolder.exists()) {
@@ -146,10 +149,10 @@ public class MarketCtrl {
     @GetMapping("/detail")
 
     public String marketDetail(@RequestParam("marketNo") int marketNo, Model model)throws Exception{
-        System.out.println("마켓엔오~~!!!:"+marketNo);
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
-        System.out.println("market: "+market);
+        List<Photos> photosList = photosService.photosList(marketNo);
 
+        model.addAttribute("photosList",photosList);
         model.addAttribute("market",market);
         return "market/marketDetail";
     }
