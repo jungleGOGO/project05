@@ -13,7 +13,6 @@ public class ChatRoom {
     private Integer productId;
     private String productTable;
     private String buyerId;
-    private String sellerId;
     private String regDate;
 
 }
