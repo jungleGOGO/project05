@@ -42,15 +42,7 @@ public class ChatCtrl {
     public String chatHome(@RequestParam(value = "productNo", required = false) int productNo, @RequestParam("productTable") String productTable, Principal principal) throws Exception {
         String path = "redirect:/";
 
-        //int productId = Integer.parseInt(productNo);
-
-        System.out.println("==========================");
-        System.out.println(productNo + 1);
-        System.out.println(productNo + 1);
-
         if(principal != null) {
-
-            System.out.println("로그인함");
             
             path += "chat/";
             String sid = principal.getName();
@@ -58,35 +50,24 @@ public class ChatCtrl {
             
             // 상품에 판매자 정보 가져오기
             if(productTable.equals("market")) {
-                System.out.println("market");
                 DetailVO market = marketService.detailVOList(productNo);
-
                 id = market.getLoginId();
-
             } else if (productTable.equals("request")) {
-                System.out.println("request");
                 Request request = requestService.requestDetail(productNo);
-
                 id = request.getLoginId();
             }
 
-            System.out.println("판매자 정보 가져옴 ----------> " + id);
-
             if(id.equals(sid)){
                 // 로그인한 아이디가 판매자 아이디가 같을 때
-                System.out.println("판매자 아이디");
-                path += "myChatList";
+                path += "myChatList?productId=" + productNo + "&productTable=" + productTable;
             } else {
                 // 로그인한 아이디가 판매자 아이디가 아닐 때
-                System.out.println("판매자 아이디가 아님");
                 ChatRoomVO chatRoomVO = chatService.chatRoomAllList(productNo, productTable, sid);
                 Long roomId;
-
-                System.out.println("chatRoomVo >>> " + chatRoomVO.toString());
-
                 if(chatRoomVO == null) {
                     ChatRoom chatRoom = new ChatRoom();
                     chatRoom.setProductId(productNo);
+                    chatRoom.setProductTable(productTable);
                     chatRoom.setBuyerId(sid);
                     ChatRoomVO room = chatService.createChatRoom(chatRoom);
                     roomId = room.getRoomId();
@@ -102,9 +83,6 @@ public class ChatCtrl {
                 path += "request/reqList";
             }
         }
-
-        System.out.println("완료");
-
         return path;
     }
 
@@ -166,7 +144,7 @@ public class ChatCtrl {
     }
 
     @MessageMapping("/{roomId}")
-    @SendTo("/getChat/{roomId}")
+    @SendTo("/chat/getChat/{roomId}")
     public ChatListVO chatInsert(@DestinationVariable Long roomId, ChatListVO message, Principal principal) throws Exception {
 
         String sid = principal.getName();
