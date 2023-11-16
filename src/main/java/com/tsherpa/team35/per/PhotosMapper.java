@@ -10,8 +10,7 @@ import java.util.List;
 @Component
 @Mapper
 public interface PhotosMapper {
-    public List<Photos> photosList(int no) throws Exception;
+    public List<Photos> photosList(int marketNo) throws Exception;
     public void photosInsert(Market market) throws Exception;
-    public void photosDelete(int no) throws Exception;
-
+    public void photosDelete(int marketNo) throws Exception;
 }

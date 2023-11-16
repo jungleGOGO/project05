@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Photos {
-    private int photo_no;
+public class Mainphoto {
+    private int mainphotoNo;
     private int marketNo;
     private String saveFolder;
     private String originFile;

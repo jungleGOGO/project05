@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Market {
+public class TotalVO {
     private int marketNo;
     private String title;
     private int price;
@@ -18,11 +16,15 @@ public class Market {
     private String active;
     private String conditions;
     private String regdate;
-    private List<Photos> fileInfoList;
-    private List<Mainphoto> mainphotoList;
     private String selectedAddress;
     private String detailAddress;
     private double xdata;
     private double ydata;
+    private String saveFolder;
+    private String originFile;
+    private String saveFile;
+    private String mainSaveFolder;
+    private String mainOriginFile;
+    private String mainSaveFile;
 
 }
