@@ -1,6 +1,7 @@
 package com.tsherpa.team35.biz;
 
 import com.tsherpa.team35.entity.Report;
+import com.tsherpa.team35.entity.User;
 import com.tsherpa.team35.per.ReportMapper;
 import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,4 +25,9 @@ public class ReportService {
     public int reportCountReq(int reqNo) { return reportMapper.reportCountReq(reqNo); }
     public List<Report> reasonReqList(int reqNo) { return reportMapper.reasonReqList(reqNo); }
     public List<Report> reasonMarList(int marketNo) { return reportMapper.reasonMarList(marketNo); }
+    public List<Report> reportUserList(Page page){ return reportMapper.reportUserList(page); }
+    public int reportUserCount(Page page) { return reportMapper.reportUserCount(page); }
+    public void activeUpdate(User user) { reportMapper.activeUpdate(user); }
+    public int reportchkReq(Report report) { return reportMapper.reportchkReq(report); }
+    public int reportchkMar(Report report) { return reportMapper.reportchkMar(report); }
 }

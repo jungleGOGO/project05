@@ -1,6 +1,7 @@
 package com.tsherpa.team35.per;
 
 import com.tsherpa.team35.entity.Report;
+import com.tsherpa.team35.entity.User;
 import com.tsherpa.team35.util.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -20,4 +21,9 @@ public interface ReportMapper {
     int reportCountReq(int reqNo);
     List<Report> reasonReqList(int reqNo);
     List<Report> reasonMarList(int marketNo);
+    List<Report> reportUserList(Page page);
+    int reportUserCount(Page page);
+    void activeUpdate(User user);
+    int reportchkReq(Report report);
+    int reportchkMar(Report report);
 }

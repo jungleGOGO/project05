@@ -66,9 +66,15 @@ public class ReportCtrl {
         report.setReason(reason);
         report.setMarketNo(marketNo);
 
-        reportService.reportMarInsert(report);
+        int chk1 = reportService.reportchkMar(report);
 
-        return "report/reportSuc";
+        if (chk1 == 0) {
+            reportService.reportMarInsert(report);
+            return "report/reportSuc";
+        } else {
+            return "report/reportF";
+        }
+
     }
 
     @PostMapping("report/reportReqPro")
@@ -87,9 +93,14 @@ public class ReportCtrl {
         report.setReason(reason);
         report.setReqNo(reqNo);
 
-        reportService.reportReqInsert(report);
+        int chk1 = reportService.reportchkReq(report);
+        if (chk1 == 0) {
+            reportService.reportReqInsert(report);
+            return "report/reportSuc";
+        }else {
+            return "report/reportF";
+        }
 
-        return "report/reportSuc";
     }
 
     @GetMapping("/report/reportSuc")

@@ -31,40 +31,40 @@ CREATE TABLE user(
 );
 
 CREATE VIEW userList AS(
-	SELECT u.user_id AS user_id, u.active AS ACTIVE, u.login_id AS login_id, u.user_name AS user_name, u.password AS PASSWORD, u.role_id AS role_id, r.role AS roleNm
-	FROM user u
-	LEFT JOIN role r ON u.role_id = r.role_id
-);
+                       SELECT u.user_id AS user_id, u.active AS ACTIVE, u.login_id AS login_id, u.user_name AS user_name, u.password AS PASSWORD, u.role_id AS role_id, r.role AS roleNm
+                       FROM user u
+                                LEFT JOIN role r ON u.role_id = r.role_id
+                           );
 
 CREATE TABLE market(
-	market_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호 	
-    title VARCHAR(100) NOT NULL,	-- 제목
-    price int NOT NULL,		-- 가격
-    content VARCHAR(5000),	-- 설명
-    login_id VARCHAR(255) NOT NULL,	-- 작성자 id
-    active INT DEFAULT 0 NOT NULL,	-- 거래 상태(거래 완료 여부)
-    conditions varchar(20) NOT NULL,	-- 상품 상태(최상 상 중 하)
-    regdate DATETIME DEFAULT CURRENT_TIMESTAMP,	-- 등록일
-    selected_address VARCHAR(200),     -- 선택 주소
-    detail_address VARCHAR(100),        -- 상세 주소
-    xdata DOUBLE,                      -- x
-    ydata DOUBLE                      -- y
+                       marketNo INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호 	
+                       title VARCHAR(100) NOT NULL,	-- 제목
+                       price int NOT NULL,		-- 가격
+                       content VARCHAR(5000),	-- 설명
+                       login_id VARCHAR(255) NOT NULL,	-- 작성자 id
+                       active INT DEFAULT 0 NOT NULL,	-- 거래 상태(거래 완료 여부)
+                       conditions varchar(20) NOT NULL,	-- 상품 상태(최상 상 중 하)
+                       regdate DATETIME DEFAULT CURRENT_TIMESTAMP,	-- 등록일
+                       selected_address VARCHAR(200),     -- 선택 주소
+                       detail_address VARCHAR(100),        -- 상세 주소
+                       xdata DOUBLE,                      -- x
+                       ydata DOUBLE                      -- y
 );
 
 CREATE TABLE photos(
                        photo_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                       market_no INT,
+                       marketNo INT,
                        saveFolder VARCHAR(300) NOT NULL,
                        originFile VARCHAR(300) NOT NULL,
                        saveFile VARCHAR(300) NOT NULL
 );
 
 CREATE TABLE mainphoto(
-		mainphoto_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                       market_no INT,
-                       saveFolder VARCHAR(300) NOT NULL,
-                       originFile VARCHAR(300) NOT NULL,
-                       saveFile VARCHAR(300) NOT NULL
+                          mainphoto_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                          marketNo INT,
+                          saveFolder VARCHAR(300) NOT NULL,
+                          originFile VARCHAR(300) NOT NULL,
+                          saveFile VARCHAR(300) NOT NULL
 );
 
 
@@ -74,7 +74,7 @@ CREATE TABLE mainphoto(
 
 CREATE VIEW detaillist AS
 SELECT
-    m.market_no,
+    m.marketNo,
     m.title,
     m.price,
     m.content,
@@ -91,12 +91,12 @@ SELECT
     p.saveFile AS saveFile
 FROM
     market m
-LEFT JOIN photos p ON m.market_no = p.market_no;
+        LEFT JOIN photos p ON m.marketNo = p.marketNo;
 
 
 CREATE VIEW totallist as
 SELECT
-    m.market_no,
+    m.marketNo,
     m.title,
     m.price,
     m.content,
@@ -116,15 +116,15 @@ SELECT
     mp.saveFile AS mainSaveFile
 FROM
     market m
-LEFT JOIN photos p ON m.market_no = p.market_no
-LEFT JOIN mainphoto mp ON m.market_no = mp.market_no;
+        LEFT JOIN photos p ON m.marketNo = p.marketNo
+        LEFT JOIN mainphoto mp ON m.marketNo = mp.marketNo;
 
 
 
 
 CREATE VIEW mainlist AS
 SELECT
-    m.market_no AS marketNo,
+    m.marketNo AS marketNo,
     m.title,
     m.price,
     m.content,
@@ -141,7 +141,7 @@ SELECT
     mp.saveFile AS saveFile
 FROM
     market m
-LEFT JOIN mainphoto mp ON m.market_no = mp.market_no;
+        LEFT JOIN mainphoto mp ON m.marketNo = mp.marketNo;
 
 
 
@@ -165,7 +165,7 @@ CREATE TABLE request(
 
 CREATE TABLE photos(
                        photo_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                       market_no INT,
+                       marketNo INT,
                        saveFolder VARCHAR(300) NOT NULL,
                        originFile VARCHAR(300) NOT NULL,
                        saveFile VARCHAR(300) NOT NULL
@@ -174,19 +174,19 @@ CREATE TABLE photos(
 
 INSERT INTO request (title, price, content, login_id, addr, bookTitle, bookAuthor, publisher, bookImage, isbn, pubdate, discount)
 VALUES
-('책 제목 1', 5000, '책 설명 1', 'user1', '주소 1', '도서 1', '저자 1', '출판사 1', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1234567890', '2022-01-01', '10'),
-('책 제목 2', 7000, '책 설명 2', 'user2', '주소 2', '도서 2', '저자 2', '출판사 2', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '0987654321', '2022-02-01', '15'),
-('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20')
+    ('책 제목 1', 5000, '책 설명 1', 'user1', '주소 1', '도서 1', '저자 1', '출판사 1', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1234567890', '2022-01-01', '10'),
+    ('책 제목 2', 7000, '책 설명 2', 'user2', '주소 2', '도서 2', '저자 2', '출판사 2', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '0987654321', '2022-02-01', '15'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20')
 
 CREATE TABLE notice(
                        no INT PRIMARY KEY AUTO_INCREMENT,
@@ -264,11 +264,13 @@ INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 효과적으로 검색하�
 SELECT * FROM qna;
 
 CREATE TABLE report (
-    report_id INT PRIMARY KEY AUTO_INCREMENT, -- 신고 번호
-    market_no INT, -- 게시글 번호
-    login_id  VARCHAR(255),
-    reporter VARCHAR(16), -- 신고자
-    reason VARCHAR(report), -- 이유
+                        report_id INT PRIMARY KEY AUTO_INCREMENT, -- 신고 번호
+                        marketNo INT,
+                        req_no int,
+                        title varchar(100),-- 게시글 번호
+                        login_id  VARCHAR(255),
+                        reporter VARCHAR(16), -- 신고자
+                        reason VARCHAR(report), -- 이유
     report_date DATETIME DEFAULT CURRENT_TIMESTAMP    
 );
 
