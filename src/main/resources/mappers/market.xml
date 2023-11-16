@@ -3,6 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tsherpa.team35.per.MarketMapper">
+    <resultMap id="DetailVO" type="com.tsherpa.team35.entity.DetailVO">
+        <result property="loginId" column="login_id" />
+        <result property="marketNo" column="market_no" />
+
+    </resultMap>
+    <resultMap id="MainVO" type="com.tsherpa.team35.entity.MainVO">
+        <result property="loginId" column="login_id" />
+        <result property="marketNo" column="market_no" />
+    </resultMap>
+
+    <resultMap id="Market" type="com.tsherpa.team35.entity.Market">
+        <result property="loginId" column="login_id" />
+        <result property="marketNo" column="market_no" />
+    </resultMap>
+
     <insert id="marketInsert" >
         insert into market(login_id, title, content,price,conditions,selected_address,detail_address,xdata,ydata)
         values(#{loginId}, #{title}, #{content}, #{price}, #{conditions},#{selectedAddress},#{detailAddress},#{xdata},#{ydata})
@@ -22,4 +37,17 @@
     <delete id="marketDelete">
         delete from market where market_no=#{marketNo}
     </delete>
+
+    <select id="mainVOList" resultType="com.tsherpa.team35.entity.MainVO">
+        select * from mainlist order by regdate desc
+    </select>
+
+    <select id="detailVOList" resultType="com.tsherpa.team35.entity.DetailVO">
+        select * from detaillist where market_no = #{marketNo}
+    </select>
+
+    <select id="mainlistForDetailVOList" resultType="com.tsherpa.team35.entity.MainVO">
+        select * from mainlist where market_no = #{marketNo}
+    </select>
+
 </mapper>

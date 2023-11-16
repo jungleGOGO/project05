@@ -40,15 +40,16 @@
             <button type="button" class="btn btn-info"><a th:href="@{/market/bookSearch}">요청하기</a></button>
         </th:block>
         <div class="row g-4" >
-            <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="market: ${marketList}" data-wow-delay="0.1s" style="width: 431.98px;height:430.58px;">
+            <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" style="width: 431.98px;height:430.58px;">
                 <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
                     <div class="overflow-hidden">
-                        <img class="img-fluid" th:src="${market.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
+                        <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
+
                     </div>
                     <div class="p-4 text-center border border-5 border-light border-top-0">
                         <h4 class="mb-3" th:text="${market.title}"></h4>
-                        <p>거래희망장소: <span th:text="${market.addr}"></span></p><p>등록일: <span th:text="${market.regdate}"></span></p>
-                        <a class="fw-medium" th:href="@{/market/reqDetail(reqNo=${market.reqNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
+                        <p>거래희망장소: <span th:text="${market.selectedAddress}"></span></p><p>등록일: <span th:text="${market.regdate}"></span></p>
+                        <a class="fw-medium" th:href="@{/market/detail(marketNo=${market.marketNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
             </div>
@@ -61,7 +62,7 @@
 </div>
 
 <div>
-    <button type="button" class="btn btn-dark"><a th:href="@{/book/insert}">글쓰기</a></button>
+    <button type="button" class="btn btn-dark"><a th:href="@{/market/marketInsert}">글쓰기</a></button>
 </div>
 <!-- Service End -->
 
