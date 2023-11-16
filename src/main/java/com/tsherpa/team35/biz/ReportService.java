@@ -14,11 +14,14 @@ public class ReportService {
     @Autowired
     private ReportMapper reportMapper;
 
-    public void reportInsert(Report report) { reportMapper.reportInsert(report); }
-    public List<Report> reportMarketList() { return reportMapper.reportMarketList(); }
-    public List<Report> reportReqList() { return reportMapper.reportReqList(); }
-    public int reportTotalMar() { return reportMapper.reportTotalMar(); }
-    public int reportTotalReq() { return reportMapper.reportTotalReq(); }
+    public void reportMarInsert(Report report) { reportMapper.reportMarInsert(report); }
+    public void reportReqInsert(Report report) { reportMapper.reportReqInsert(report); }
+    public List<Report> reportMarketList(Page page) { return reportMapper.reportMarketList(page); }
+    public List<Report> reportReqList(Page page) { return reportMapper.reportReqList(page); }
+    public int reportTotalMar(Page page) { return reportMapper.reportTotalMar(page); }
+    public int reportTotalReq(Page page) { return reportMapper.reportTotalReq(page); }
     public int reportCountMar(int marketNo) { return reportMapper.reportCountMar(marketNo); }
     public int reportCountReq(int reqNo) { return reportMapper.reportCountReq(reqNo); }
+    public List<Report> reasonReqList(int reqNo) { return reportMapper.reasonReqList(reqNo); }
+    public List<Report> reasonMarList(int marketNo) { return reportMapper.reasonMarList(marketNo); }
 }

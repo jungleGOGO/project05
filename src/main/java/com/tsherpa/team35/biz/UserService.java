@@ -5,12 +5,15 @@ import com.tsherpa.team35.entity.User;
 import com.tsherpa.team35.entity.UserVO;
 import com.tsherpa.team35.per.RoleMapper;
 import com.tsherpa.team35.per.UserMapper;
+import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -45,5 +48,8 @@ public class UserService implements UserDetailsService {
 
         return new UserPrincipal(userVO);
     }
+
+    public List<User> userList(Page page) { return userMapper.userList(page); }
+    public int getCount(Page page) { return userMapper.getCount(page); }
 
 }

@@ -60,11 +60,14 @@
                                         <a class="badge bg-primary rounded-3 fw-semibold" th:href="@{/admin/answerInsert(qno = ${question.qno})}">답변추가</a>
                                     </td>
                                 </tr>
+                                <tr th:if="${noAnswerList.isEmpty()}">
+                                    <td colspan="6">답변할 질문이 없습니다.</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <div style="margin-top: 30px;">
+                        <div style="margin-top: 30px;" th:if="${!noAnswerList.isEmpty()}">
                             <ul class="pagination justify-content-center mb-0">
                                 <li th:if="${curPage > 1}" class="page-item">
                                     <a th:href="@{|/admin/questionList?page=${curPage - 1}|}" class="page-link">

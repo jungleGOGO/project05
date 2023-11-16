@@ -3,9 +3,11 @@ package com.tsherpa.team35.ctrl;
 import com.tsherpa.team35.biz.NoticeService;
 import com.tsherpa.team35.biz.QnaService;
 import com.tsherpa.team35.biz.ReportService;
+import com.tsherpa.team35.biz.UserService;
 import com.tsherpa.team35.entity.Notice;
 import com.tsherpa.team35.entity.Qna;
 import com.tsherpa.team35.entity.Report;
+import com.tsherpa.team35.entity.User;
 import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,9 +31,33 @@ public class AdminCtrl {
     @Autowired
     private ReportService reportService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/admin/dashboard")
     public String getDashboard() {
         return "admin/adminDashboard";
+    }
+
+    @GetMapping("/admin/userList")
+    public String getuserList(HttpServletRequest request, Model model){
+
+        int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+
+        Page page = new Page();
+
+        int total = userService.getCount(page);
+        page.makeBlock(curPage, total);
+        page.makeLastPageNum(total);
+        page.makePostStart(curPage, total);
+
+        List<User> list = userService.userList(page);
+
+        model.addAttribute("list", list);
+        model.addAttribute("curPage", curPage);
+        model.addAttribute("page", page);
+
+        return "admin/userMgmt";
     }
 
     @GetMapping("/admin/noticeAdmin")
@@ -121,9 +147,30 @@ public class AdminCtrl {
     @GetMapping("/admin/reportList")
     public String getReportList(HttpServletRequest request, Model model) {
 
-        List<Report> market = reportService.reportMarketList();
-        List<Report> req = reportService.reportReqList();
+        int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+
+        Page page = new Page();
+        int total = reportService.reportTotalReq(page);
+
+        page.makeBlock(curPage, total);
+        page.makeLastPageNum(total);
+        page.makePostStart(curPage, total);
+        model.addAttribute("curPage", curPage);     // 현재 페이지
+        model.addAttribute("page", page);
+
+        List<Report> market = reportService.reportMarketList(page);
         model.addAttribute("market", market);
+
+        Page page2 = new Page();
+        int total2 = reportService.reportTotalMar(page2);
+
+        page2.makeBlock(curPage, total2);
+        page2.makeLastPageNum(total2);
+        page2.makePostStart(curPage, total2);
+        model.addAttribute("curPage", curPage);     // 현재 페이지
+        model.addAttribute("page2", page2);
+
+        List<Report> req = reportService.reportReqList(page2);
         model.addAttribute("req", req);
 
         return "admin/reportMgmt";

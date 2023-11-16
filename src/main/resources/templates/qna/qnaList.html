@@ -60,11 +60,14 @@
                     <td class="has-text-centered" th:text="${qna.author}"></td>
                     <td class="has-text-centered" th:text="${#dates.format(qna.resdate,'yyyy-MM-dd')}"></td>
                 </tr>
+                <tr th:if="${list.isEmpty()}">
+                    <td colspan="6">질문글이 없습니다.</td>
+                </tr>
             </tbody>
         </table>
     </div>
 
-    <div style="margin-top: 30px;">
+    <div style="margin-top: 30px;"  th:if="${!list.isEmpty()}">
         <ul class="pagination justify-content-center mb-0">
             <li th:if="${curPage > 5}" class="page-item">
                 <a th:href="@{|/qna/list?page=${page.blockStartNum - 1}|}" class="page-link">
