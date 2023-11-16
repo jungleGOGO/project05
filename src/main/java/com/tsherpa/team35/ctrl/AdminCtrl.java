@@ -12,9 +12,7 @@ import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -174,6 +172,40 @@ public class AdminCtrl {
         model.addAttribute("req", req);
 
         return "admin/reportMgmt";
+    }
+
+    @GetMapping("/admin/reportUser")
+    public String reportUserList (HttpServletRequest request, Model model){
+
+        int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+
+        Page page = new Page();
+        int total = reportService.reportUserCount(page);
+
+        page.makeBlock(curPage, total);
+        page.makeLastPageNum(total);
+        page.makePostStart(curPage, total);
+        model.addAttribute("curPage", curPage);     // 현재 페이지
+        model.addAttribute("page", page);
+
+        List<Report> list = reportService.reportUserList(page);
+        model.addAttribute("list", list);
+
+        return "admin/reportUserMgmt";
+    }
+
+    @PostMapping("/admin/activeUpdate")
+    @ResponseBody
+    public boolean activeUpdatePro(@RequestParam("active") int active, @RequestParam("loginId") String loginId) {
+
+        User user = new User();
+        user.setActive(active);
+        user.setLoginId(loginId);
+
+        reportService.activeUpdate(user);
+
+        return true;
+
     }
 
 

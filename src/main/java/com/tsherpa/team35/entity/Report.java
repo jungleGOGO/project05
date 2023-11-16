@@ -20,4 +20,7 @@ public class Report {
     private Date reportDate;
     private int reportCount;
     private int reasonCount;
+    private int reporterCount;
+    private String userName;
+    private int active;
 }
