@@ -11,11 +11,11 @@ import org.springframework.aop.framework.AopInfrastructureBean;
 public class ChatRoomVO {
 
     private Long roomId;
-    private Integer productId;
+    private int productId;
     private String productTable;
     private String buyerId;
     private String buyerName;
-    private Integer buyerActive;
+    private int buyerActive;
     private String regDate;
 
 }

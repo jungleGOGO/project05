@@ -38,40 +38,55 @@ public class ChatCtrl {
     @Autowired
     private RequestService requestService;
 
-    @GetMapping("/")
-    public String chatHome(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, Principal principal) throws Exception {
+    @GetMapping("/chat")
+    public String chatHome(@RequestParam(value = "productNo", required = false) int productNo, @RequestParam("productTable") String productTable, Principal principal) throws Exception {
         String path = "redirect:/";
 
+        //int productId = Integer.parseInt(productNo);
+
+        System.out.println("==========================");
+        System.out.println(productNo + 1);
+        System.out.println(productNo + 1);
+
         if(principal != null) {
+
+            System.out.println("로그인함");
+            
             path += "chat/";
             String sid = principal.getName();
             String id = "";
             
             // 상품에 판매자 정보 가져오기
             if(productTable.equals("market")) {
-                Market market = new Market();
-                market.setLoginId("kim");
+                System.out.println("market");
+                DetailVO market = marketService.detailVOList(productNo);
 
                 id = market.getLoginId();
 
             } else if (productTable.equals("request")) {
-                Request request = new Request();
-                request.setLoginId("kim");
+                System.out.println("request");
+                Request request = requestService.requestDetail(productNo);
 
                 id = request.getLoginId();
             }
 
+            System.out.println("판매자 정보 가져옴 ----------> " + id);
+
             if(id.equals(sid)){
                 // 로그인한 아이디가 판매자 아이디가 같을 때
+                System.out.println("판매자 아이디");
                 path += "myChatList";
             } else {
                 // 로그인한 아이디가 판매자 아이디가 아닐 때
-                ChatRoomVO chatRoomVO = chatService.chatRoomAllList(productId, productTable, sid);
+                System.out.println("판매자 아이디가 아님");
+                ChatRoomVO chatRoomVO = chatService.chatRoomAllList(productNo, productTable, sid);
                 Long roomId;
+
+                System.out.println("chatRoomVo >>> " + chatRoomVO.toString());
 
                 if(chatRoomVO == null) {
                     ChatRoom chatRoom = new ChatRoom();
-                    chatRoom.setProductId(Math.toIntExact(productId));
+                    chatRoom.setProductId(productNo);
                     chatRoom.setBuyerId(sid);
                     ChatRoomVO room = chatService.createChatRoom(chatRoom);
                     roomId = room.getRoomId();
@@ -87,6 +102,8 @@ public class ChatCtrl {
                 path += "request/reqList";
             }
         }
+
+        System.out.println("완료");
 
         return path;
     }
