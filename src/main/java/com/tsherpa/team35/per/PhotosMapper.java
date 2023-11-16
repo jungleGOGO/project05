@@ -13,5 +13,4 @@ public interface PhotosMapper {
     public List<Photos> photosList(int marketNo) throws Exception;
     public void photosInsert(Market market) throws Exception;
     public void photosDelete(int marketNo) throws Exception;
-
 }

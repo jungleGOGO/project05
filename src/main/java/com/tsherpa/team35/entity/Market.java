@@ -24,4 +24,5 @@ public class Market {
     private String detailAddress;
     private double xdata;
     private double ydata;
+
 }

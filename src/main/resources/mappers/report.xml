@@ -4,7 +4,7 @@
 
     <resultMap id="Report" type="com.tsherpa.team35.entity.Report">
         <result property="reportId" column="report_id" />
-        <result property="marketNo" column="market_no" />
+        <result property="marketNo" column="marketNo" />
         <result property="reqNo" column="req_no" />
         <result property="title" column="title" />
         <result property="loginId" column="login_id" />
@@ -27,17 +27,17 @@
         SELECT
             a.report_id,
             b.title,
-            b.market_no,
+            b.marketNo,
             b.login_id,
             a.report_date,
             sub.report_count
         FROM (
-                 SELECT market_no, COUNT(market_no) AS report_count
+                 SELECT marketNo, COUNT(marketNo) AS report_count
                  FROM report
                  GROUP BY req_no
              ) AS sub
-                 JOIN report a ON (sub.market_no = a.market_no)
-                 JOIN market b ON (a.market_no = b.market_no)
+                 JOIN report a ON (sub.marketNo = a.marketNo)
+                 JOIN market b ON (a.marketNo = b.marketNo)
         GROUP BY b.title
         ORDER BY a.report_date DESC LIMIT #{postStart}, #{postCount}
     </select>
@@ -62,7 +62,7 @@
         </select>
 
     <select id="reportTotalMar">
-        select COUNT(*) from report where market_no
+        select COUNT(*) from report where marketNo
     </select>
 
     <select id="reportTotalReq">
@@ -70,7 +70,7 @@
     </select>
 
     <select id="reportCountMar">
-        select count(*) from report where market_no=#{marketNo}
+        select count(*) from report where marketNo=#{marketNo}
     </select>
 
     <select id="reportCountReq">
@@ -84,9 +84,9 @@
     </select>
 
     <select id="reasonMarList" resultType="com.tsherpa.team35.entity.Report">
-        SELECT a.market_no, b.title, a.reason, sub.reason_count FROM (SELECT reason, COUNT(reason) AS reason_count FROM report GROUP BY reason) AS sub
-        JOIN report a ON(sub.reason=a.reason) JOIN market b ON (a.market_no=b.market_no)
-        WHERE b.market_no=#{marketNo} GROUP BY b.title  ORDER BY a.report_date
+        SELECT a.marketNo, b.title, a.reason, sub.reason_count FROM (SELECT reason, COUNT(reason) AS reason_count FROM report GROUP BY reason) AS sub
+        JOIN report a ON(sub.reason=a.reason) JOIN market b ON (a.marketNo=b.marketNo)
+        WHERE b.marketNo=#{marketNo} GROUP BY b.title  ORDER BY a.report_date
     </select>
 
 </mapper>

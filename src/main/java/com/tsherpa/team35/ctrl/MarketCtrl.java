@@ -196,5 +196,11 @@ public class MarketCtrl {
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
 
+    @GetMapping("/delete")
+    public String marketDelete(@RequestParam int marketNo)throws Exception{
+        marketService.marketDelete(marketNo);
+        return "redirect:/market/marketList";
+    }
+
 
 }
