@@ -27,27 +27,60 @@ public class ReportCtrl {
     @Autowired
     private MarketService marketService;
 
+    @RequestMapping(value = "repCheck", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean repCheck(HttpServletRequest request, Principal principal) throws Exception {
+
+        String sid = principal != null ? principal.getName() : "";
+        int reqNo = Integer.parseInt(request.getParameter("reqNo"));
+
+        int chk = reportService.reportchkMar(reqNo, sid);
+
+        return true;
+    }
+
+
+
     @GetMapping("/report/getReportMar")
-    public String getReportMarForm (@RequestParam("marketNo")int marketNo, Principal principal, Model model) {
+    public String getReportMarForm (@RequestParam("marketNo")int marketNo, Principal principal, Model model) throws Exception {
 
+        String sid = principal != null ? principal.getName() : "";
 
-//        Market mar = marketService.marketDetail(marketNo);
+        Market market = marketService.marketDetail(marketNo);
 
         model.addAttribute("marketNo", marketNo);
-//        model.addAttribute("mar", mar);
+        model.addAttribute("market", market);
 
-        return "report/reportMarInsert";
+        int chk1 = reportService.reportchkMar(marketNo, sid );
+        if (chk1 == 0) {
+            return "report/reportMarInsert";
+        } else {
+            model.addAttribute("msg", "이미 신고한 회원입니다.");
+            model.addAttribute("url", "/layout/alert");
+            return "layout/alert";
+        }
+
     }
 
     @GetMapping("/report/getReportReq")
     public String getReportReqForm (@RequestParam("reqNo")int reqNo, Principal principal, Model model) throws Exception {
 
+        String sid = principal != null ? principal.getName() : "";
         Request req =requestService.requestDetail(reqNo);
 
         model.addAttribute("reqNo", reqNo);
         model.addAttribute("req", req);
 
-        return "report/reportReqInsert";
+        int chk1 = reportService.reportchkReq(reqNo, sid );
+        if (chk1 == 0) {
+            return "report/reportReqInsert";
+        } else {
+            model.addAttribute("msg", "이미 신고한 회원입니다.");
+            model.addAttribute("url", "/layout/alert");
+            return "layout/alert";
+        }
+
+
     }
 
     @PostMapping("report/reportMarPro")
@@ -66,14 +99,9 @@ public class ReportCtrl {
         report.setReason(reason);
         report.setMarketNo(marketNo);
 
-        int chk1 = reportService.reportchkMar(report);
+        reportService.reportMarInsert(report);
+        return "report/reportSuc";
 
-        if (chk1 == 0) {
-            reportService.reportMarInsert(report);
-            return "report/reportSuc";
-        } else {
-            return "report/reportF";
-        }
 
     }
 
@@ -93,13 +121,8 @@ public class ReportCtrl {
         report.setReason(reason);
         report.setReqNo(reqNo);
 
-        int chk1 = reportService.reportchkReq(report);
-        if (chk1 == 0) {
-            reportService.reportReqInsert(report);
-            return "report/reportSuc";
-        }else {
-            return "report/reportF";
-        }
+        reportService.reportReqInsert(report);
+        return "report/reportSuc";
 
     }
 
