@@ -5,6 +5,57 @@
     <th:block th:insert="~{layout/head :: head}"></th:block>
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <title>T셀파</title>
+
+    <style>
+        .image-preview-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            overflow: hidden; /* 가로 사이즈 넘치는 부분 숨김 */
+        }
+
+        .image-preview {
+            width: 200px;
+            height: 200px;
+            object-fit: cover; /* 세로 사이즈 200px에 맞추고 가로는 넘치면 숨김 */
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #images_container {
+            display: flex; /* flexbox 레이아웃 적용 */
+            flex-wrap: wrap; /* 줄 바꿈 허용 */
+            gap: 10px; /* 이미지 사이 간격 */
+        }
+
+        .image-preview-container {
+            flex: 0 0 calc(20% - 10px); /* 한 줄에 5개의 이미지, 10px은 gap을 고려 */
+        }
+        .file-upload-btn {
+            cursor: pointer;
+            display: flex; /* Flex 컨테이너로 설정 */
+            justify-content: center; /* 가로 방향으로 중앙 정렬 */
+            align-items: center; /* 세로 방향으로 중앙 정렬 */
+            width: 200px;
+            height: 200px;
+            background-color: #ececec;
+        }
+
+        .file-upload-btn img {
+            width: 50px; /* 이미지 크기 설정 */
+            height: auto;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
 </head>
 <body>
 <th:block th:insert="~{layout/header :: header}"></th:block>
@@ -29,10 +80,12 @@
     <h2 class="mb-4">중고거래 게시글 작성</h2>
     <form th:action="@{/market/insert}" method="post" enctype="multipart/form-data">
         <div class="form-group">
+
             <label for="product_detail_image" class="form-label">대표 이미지</label>
+
             <input class="form-control form-control-user" type="file" multiple="multiple"
-                   name="upfile" id="product_detail_image" onchange="setDetailImage(event);" accept="image/*"  oninput="fileMax(this)">
-        <script>
+                   name="upfile" id="product_detail_image" onchange="setDetailImage(event);" accept="image/*" oninput="fileMax(this)" style="display: none;">
+            <script>
             function fileMax(input) {
                 var files = input.files;
 
@@ -44,6 +97,7 @@
         </script>
         </div>
         <div id="images_container"></div>
+
 
         <div class="form-group">
             <label for="product_detail_image2" class="form-label">상세 이미지</label>
@@ -61,6 +115,7 @@
             </script>
         </div>
         <div id="images_container2"></div>
+
 
 
         <div class="mb-3">
@@ -222,38 +277,84 @@
     </form>
 </div>
 
+
 <script>
-    function setThumbnail(event){
-        var reader = new FileReader();
-
-        reader.onload = function(event){
-            var img = document.createElement("img");
-            img.setAttribute("src", event.target.result);
-            img.setAttribute("class", "col-lg-6");
-            document.querySelector("div#image_container").appendChild(img);
-        };
-
-        reader.readAsDataURL(event.target.files[0]);
+    var selectedFiles = []; // 선택된 파일들을 저장할 배열
+    var deletedFileNames = []; // 삭제된 파일 이름을 저장할 배열
+    function setDetailImage(event) {
+        // 파일을 배열에 추가
+        selectedFiles = Array.from(event.target.files);
+        renderPreview();
+        deletedFileNames = [];
     }
-</script>
 
-<script>
-    function setDetailImage(event){
-        for(var image of event.target.files){
+    function renderPreview() {
+        var imagesContainer = document.querySelector("div#images_container");
+        imagesContainer.innerHTML = ''; // 이미지 컨테이너 초기화
+
+        selectedFiles.forEach((file, index) => {
             var reader = new FileReader();
+            reader.onload = function(event) {
+                var imgContainer = document.createElement("div");
+                imgContainer.setAttribute("class", "image-preview-container col-lg-6");
 
-            reader.onload = function(event){
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
-                img.setAttribute("class", "col-lg-6");
-                document.querySelector("div#images_container").appendChild(img);
-            };
+                img.setAttribute("class", "image-preview");
 
-            console.log(image);
-            reader.readAsDataURL(image);
-        }
+                var deleteBtn = document.createElement("button");
+                deleteBtn.setAttribute("class", "delete-btn");
+                deleteBtn.textContent = "x";
+                deleteBtn.onclick = function() {
+                    // 삭제된 파일 이름 저장
+                    deletedFileNames.push(selectedFiles[index].name);
+                    selectedFiles.splice(index, 1);
+                    renderPreview();
+                };
+
+
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(deleteBtn);
+                imagesContainer.appendChild(imgContainer);
+            };
+            reader.readAsDataURL(file);
+        });
     }
 </script>
+
+<!--<script>-->
+<!--    -->
+<!--    function setDetailImage(event) {-->
+<!--        var imagesContainer = document.querySelector("div#images_container");-->
+<!--        imagesContainer.innerHTML = ''; // 이미지 컨테이너를 초기화합니다.-->
+
+<!--        for (var image of event.target.files) {-->
+<!--            var reader = new FileReader();-->
+
+<!--            reader.onload = function (event) {-->
+<!--                var imgContainer = document.createElement("div");-->
+<!--                imgContainer.setAttribute("class", "image-preview-container col-lg-6");-->
+
+<!--                var img = document.createElement("img");-->
+<!--                img.setAttribute("src", event.target.result);-->
+<!--                img.setAttribute("class", "image-preview");-->
+
+<!--                var deleteBtn = document.createElement("button");-->
+<!--                deleteBtn.setAttribute("class", "delete-btn");-->
+<!--                deleteBtn.textContent = "x";-->
+<!--                deleteBtn.onclick = function() {-->
+<!--                    imgContainer.remove();-->
+<!--                };-->
+
+<!--                imgContainer.appendChild(img);-->
+<!--                imgContainer.appendChild(deleteBtn);-->
+<!--                imagesContainer.appendChild(imgContainer);-->
+<!--            };-->
+
+<!--            reader.readAsDataURL(image);-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
 <!-- content 영역 종료 -->
 <script th:src="@{/js/common.js}"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
