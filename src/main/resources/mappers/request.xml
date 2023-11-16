@@ -6,7 +6,6 @@
     <resultMap id="User" type="com.tsherpa.team35.entity.Request">
         <result property="loginId" column="login_id" />
         <result property="reqNo" column="req_no" />
-
     </resultMap>
 
     <insert id="requestInsert" >
