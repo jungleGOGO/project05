@@ -115,11 +115,23 @@ public class ChatCtrl {
         ChatRoomVO chatRoomVO = chatService.getRoom(roomId);
 
         if(principal != null) {
-            User user = userService.getUserByLoginId(sid);
-            Product product = productService.productListByUser(user.getId());
-            if(product != null || (chatRoomVO != null && chatRoomVO.getBuyerId().equals(user.getId()))) {
+            String id = "";
+
+            if(chatRoomVO.getProductTable().equals("market")) {
+                Market market = new Market();
+                market.setLoginId("kim");
+
+                id = market.getLoginId();
+
+            } else if (chatRoomVO.getProductTable().equals("request")) {
+                Request request = new Request();
+                request.setLoginId("kim");
+
+                id = request.getLoginId();
+            }
+
+            if(chatRoomVO != null && (id.equals(sid) || chatRoomVO.getBuyerId().equals(sid))) {
                 List<ChatListVO> chatList = chatService.getChat(roomId);
-                if(chatRoomVO.getUserName().equals(user.getUserName()) ) {}
                 model.addAttribute("roomId", roomId);
                 model.addAttribute("chatList", chatList);
                 return "chat/get";
