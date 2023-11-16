@@ -98,7 +98,7 @@ public class MarketCtrl {
 
         Market market = marketService.getMarket(no);
         model.addAttribute("market",market);
-        return "marketDetail_bak";
+        return "market/marketDetail";
     }
 
 }
