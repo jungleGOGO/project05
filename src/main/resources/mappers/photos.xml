@@ -15,7 +15,7 @@
         delete from photos where marketNo=#{marketNo}
     </delete>
 
-    <select id="photoList" resultType="com.tsherpa.team35.entity.Photos">
+    <select id="photosList" resultType="com.tsherpa.team35.entity.Photos">
         select * from photos where marketNo=#{marketNo}
     </select>
 </mapper>
