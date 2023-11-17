@@ -1,13 +1,7 @@
 package com.tsherpa.team35.ctrl;
 
-import com.tsherpa.team35.biz.NoticeService;
-import com.tsherpa.team35.biz.QnaService;
-import com.tsherpa.team35.biz.ReportService;
-import com.tsherpa.team35.biz.UserService;
-import com.tsherpa.team35.entity.Notice;
-import com.tsherpa.team35.entity.Qna;
-import com.tsherpa.team35.entity.Report;
-import com.tsherpa.team35.entity.User;
+import com.tsherpa.team35.biz.*;
+import com.tsherpa.team35.entity.*;
 import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +25,12 @@ public class AdminCtrl {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MarketService marketService;
+
+    @Autowired
+    private RequestService requestService;
 
     @GetMapping("/admin/dashboard")
     public String getDashboard() {
@@ -174,6 +174,32 @@ public class AdminCtrl {
         return "admin/reportMgmt";
     }
 
+    @GetMapping("/admin/reportMarDetail")
+    public String reportMarDetail(@RequestParam("marketNo") int marketNo, Model model) throws Exception {
+
+        Market market = marketService.marketDetail(marketNo);
+        model.addAttribute("market", market);
+
+        List<Report> list = reportService.reasonMarList(marketNo);
+        model.addAttribute("list", list);
+
+        return "admin/reportMarDetail";
+    }
+
+    @GetMapping("/admin/reportReqDetail")
+    public String reportReqDetail(@RequestParam("reqNo") int reqNo, Model model) throws Exception {
+
+        Request request = requestService.requestDetail(reqNo);
+        model.addAttribute("request", request);
+
+        List<Report> list = reportService.reasonReqList(reqNo);
+        model.addAttribute("list", list);
+
+
+        return "admin/reportReqDetail";
+    }
+
+
     @GetMapping("/admin/reportUser")
     public String reportUserList (HttpServletRequest request, Model model){
 
@@ -203,6 +229,28 @@ public class AdminCtrl {
         user.setLoginId(loginId);
 
         reportService.activeUpdate(user);
+
+        return true;
+
+    }
+
+    @PostMapping("/admin/readableUpdate")
+    @ResponseBody
+    public boolean readableUpdatePro(@RequestParam("readable") int readable, @RequestParam("reqNo") int reqNo){
+
+
+        requestService.readable(readable, reqNo);
+
+        return true;
+
+    }
+
+    @PostMapping("/admin/readableUpdateMar")
+    @ResponseBody
+    public boolean readableUpdateMarPro(@RequestParam("readable") int readable, @RequestParam("marketNo") int marketNo){
+
+
+        marketService.readable(readable, marketNo);
 
         return true;
 

@@ -24,6 +24,6 @@ public interface ReportMapper {
     List<Report> reportUserList(Page page);
     int reportUserCount(Page page);
     void activeUpdate(User user);
-    int reportchkReq(Report report);
-    int reportchkMar(Report report);
+    int reportchkReq(int reqNo, String loginId);
+    int reportchkMar(int marketNo,String loginId);
 }

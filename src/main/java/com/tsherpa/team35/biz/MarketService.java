@@ -48,6 +48,11 @@ public class MarketService {
         mainphotoMapper.mainphotoDelete(marketNo);
     }
 
+    public Market marketDetail(int marketNo) throws Exception {
+        return marketMapper.marketDetail(marketNo);
+    }
 
-
+    public void readable(int readable,int marketNo){
+        marketMapper.readable(readable, marketNo);
+    }
 }
