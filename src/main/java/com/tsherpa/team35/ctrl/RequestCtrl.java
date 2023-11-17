@@ -140,7 +140,7 @@ public class RequestCtrl {
             return "request/reqDetail";
         }else {
             model.addAttribute("msg", "열람 불가능한 글입니다.");
-            model.addAttribute("url", "/layout/alert");
+            model.addAttribute("url", "/request/reqList");
             return "layout/alert";
         }
 
