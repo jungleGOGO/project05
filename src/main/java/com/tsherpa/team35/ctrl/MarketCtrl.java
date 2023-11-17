@@ -53,9 +53,6 @@ public class MarketCtrl {
 
         List<MainVO> mainList = marketService.mainVOList();
         model.addAttribute("mainList",mainList);
-        System.out.println("============================");
-        System.out.println(mainList.toString());
-        System.out.println("============================");
         return "market/marketList";
     }
 
@@ -82,7 +79,6 @@ public class MarketCtrl {
         String sid = principal != null ? principal.getName() : "";
 
         String realPath = "C://upload/";
-        System.out.println(realPath);           // 업로드 경로 설정
 //        String realPath = "/Users/juncheol/Desktop/fileupload";    // 업로드 경로 설정
 
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
@@ -121,7 +117,6 @@ public class MarketCtrl {
         for(MultipartFile file : detailImages) {
             Photos fileInfo = new Photos();
             String originalFileName = file.getOriginalFilename(); // 첨부파일의 실제 파일명
-            System.out.println("파일명 : "+originalFileName);
             if(!originalFileName.isEmpty()) {
                 String saveFileName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf("."));     // 파일 이름을 랜덤으로 설정
                 fileInfo.setSaveFile(today);
@@ -160,7 +155,6 @@ public class MarketCtrl {
     @GetMapping("/mainImage")
     public ResponseEntity<Resource> download1(@ModelAttribute MainVO dto) throws IOException {
         Path path = Paths.get(uploadFolder + "/" + dto.getSaveFolder()+"/"+dto.getSaveFile());
-        System.out.println(path);
         String contentType = Files.probeContentType(path);
         // header를 통해서 다운로드 되는 파일의 정보를 설정한다.
         HttpHeaders headers = new HttpHeaders();
@@ -176,7 +170,6 @@ public class MarketCtrl {
     @GetMapping("/totalImage")
     public ResponseEntity<Resource> download3(@ModelAttribute TotalVO dto) throws IOException {
         Path path = Paths.get(uploadFolder + "/" + dto.getMainSaveFolder()+"/"+dto.getMainSaveFile());
-        System.out.println(path);
         String contentType = Files.probeContentType(path);
         // header를 통해서 다운로드 되는 파일의 정보를 설정한다.
         HttpHeaders headers = new HttpHeaders();
@@ -192,7 +185,6 @@ public class MarketCtrl {
     @GetMapping("/detailImage")
     public ResponseEntity<Resource> download2(@ModelAttribute DetailVO dto) throws IOException {
         Path path = Paths.get(uploadFolder + "/" + dto.getSaveFolder()+"/"+dto.getSaveFile());
-        System.out.println(path);
         String contentType = Files.probeContentType(path);
         // header를 통해서 다운로드 되는 파일의 정보를 설정한다.
         HttpHeaders headers = new HttpHeaders();

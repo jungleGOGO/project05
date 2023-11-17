@@ -96,7 +96,6 @@ public class BookCtrl {
         book.setDiscount(request.getParameter("discount"));
         book.setPublisher(request.getParameter("publisher"));
         model.addAttribute("book",book);
-        System.out.println(book);
         return "market/marketInsert";
     }
 
