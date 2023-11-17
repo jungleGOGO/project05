@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
+  <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+  <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
   <th:block th:insert="~{layout/head :: head}"></th:block>
   <link rel="stylesheet" th:href="@{/css/main.css}">
   <title>T셀파</title>
@@ -186,7 +188,7 @@
                 <input type="hidden" class="form-control border-0" id="reporter" name="reporter" th:value="${market.loginId}" readonly style="height: 55px;">
                 <input type="hidden" class="form-control border-0" id="title" name="title" th:value="${market.title}" readonly style="height: 55px;">
                 <button class="btn btn-primary w-25 py-3" type="submit">찜하기</button>
-                <a th:href="'javascript:void(0);'" th:attr="onclick='openChildWindow(\'' + ${market.marketNo} + '\')'" class="btn btn-primary w-25 py-3">신고하기</a>
+                  <button type="button" id="ck_btn" class="btn btn-primary w-25 py-3" onclick="repCheck()" style="height:72px">신고하기</button>
                   <a class="btn btn-primary w-25 py-3" th:href="@{/request/requestList}" type="button">목록</a>
               </div>
                 <div class="col-12" style="margin-left: 70px;">
@@ -200,10 +202,37 @@
     </div>
   </div>
 </div>
-<script th:inline="javascript">
-  function openChildWindow(marketNo) {
-    var child = window.open("/report/getReportMar?marketNo=" + marketNo, "child", "width=900, height=800");
-  }
+<script>
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+
+    function repCheck(){
+        let marketNo=parseInt($("#marketNo").val());
+        let params = {"marketNo" : marketNo };
+        var child;
+
+        $.ajax({
+            url: "/report/repCheckMar",
+            type: "post",
+            dataType: "json",
+            data: params,
+            success:function(result) {
+                if(result == false) {
+                    console.log(result);
+                    alert("이미 신고한 회원입니다.");
+                } else{
+                    child = window.open("/report/getReportMar?marketNo=" + marketNo, "child", "width=900, height=800");
+                }
+            },
+            error:function(res) {
+                alert("로그인 후 다시 시도해주세요.");
+                window.location="/login";
+            }
+        });
+    }
 </script>
 
 <script>
