@@ -18,4 +18,9 @@ public interface UserMapper {
     int userInsert(@Param("param") User param);
     List<User> userList(Page page);
     int getCount(Page page);
+
+    //회원 정보 수정
+    void userEdit(User user);
+    //비번 변경
+    void pwEdit(User user);
 }
