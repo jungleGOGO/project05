@@ -1,5 +1,6 @@
 package com.tsherpa.team35.ctrl;
 
+import com.tsherpa.team35.biz.MainPhotoService;
 import com.tsherpa.team35.biz.MarketService;
 import com.tsherpa.team35.biz.PhotosService;
 import com.tsherpa.team35.entity.*;
@@ -37,6 +38,8 @@ public class MarketCtrl {
     MarketService marketService;
     @Autowired
     PhotosService photosService;
+    @Autowired
+    MainPhotoService mainphotoService;
     @Value("${spring.servlet.multipart.location}")
     String uploadFolder;
 
@@ -125,10 +128,6 @@ public class MarketCtrl {
         for(MultipartFile file : detailImages) {
             Photos fileInfo = new Photos();
             String originalFileName = file.getOriginalFilename(); // 첨부파일의 실제 파일명
-<<<<<<< HEAD
-
-=======
->>>>>>> a5369133abd49e8f620a0496592c043076757189
             if(!originalFileName.isEmpty()) {
                 String saveFileName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf("."));     // 파일 이름을 랜덤으로 설정
                 fileInfo.setSaveFile(today);
@@ -173,7 +172,9 @@ public class MarketCtrl {
     public String marketDetail(@RequestParam("marketNo") int marketNo, Model model)throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
         List<Photos> photosList = photosService.photosList(marketNo);
-
+        List<Mainphoto> mainphotoList = mainphotoService.mainphotoList(marketNo);
+        System.out.println("결과:"+mainphotoList);
+        model.addAttribute("mainList",mainphotoList);
         model.addAttribute("photosList",photosList);
         model.addAttribute("market",market);
         return "market/marketDetail";
@@ -234,7 +235,8 @@ public class MarketCtrl {
     public String marketEdit(@RequestParam int marketNo,MainVO mainVO, Model model) throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
         List<Photos> photosList = photosService.photosList(marketNo);
-
+        List<Mainphoto> mainphotoList = mainphotoService.mainphotoList(marketNo);
+        model.addAttribute("mainList",mainphotoList);
         model.addAttribute("photosList",photosList);
         model.addAttribute("market",market);
     return "market/marketEdit";

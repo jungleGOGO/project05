@@ -46,7 +46,7 @@
       </script>
     </div>
     <div id="images_container"></div>
-
+    <img class="col-lg-6" th:each="market: ${mainList}" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}">
     <div class="form-group">
       <label for="product_detail_image2" class="form-label">상세 이미지 (* 첨부되는 파일들만 이미지를 보여줍니다.)</label>
       <input class="form-control form-control-user" type="file" multiple="multiple"
@@ -62,7 +62,9 @@
         }
       </script>
     </div>
-    <div id="images_container2"></div>
+    <div id="images_container2">
+      <img class="col-lg-6" th:each="photo : ${photosList}" th:src="${'/market/detailImage?saveFile='+photo.getSaveFile()+'&originFile='+photo.getOriginFile()+'&saveFolder='+photo.getSaveFolder()}">
+    </div>
 
     <div class="mb-3">
       <label for="title" class="form-label">제목</label>
@@ -109,22 +111,32 @@
     <!--            <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9rw0o1zqhd&callback=CALLBACK_FUNCTION"></script>-->
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9rw0o1zqhd&submodules=geocoder"></script>
     <script>
-      var map, marker; //지도, 마커
       var latitude, longitude; // 위도, 경도 저장 전역변수
+      var map = new naver.maps.Map('map', {
+        center: new naver.maps.LatLng([[${market.ydata}]], [[${market.xdata}]]),
+        zoom: 17
+      });
 
+      var marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng([[${market.ydata}]], [[${market.xdata}]]),
+        map: map
+
+      });
       function initMap(lat, lng) {
         latitude = lat; // 위도 y  Latitude
         longitude = lng; // 경도 x  Longitude
 
         // 지도 생성
         map = new naver.maps.Map('map', {
-          center: new naver.maps.LatLng(latitude, longitude),
-          zoom: 17 // 지도 기본 확대 정도
+          center: new naver.maps.LatLng([[${market.ydata}]], [[${market.xdata}]]),
+          zoom: 17
         });
 
         // 마커 생성
         marker = new naver.maps.Marker({
+          position: new naver.maps.LatLng([[${market.ydata}]], [[${market.xdata}]]),
           map: map
+
         });
 
 

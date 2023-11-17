@@ -25,4 +25,8 @@
             savefile = #{mainphoto.saveFile}
         </foreach>
     </update>
+
+    <select id="mainphotoList" resultType="com.tsherpa.team35.entity.Mainphoto">
+        select * from mainphoto where marketNo=#{marketNo}
+    </select>
 </mapper>
