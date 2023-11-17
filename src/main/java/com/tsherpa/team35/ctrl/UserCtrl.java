@@ -73,4 +73,11 @@ public class UserCtrl {
 
         return "/user/mypage";
     }
+
+
+    @GetMapping("/userEdit")
+    public String userEdit(Model model) {
+
+        return "/user/userEdit";
+    }
 }

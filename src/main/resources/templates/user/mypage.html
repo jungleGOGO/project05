@@ -20,7 +20,7 @@
             position: relative;
         }
         .custom-progress {
-            background: linear-gradient(to right, #c0c0c0, yellow); /* 채워지지 않은 20% 부분의 색상 */
+            background: linear-gradient(to right, #c0c0c0, greenyellow); /* 채워지지 않은 20% 부분의 색상 */
         }
 
         .progress-icon {
@@ -41,7 +41,16 @@
             text-align: center;
         }
         #info td{
+            width: 33%;
             border: 2px solid white;
+        }
+        #info img{
+            margin-bottom: 2px;
+        }
+        #info p{
+            margin-bottom: 0;
+            font-weight: bold;
+            color: black;
         }
 
     </style>
@@ -76,7 +85,7 @@
                 </div>
                 <div style="text-align: center; width: 140px; margin: 10px 0 0 20px;">
                     <p style="margin-bottom: 8px">회원이름</p>
-                    <a class="btn" th:href="@{/}" style=" padding: 4px; background-color: #CCCCCC">정보 수정</a>
+                    <a class="btn" th:href="@{/userEdit}" style=" padding: 4px; background-color: #CCCCCC">정보 수정</a>
                 </div>
             </div>
 
@@ -84,9 +93,19 @@
                 <div style="height: 150px; ">
                     <table id="info">
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>
+                                <img th:src="@{/image/storefront.svg}" alt="">마켓 개설일
+                                <p th:text="'1234일'+'&nbsp;'+'전'">1234</p>
+                            </td>
+                            <td>
+                                <img th:src="@{/image/sell.svg}" alt="">판매 상품
+                                <p th:text="'1234'+'&nbsp;'+'개'">1234</p>
+                            </td>
+                            <td>
+                                <img th:src="@{/image/bag.svg}" alt="">거래 수
+                                <p th:text="'1234'+'&nbsp;'+'회'">1234</p>
+                            </td>
+
                         </tr>
                     </table>
                 </div>
