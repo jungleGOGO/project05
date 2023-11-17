@@ -58,15 +58,15 @@
 
                                   <div class="form-outline mb-1">
                                       <label th:if="${#fields.hasErrors('addr1')}" th:errors="*{addr1}">기본주소</label>
-                                      <input type="text" th:field="*{addr1}" placeholder="기본주소를 입력해주세요." id="address1" class="form-control" required />
+                                      <input type="text" th:field="*{addr1}" placeholder="기본주소" id="address1" class="form-control" required readonly/>
                                   </div>
 
                                   <div class="form-outline mb-1">
-                                      <input type="text" th:field="*{addr2}" placeholder="상세주소를 입력해주세요." id="address2" class="form-control" required />
+                                      <input type="text" th:field="*{addr2}" placeholder="상세주소를 입력해주세요." id="address2" class="form-control" />
                                   </div>
 
                                   <div class="form-outline mb-4">
-                                      <input type="text" th:field="*{postcode}" placeholder="우편번호를 입력해주세요." id="postcode" class="form-control" style="width:65%;display:inline-block;" required />
+                                      <input type="text" th:field="*{postcode}" placeholder="우편번호" id="postcode" class="form-control" style="width:65%;display:inline-block;" required readonly/>
                                       <button type="button" id="post_btn" onclick="findAddr()" class="btn btn-outline-primary" style="width:calc(35% - 15px);margin-left:10px;display:inline-block;">우편번호 검색</button>
                                   </div>
 
