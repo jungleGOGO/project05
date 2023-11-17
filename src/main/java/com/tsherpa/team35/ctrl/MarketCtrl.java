@@ -153,7 +153,7 @@ public class MarketCtrl {
             return "market/marketDetail";
         }else {
             model.addAttribute("msg", "열람 불가능한 글입니다.");
-            model.addAttribute("url", "/layout/alert");
+            model.addAttribute("url", "/market/marketList");
             return "layout/alert";
         }
     }
