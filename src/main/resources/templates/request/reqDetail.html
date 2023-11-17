@@ -3,8 +3,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-  <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--  <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>-->
+<!--  <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>-->
   <th:block th:insert="~{layout/head :: head}"></th:block>
   <link rel="stylesheet" th:href="@{/css/main.css}">
   <title>T셀파</title>
@@ -134,11 +134,11 @@
   </div>
 </div>
 <script>
-    let token = $("meta[name='_csrf']").attr("content");
-    let header = $("meta[name='_csrf_header']").attr("content");
-    $(document).ajaxSend(function(e, xhr, options) {
-      xhr.setRequestHeader(header, token);
-    });
+    // let token = $("meta[name='_csrf']").attr("content");
+    // let header = $("meta[name='_csrf_header']").attr("content");
+    // $(document).ajaxSend(function(e, xhr, options) {
+    //   xhr.setRequestHeader(header, token);
+    // });
 
     function repCheck(){
     let reqNo=parseInt($("#reqNo").val());

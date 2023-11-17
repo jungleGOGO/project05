@@ -48,13 +48,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-<<<<<<< HEAD
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/mypage","/report/**").hasRole("USER")
-=======
+
                 .antMatchers("/admin/**").hasRole("ADMIN") // ADMIN 권한의 유저만 /home 에 접근가능
                 .antMatchers("/mypage","/pwEdit","/userEdit").hasRole("USER")
->>>>>>> a5369133abd49e8f620a0496592c043076757189
                 .antMatchers("/","/**","/login","/join").permitAll()
                 .mvcMatchers("/css/**","/js/**","/image/**","/fonts/**","/clEditor/**", "/lib/**").permitAll()
                 .anyRequest().authenticated()
