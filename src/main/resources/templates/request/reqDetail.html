@@ -136,7 +136,7 @@
                 <input class="form-control border-0" id="content" th:value="${request.content}" readonly style="height: 150px;">
               </div>
               <div class="col-12">
-                <button class="btn btn-primary w-100 py-3" type="submit">대화하기</button>
+                <button class="btn btn-primary w-100 py-3" type="button"  th:onclick="|location.href='@{/chat/chat(productNo=${request.reqNo}, productTable=request)}'|">대화하기</button>
               </div>
               <hr>
               <div class="col-12" style="margin-left: 70px;">

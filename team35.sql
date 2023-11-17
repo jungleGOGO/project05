@@ -144,7 +144,6 @@ FROM
         LEFT JOIN mainphoto mp ON m.marketNo = mp.marketNo;
 
 
-
 CREATE TABLE request(
                         req_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호
                         title VARCHAR(100) NOT NULL,	-- 제목
@@ -163,18 +162,9 @@ CREATE TABLE request(
                         discount VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE photos(
-                       photo_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                       marketNo INT,
-                       saveFolder VARCHAR(300) NOT NULL,
-                       originFile VARCHAR(300) NOT NULL,
-                       saveFile VARCHAR(300) NOT NULL
-);
-
-
 INSERT INTO request (title, price, content, login_id, addr, bookTitle, bookAuthor, publisher, bookImage, isbn, pubdate, discount)
 VALUES
-    ('책 제목 1', 5000, '책 설명 1', 'user1', '주소 1', '도서 1', '저자 1', '출판사 1', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1234567890', '2022-01-01', '10'),
+    ('책 제목 1', 5000, '책 설명 1', 'kim', '주소 1', '도서 1', '저자 1', '출판사 1', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1234567890', '2022-01-01', '10'),
     ('책 제목 2', 7000, '책 설명 2', 'user2', '주소 2', '도서 2', '저자 2', '출판사 2', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '0987654321', '2022-02-01', '15'),
     ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
     ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
@@ -186,7 +176,7 @@ VALUES
     ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
     ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
     ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20')
+    ('책 제목 3', 8000, '책 설명 3', 'user3', '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20');
 
 CREATE TABLE notice(
                        no INT PRIMARY KEY AUTO_INCREMENT,
@@ -194,7 +184,7 @@ CREATE TABLE notice(
                        content VARCHAR(1000) NOT NULL,
                        author INT,
                        regdate DATETIME DEFAULT CURRENT_TIME,
-                       cnt INT DEFAULT 0,
+                       cnt INT DEFAULT 0
 );
 
 INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목1  입니다.','여기는 샘플 글 1의 내용입니다.',1,DEFAULT, DEFAULT);
@@ -203,8 +193,6 @@ INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목3  입니다.','여기는 �
 INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목4  입니다.','여기는 샘플 글 4의 내용입니다.',1,DEFAULT, DEFAULT);
 INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목5  입니다.','여기는 샘플 글 5의 내용입니다.',1,DEFAULT, DEFAULT);
 INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목6  입니다.','여기는 샘플 글 6의 내용입니다.',1,DEFAULT, DEFAULT);
-
-SELECT * FROM notice;
 
 CREATE TABLE faq (
                      fno INT  PRIMARY KEY AUTO_INCREMENT ,
@@ -261,8 +249,6 @@ INSERT INTO qna VALUES (DEFAULT, '강의 동영상을 더 깊이 이해하기 �
 INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 보면서 메모를 어떻게 작성하고 정리할 수 있을까요?','메모를 작성하고 정리하기 위해 중요한 내용을 요약하고, 주요 포인트를 강조하며, 메모를 주기적으로 정리하는 것이 도움이 됩니다.','admin', DEFAULT, 1,9);
 INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 효과적으로 검색하고 필요한 내용을 찾는 방법이 뭐가 있나요?','동영상을 검색하기 위해 키워드를 사용하고, 정확한 제목 또는 주제를 입력하며, 검색 결과를 필터링하는 방법을 사용하여 원하는 내용을 빠르게 찾을 수 있습니다.','admin', DEFAULT, 1,10);
 
-SELECT * FROM qna;
-
 CREATE TABLE report (
                         report_id INT PRIMARY KEY AUTO_INCREMENT, -- 신고 번호
                         marketNo INT,
@@ -274,4 +260,35 @@ CREATE TABLE report (
     report_date DATETIME DEFAULT CURRENT_TIMESTAMP    
 );
 
-SELECT * FROM report;
+
+CREATE TABLE chatRoom(
+	roomId BIGINT PRIMARY KEY AUTO_INCREMENT,			-- 채팅방 자동증가
+	productId INT NOT NULL,									-- 상품 아이디
+	productTable VARCHAR(20) NOT NULL,						-- 상품 테이블
+	buyerId VARCHAR(255) NOT NULL,							-- 구매자 희망자
+	regDate DATETIME DEFAULT CURRENT_TIMESTAMP()		-- 채팅방 생성일
+);
+
+CREATE VIEW chatRoomView AS (
+	SELECT 
+		r.roomId AS roomId, 
+		r.productId AS productId, 
+		r.productTable AS productTable,
+		r.buyerId AS buyerId, 
+		u.user_name AS buyerName, 
+		u.active AS buyerActive,
+		r.regDate AS regDate
+	FROM chatRoom r 
+	LEFT JOIN user u ON r.buyerId = u.login_id
+);
+
+CREATE TABLE chatList(
+	chatId BIGINT PRIMARY KEY AUTO_INCREMENT,			-- 채팅 내역 번호 자동 증가
+	senderId VARCHAR(255) NOT NULL,							-- 채팅 보내는 사람 아이디
+	sendDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,		-- 채팅 보낸 일자
+	message TEXT NOT NULL,										-- 채팅 내역
+	readYn BOOLEAN DEFAULT FALSE,							-- 읽음 여부
+	roomId BIGINT NOT NULL										-- 채팅방 번호
+);
+
+CREATE VIEW chatListView AS (SELECT r.chatId AS chatId, r.sendDate AS sendDate, r.message AS message, r.readYn AS readYn, r.roomId AS roomId, r.senderId AS senderId, u.user_name AS userName FROM chatList r LEFT JOIN user u ON r.senderId = u.login_id);

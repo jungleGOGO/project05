@@ -30,9 +30,6 @@ public class MarketService {
     }
 
     public List<MainVO> mainVOList() throws Exception{
-        System.out.println("============================");
-        System.out.println(marketMapper.mainVOList().toString());
-        System.out.println("============================");
        return marketMapper.mainVOList();
     }
 

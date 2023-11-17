@@ -24,5 +24,6 @@ public class User {
     private int visited;
     private int roleId = 99;
     private boolean useYn;
+    private String nowPassword;
 
 }
