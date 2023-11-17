@@ -4,10 +4,7 @@ import com.tsherpa.team35.biz.NoticeService;
 import com.tsherpa.team35.biz.QnaService;
 import com.tsherpa.team35.biz.ReportService;
 import com.tsherpa.team35.biz.UserService;
-import com.tsherpa.team35.entity.Notice;
-import com.tsherpa.team35.entity.Qna;
-import com.tsherpa.team35.entity.Report;
-import com.tsherpa.team35.entity.User;
+import com.tsherpa.team35.entity.*;
 import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,9 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequestMapping("admin")
 public class AdminCtrl {
 
     @Autowired
@@ -32,12 +31,15 @@ public class AdminCtrl {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/admin/dashboard")
-    public String getDashboard() {
+    @GetMapping("/dashboard")
+    public String getDashboard(Principal principal) {
+        User user = userService.getUserByLoginId(principal.getName());
+        System.out.println(principal.getName());
+        System.out.println();
         return "admin/adminDashboard";
     }
 
-    @GetMapping("/admin/userList")
+    @GetMapping("/userList")
     public String getuserList(HttpServletRequest request, Model model){
 
         int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
@@ -58,7 +60,7 @@ public class AdminCtrl {
         return "admin/userMgmt";
     }
 
-    @GetMapping("/admin/noticeAdmin")
+    @GetMapping("/noticeAdmin")
     public String getNoticeList(HttpServletRequest request, Model model){
         int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
 
@@ -78,37 +80,37 @@ public class AdminCtrl {
         return "admin/noticeMgmt";
     }
 
-    @GetMapping("/admin/noticeInsert")
+    @GetMapping("/noticeInsert")
     public String NoticeInsertForm(Notice notice, Model model) {
         return "admin/noticeInsert";
     }
 
-    @PostMapping("/admin/noticeInsert")
+    @PostMapping("/noticeInsert")
     public String NoticeInsertPro(Notice param) {
         noticeService.noticeInsert(param);
         return "redirect:/admin/noticeAdmin";
     }
 
-    @GetMapping("/admin/noticeUpdate")
+    @GetMapping("/noticeUpdate")
     public String noticeUpdateForm(@RequestParam("no") int no, Model model){
         Notice notice = noticeService.getNotice(no);
         model.addAttribute("notice", notice);
         return "/admin/noticeUpdate";
     }
 
-    @PostMapping("/admin/noticeUpdate")
+    @PostMapping("/noticeUpdate")
     public String noticeUpdate(Notice param, Model model){
         noticeService.noticeUpdate(param);
         return "redirect:/admin/noticeAdmin";
     }
 
-    @GetMapping("/admin/noticeDelete")
+    @GetMapping("/noticeDelete")
     public String noticeDelete(@RequestParam("no") int no, Model model){
         noticeService.noticeDelete(no);
         return "redirect:/admin/noticeAdmin";
     }
 
-    @GetMapping("/admin/questionList")
+    @GetMapping("/questionList")
     public String questionList(HttpServletRequest request, Model model){
 
         int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
@@ -127,7 +129,7 @@ public class AdminCtrl {
         return "/admin/qnaMgmt";
     }
 
-    @GetMapping("/admin/answerInsert")
+    @GetMapping("/answerInsert")
     public String getAnswerInsert(HttpServletRequest request, Model model) {
         int qno = Integer.parseInt(request.getParameter("qno"));
         Qna detail = qnaService.qnaDetail(qno);
@@ -136,13 +138,13 @@ public class AdminCtrl {
     }
 
 
-    @PostMapping("/admin/answerInsert")
+    @PostMapping("/answerInsert")
     public String getAnswerInsertPro(Qna qna, HttpServletRequest request, Model model) {
         qnaService.answerInsert(qna);
         return "redirect:/admin/questionList";
     }
 
-    @GetMapping("/admin/reportList")
+    @GetMapping("/reportList")
     public String getReportList(HttpServletRequest request, Model model) {
 
         int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
@@ -174,7 +176,7 @@ public class AdminCtrl {
         return "admin/reportMgmt";
     }
 
-    @GetMapping("/admin/reportUser")
+    @GetMapping("/reportUser")
     public String reportUserList (HttpServletRequest request, Model model){
 
         int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
@@ -194,7 +196,7 @@ public class AdminCtrl {
         return "admin/reportUserMgmt";
     }
 
-    @PostMapping("/admin/activeUpdate")
+    @PostMapping("/activeUpdate")
     @ResponseBody
     public boolean activeUpdatePro(@RequestParam("active") int active, @RequestParam("loginId") String loginId) {
 

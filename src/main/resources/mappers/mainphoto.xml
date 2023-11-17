@@ -14,4 +14,15 @@
     <delete id="mainphotoDelete">
         delete from mainphoto where marketNo=#{marketNo}
     </delete>
+
+    <update id="mainphotoEdit">
+        update mainphoto
+        set
+        <foreach collection="mainphotoList" item="mainphoto" separator=" , ">
+            marketNo = #{marketNo},
+            savefolder = #{mainphoto.saveFolder},
+            originfile = #{mainphoto.originFile},
+            savefile = #{mainphoto.saveFile}
+        </foreach>
+    </update>
 </mapper>

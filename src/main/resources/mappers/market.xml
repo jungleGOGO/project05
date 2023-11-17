@@ -38,4 +38,9 @@
         delete from market where marketNo=#{marketNo}
     </delete>
 
+    <update id="marketEdit">
+        update market
+        set title=#{title}, content=#{content},price=#{price},conditions=#{conditions},selected_address=#{selectedAddress},detail_address=#{detailAddress},xdata=#{xdata},ydata=#{ydata}
+        where marketNo = #{marketNo}
+    </update>
 </mapper>

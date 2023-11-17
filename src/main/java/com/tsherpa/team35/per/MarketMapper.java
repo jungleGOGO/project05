@@ -19,5 +19,6 @@ public interface MarketMapper {
     public MainVO mainlistForDetailVOList(int marketNo) throws Exception;
 
     public void marketDelete(int marketNo) throws Exception;
+    public void marketEdit(Market market) throws Exception;
 
 }

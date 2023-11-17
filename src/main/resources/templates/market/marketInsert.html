@@ -29,6 +29,8 @@
     <h2 class="mb-4">중고거래 게시글 작성</h2>
     <form th:action="@{/market/insert}" method="post" enctype="multipart/form-data">
         <div class="form-group">
+            <h3>"jpg", "jpeg", "png" 형식의 이미지 파일만 첨부가능합니다.</h3>
+            <h2 th:if="${msg}" th:text="${msg}" style="color: red;"></h2>
             <label for="product_detail_image" class="form-label">대표 이미지</label>
             <input class="form-control form-control-user" type="file" multiple="multiple"
                    name="upfile" id="product_detail_image" onchange="setDetailImage(event);" accept="image/*"  oninput="fileMax(this)">
@@ -46,9 +48,9 @@
         <div id="images_container"></div>
 
         <div class="form-group">
-            <label for="product_detail_image2" class="form-label">상세 이미지</label>
+            <label for="product_detail_image2" class="form-label">상세 이미지 (* 첨부되는 파일들만 이미지를 보여줍니다.)</label>
             <input class="form-control form-control-user" type="file" multiple="multiple"
-                   name="detailFile" id="product_detail_image2" onchange="setDetailImage(event);" accept="image/*"  oninput="fileMax2(this)">
+                   name="detailFile" id="product_detail_image2" onchange="setDetailImage2(event);" accept="image/*"  oninput="fileMax2(this)">
             <script>
                 function fileMax2(input) {
                     var files = input.files;
@@ -61,7 +63,6 @@
             </script>
         </div>
         <div id="images_container2"></div>
-
 
         <div class="mb-3">
             <label for="title" class="form-label">제목</label>
@@ -238,19 +239,35 @@
 </script>
 
 <script>
-    function setDetailImage(event){
-        for(var image of event.target.files){
-            var reader = new FileReader();
+    function setDetailImage(event) {
+        var files = event.target.files;
+        var imagesContainer = document.getElementById("images_container");
+        imagesContainer.innerHTML = "";  // 이미지를 모두 제거
 
-            reader.onload = function(event){
-                var img = document.createElement("img");
-                img.setAttribute("src", event.target.result);
-                img.setAttribute("class", "col-lg-6");
-                document.querySelector("div#images_container").appendChild(img);
-            };
+        for (var i = 0; i < files.length; i++) {
+            var img = document.createElement("img");
+            img.setAttribute("class", "col-lg-6");
 
-            console.log(image);
-            reader.readAsDataURL(image);
+            // File 객체에서 미리보기 URL 생성
+            img.src = URL.createObjectURL(files[i]);
+
+            imagesContainer.appendChild(img);
+        }
+    }
+
+    function setDetailImage2(event) {
+        var files = event.target.files;
+        var imagesContainer = document.getElementById("images_container2");
+        imagesContainer.innerHTML = "";  // 이미지를 모두 제거
+
+        for (var i = 0; i < files.length; i++) {
+            var img = document.createElement("img");
+            img.setAttribute("class", "col-lg-6");
+
+            // File 객체에서 미리보기 URL 생성
+            img.src = URL.createObjectURL(files[i]);
+
+            imagesContainer.appendChild(img);
         }
     }
 </script>

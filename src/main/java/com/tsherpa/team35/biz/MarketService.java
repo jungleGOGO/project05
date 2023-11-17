@@ -51,6 +51,12 @@ public class MarketService {
         mainphotoMapper.mainphotoDelete(marketNo);
     }
 
+    @Transactional
+    public void marketEdit(Market market) throws Exception{
+        marketMapper.marketEdit(market);
+        photosMapper.photosEdit(market);
+        mainphotoMapper.mainphotoEdit(market);
+    }
 
 
 }
