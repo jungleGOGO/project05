@@ -14,6 +14,7 @@ public class Request {
     private String content;
     private String loginId;
     private String active;
+    private int readable;
     private String regdate;
     private String addr;
     private String isbn;
@@ -24,9 +25,6 @@ public class Request {
     private String pubdate;
     private String discount;
 
-    public void setReqNo(int reqNo) {
-        this.reqNo = reqNo;
-    }
 }
 
 

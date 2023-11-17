@@ -136,14 +136,20 @@ public class RequestCtrl {
 
     @GetMapping("/reqDetail")
     public String reqDetail(Model model,@RequestParam int reqNo) throws Exception{
-       Request request = requestService.requestDetail(reqNo);
-        List<Request> requestList = requestService.allRequest();
-        model.addAttribute("requestList",requestList);
-        model.addAttribute("request",request);
 
-        List<Report> list = reportService.reasonReqList(reqNo);
-        model.addAttribute("list", list);
-        return "request/reqDetail";
+        Request request = requestService.requestDetail(reqNo);
+        if(requestService.requestDetail(reqNo).getReadable() == 0){
+            List<Request> requestList = requestService.allRequest();
+            model.addAttribute("requestList", requestList);
+            model.addAttribute("request", request);
+            return "request/reqDetail";
+        }else {
+            model.addAttribute("msg", "열람 불가능한 글입니다.");
+            model.addAttribute("url", "/layout/alert");
+            return "layout/alert";
+        }
+
+
     }
 
 

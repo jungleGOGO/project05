@@ -48,7 +48,7 @@
                                 <tr th:each="mk, mkStat : ${market}">
                                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0" th:text="${mkStat.index}"></h6></td>
                                     <td class="border-bottom-0">
-                                        <a th:text="${mk.title}" th:href="@{/request/reqDetail(marketNo=${mk.marketNo})}" id="title" ></a>
+                                        <a th:text="${mk.title}" th:href="@{/admin/reportMarDetail(marketNo=${mk.marketNo})}" id="title" ></a>
                                     </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </td>
                                     <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal" th:text="${mk.loginId}"></p>
@@ -57,7 +57,7 @@
                                         <p class="mb-0 fw-normal" th:text="${mk.reportCount}"></p>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <a class="badge bg-primary rounded-3 fw-semibold" >삭제</a>
+                                        <a class="badge bg-primary rounded-3 fw-semibold" th:href="@{/market/delete(marketNo=${mk.marketNo})}" >삭제</a>
                                     </td>
                                 </tr>
                                 <tr th:if="${market.isEmpty()}">
@@ -119,7 +119,7 @@
                                 <tr th:each="r, reqStat : ${req}">
                                     <td class="border-bottom-0"><h6 class="fw-semibold mb-0" th:text="${reqStat.index}"></h6></td>
                                     <td class="border-bottom-0">
-                                        <a th:text="${r.title}" th:href="@{/request/reqDetail(reqNo=${r.reqNo})}" id="rtitle" ></a>
+                                        <a th:text="${r.title}" th:href="@{/admin/reportReqDetail(reqNo=${r.reqNo})}" id="rtitle" ></a>
                                     </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </td>
                                     <td class="border-bottom-0">
                                         <p class="mb-0 fw-normal" th:text="${r.loginId}"></p>
@@ -128,7 +128,7 @@
                                         <p class="mb-0 fw-normal" th:text="${r.reportCount}"></p>
                                     </td>
                                     <td class="border-bottom-0">
-                                        <a class="badge bg-primary rounded-3 fw-semibold" >삭제</a>
+                                        <a class="badge bg-primary rounded-3 fw-semibold" th:href="@{/request/delete(reqNo=${r.reqNo})}">삭제</a>
                                     </td>
                                 </tr>
                                 <tr th:if="${req.isEmpty()}">

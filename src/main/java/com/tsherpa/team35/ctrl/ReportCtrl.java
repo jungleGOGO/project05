@@ -72,8 +72,10 @@ public class ReportCtrl {
     public String getReportMarForm (@RequestParam("marketNo")int marketNo, Principal principal, Model model) throws Exception {
 
         String sid = principal != null ? principal.getName() : "";
-
         Market market = marketService.marketDetail(marketNo);
+
+        System.out.println(sid);
+        System.out.println(marketNo);
 
         model.addAttribute("marketNo", marketNo);
         model.addAttribute("market", market);

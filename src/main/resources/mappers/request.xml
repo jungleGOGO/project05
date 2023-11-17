@@ -46,4 +46,8 @@
         select * from request where login_id = #{loginId} order by regdate desc
     </select>
 
+    <update id="readable">
+        UPDATE request SET readable=#{readable} WHERE req_no=#{reqNo}
+    </update>
+
 </mapper>

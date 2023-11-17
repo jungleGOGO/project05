@@ -213,6 +213,7 @@
         let marketNo=parseInt($("#marketNo").val());
         let params = {"marketNo" : marketNo };
         var child;
+        console.log(marketNo);
 
         $.ajax({
             url: "/report/repCheckMar",
@@ -229,7 +230,8 @@
             },
             error:function(res) {
                 alert("로그인 후 다시 시도해주세요.");
-                window.location="/login";
+                console.log(res)
+                // window.location="/login";
             }
         });
     }

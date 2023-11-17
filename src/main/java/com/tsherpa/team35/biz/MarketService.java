@@ -55,4 +55,7 @@ public class MarketService {
         return marketMapper.marketDetail(marketNo);
     }
 
+    public void readable(int readable,int marketNo){
+        marketMapper.readable(readable, marketNo);
+    }
 }

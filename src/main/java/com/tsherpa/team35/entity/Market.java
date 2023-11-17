@@ -17,6 +17,7 @@ public class Market {
     private String loginId;
     private String active;
     private String conditions;
+    private int readable;
     private String regdate;
     private List<Photos> fileInfoList;
     private List<Mainphoto> mainphotoList;
