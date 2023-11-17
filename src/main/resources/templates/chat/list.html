@@ -4,6 +4,7 @@
     <head>
         <th:block th:insert="~{layout/head :: head}"></th:block>
         <link rel="stylesheet" th:href="@{/css/sub.css}">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
         <title>T셀파::</title>
     </head>
     <body>
@@ -23,7 +24,31 @@
                     </table>
                 </div>
                 <div class="col">
-                    <h2>채팅 내역</h2>
+                    <div id="main-content" class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table id="conversation" class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Chat</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="chatting"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label for="message">내용</label>
+                                        <input type="text" id="message" name="message" class="form-control" placeholder="메시지 내용">
+                                    </div>
+                                    <button id="send" class="btn btn-default" type="submit">보내기</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,5 +63,91 @@
 
         <th:block th:insert="~{layout/footer :: footer}"></th:block>
         <script th:src="@{/js/sub.js}"></script>
+        <script th:src="@{/js/sockjs.min.js}"></script>
+        <script th:src="@{/js/stomp.min.js}"></script>
+        <script th:inline="javascript">
+            var stompClient = null;
+            var roomId = [[${roomId}]];
+            var chatList = [[${chatList}]];
+
+            function setConnected(connected) {
+                $("#connect").prop("disabled", connected);
+                $("#disconnect").prop("disabled", !connected);
+                if (connected) {
+                    $("#conversation").show();
+                }
+                else {
+                    $("#conversation").hide();
+                }
+                $("#chatting").html("");
+            }
+
+            function connect() {
+                var socket = new SockJS('/ws-stomp');
+                stompClient = Stomp.over(socket);
+                stompClient.connect({}, function (frame) {
+                    setConnected(true);
+                    //console.log('Connected: ' + frame);
+                    loadChat(chatList)  //저장된 채팅 불러오기
+
+                    stompClient.subscribe('/chat/getChat/'+roomId, function (chatListVO) {
+                        showChat(JSON.parse(chatListVO.body));
+                    });
+                });
+            }
+
+            function disconnect() {
+                if (stompClient !== null) {
+                    stompClient.disconnect();
+                }
+                setConnected(false);
+                console.log("Disconnected");
+            }
+
+            //html 에서 입력값, roomId 를 받아서 Controller 로 전달
+            function sendChat() {
+                stompClient.send("/chat/send/"+roomId, {},
+                    JSON.stringify({
+                        'message' : $("#message").val()
+                    }));
+            }
+
+            //저장된 채팅 불러오기
+            function loadChat(chatList){
+                if(chatList != null) {
+                    for(chat in chatList) {
+                        $("#chatting").append(
+                            "<tr><td>" + "[" + chatList[chat].userName + "]" + chatList[chat].message + "</td></tr>"
+                        );
+                    }
+                }
+            }
+
+            //보낸 채팅 보기
+            function showChat(chatListVO) {
+                $("#chatting").append(
+                    "<tr><td>" + "[" + chatListVO.userName + "]" + chatListVO.message + "</td></tr>"
+                );
+                $("#message").val("");
+            }
+
+            $(function () {
+                $("form").on('submit', function (e) {
+                    e.preventDefault();
+                });
+                $( "#connect" ).click(function() { connect(); });
+                //$( "#disconnect" ).click(function() { disconnect(); });
+                $( "#send" ).click(function() { sendChat(); });
+            });
+
+            //창 키면 바로 연결
+            window.onload = function (){
+                connect();
+            }
+
+            window.BeforeUnloadEvent = function (){
+                disconnect();
+            }
+        </script>
     </body>
 </html>
