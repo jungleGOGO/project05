@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -51,5 +52,16 @@ public class UserService implements UserDetailsService {
 
     public List<User> userList(Page page) { return userMapper.userList(page); }
     public int getCount(Page page) { return userMapper.getCount(page); }
+
+    //회원 정보 수정
+    public void userEdit(User user) {
+        userMapper.userEdit(user);
+    }
+
+    //패스워드 변경
+    public void pwEdit(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+         userMapper.pwEdit(user);
+    }
 
 }

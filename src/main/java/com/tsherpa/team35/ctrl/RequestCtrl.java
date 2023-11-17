@@ -107,7 +107,6 @@ public class RequestCtrl {
         book.setDiscount(request.getParameter("discount"));
         book.setPublisher(request.getParameter("publisher"));
         model.addAttribute("book",book);
-        System.out.println(book);
         return "request/reqInsert";
     }
 
@@ -125,12 +124,8 @@ public class RequestCtrl {
         request.setPubdate(req.getParameter("pubdate"));
         request.setPublisher(req.getParameter("publisher"));
         request.setBookImage(req.getParameter("bookImage"));
-        System.out.println("=============================");
-        System.out.println(req.getParameter("bookImage"));
         request.setDiscount(req.getParameter("discount"));
         requestService.reqInsert(request);
-        System.out.println("+++++++++++++++++++++========");
-        System.out.println(request);
         return "redirect:/request/reqList";
     }
 
@@ -170,7 +165,6 @@ public class RequestCtrl {
     public String requestEditAll(Request request, HttpServletRequest req, Model model) throws Exception {
         requestService.requestEditAll(request);
         int reqNo = request.getReqNo();
-        System.out.println(request);
         return "redirect:/request/reqList";
     }
 
