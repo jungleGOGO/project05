@@ -27,19 +27,46 @@ public class ReportCtrl {
     @Autowired
     private MarketService marketService;
 
-    @RequestMapping(value = "repCheck", method = RequestMethod.POST)
+    @RequestMapping(value = "/report/repCheck", method = RequestMethod.POST)
     @ResponseBody
     public boolean repCheck(HttpServletRequest request, Principal principal) throws Exception {
 
         String sid = principal != null ? principal.getName() : "";
         int reqNo = Integer.parseInt(request.getParameter("reqNo"));
 
-        int chk = reportService.reportchkMar(reqNo, sid);
+        int chk = reportService.reportchkReq(reqNo, sid);
 
-        return true;
+        boolean result;
+        if(chk == 0) {
+            result = true;
+
+        } else {
+            result= false;
+        }
+
+        return result;
     }
 
+    @RequestMapping(value = "/report/repCheckMar", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean repCheckMar(HttpServletRequest request, Principal principal) throws Exception {
 
+        String sid = principal != null ? principal.getName() : "";
+        int marketNo = Integer.parseInt(request.getParameter("marketNo"));
+
+
+        int chk = reportService.reportchkMar(marketNo, sid);
+
+        boolean result;
+        if(chk == 0) {
+            result = true;
+
+        } else {
+            result= false;
+        }
+
+        return result;
+    }
 
     @GetMapping("/report/getReportMar")
     public String getReportMarForm (@RequestParam("marketNo")int marketNo, Principal principal, Model model) throws Exception {
@@ -83,7 +110,7 @@ public class ReportCtrl {
 
     }
 
-    @PostMapping("report/reportMarPro")
+    @PostMapping("/report/reportMarPro")
     public String reportMarPro (HttpServletRequest request, Principal principal){
 
         String sid = principal != null ? principal.getName() : "";
@@ -105,7 +132,7 @@ public class ReportCtrl {
 
     }
 
-    @PostMapping("report/reportReqPro")
+    @PostMapping("/report/reportReqPro")
     public String reportReqPro (HttpServletRequest request, Principal principal){
 
         String sid = principal != null ? principal.getName() : "";
