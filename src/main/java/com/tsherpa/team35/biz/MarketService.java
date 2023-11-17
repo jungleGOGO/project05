@@ -49,11 +49,17 @@ public class MarketService {
     }
 
     @Transactional
-    public void marketEdit(Market market) throws Exception{
+    public void marketEdit(Market market) throws Exception {
         marketMapper.marketEdit(market);
         photosMapper.photosEdit(market);
         mainphotoMapper.mainphotoEdit(market);
     }
+    public Market marketDetail(int marketNo) throws Exception {
+        return marketMapper.marketDetail(marketNo);
 
+    }
 
+    public void readable(int readable,int marketNo){
+        marketMapper.readable(readable, marketNo);
+    }
 }

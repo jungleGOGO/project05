@@ -41,4 +41,8 @@ public class RequestService {
     public void requestEditAll(Request request) throws Exception {
         requestMapper.requestEditAll(request);
     }
+
+    public void readable(int readable,int reqNo){
+        requestMapper.readable(readable, reqNo);
+    }
 }

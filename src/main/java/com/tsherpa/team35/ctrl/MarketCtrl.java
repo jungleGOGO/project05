@@ -172,12 +172,18 @@ public class MarketCtrl {
     public String marketDetail(@RequestParam("marketNo") int marketNo, Model model)throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
         List<Photos> photosList = photosService.photosList(marketNo);
-        List<Mainphoto> mainphotoList = mainphotoService.mainphotoList(marketNo);
-        System.out.println("결과:"+mainphotoList);
-        model.addAttribute("mainList",mainphotoList);
-        model.addAttribute("photosList",photosList);
-        model.addAttribute("market",market);
-        return "market/marketDetail";
+
+
+        if(marketService.marketDetail(marketNo).getReadable() == 0){
+            model.addAttribute("photosList",photosList);
+            model.addAttribute("market",market);
+            return "market/marketDetail";
+        }else {
+            model.addAttribute("msg", "열람 불가능한 글입니다.");
+            model.addAttribute("url", "/layout/alert");
+            return "layout/alert";
+        }
+
     }
 
     @GetMapping("/mainImage")

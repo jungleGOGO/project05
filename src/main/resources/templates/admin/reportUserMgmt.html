@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>-->
+<!--    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>-->
     <title>회원관리</title>
     <link rel="shortcut icon" th:href="@{/image/common/logo.ico}">
     <link rel="stylesheet" th:href="@{/css/styles.min.css}" />
@@ -99,11 +99,11 @@
 <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
 
 <script>
-    let token = $("meta[name='_csrf']").attr("content");
-    let header = $("meta[name='_csrf_header']").attr("content");
-    $(document).ajaxSend(function(e, xhr, options) {
-        xhr.setRequestHeader(header, token);
-    });
+    // let token = $("meta[name='_csrf']").attr("content");
+    // let header = $("meta[name='_csrf_header']").attr("content");
+    // $(document).ajaxSend(function(e, xhr, options) {
+    //     xhr.setRequestHeader(header, token);
+    // });
 
     $(function() {
         $("#active").on("change", function() {
