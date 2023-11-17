@@ -19,4 +19,5 @@ public interface RequestMapper {
     public void requestDelete(int reqNo) throws Exception;
     public List<Request> allRequest() throws Exception;
     public void requestEditAll(Request request) throws Exception;
+    public void readable(int readable,int reqNo);
 }

@@ -147,9 +147,15 @@ public class MarketCtrl {
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
         List<Photos> photosList = photosService.photosList(marketNo);
 
-        model.addAttribute("photosList",photosList);
-        model.addAttribute("market",market);
-        return "market/marketDetail";
+        if(marketService.marketDetail(marketNo).getReadable() == 0){
+            model.addAttribute("photosList",photosList);
+            model.addAttribute("market",market);
+            return "market/marketDetail";
+        }else {
+            model.addAttribute("msg", "열람 불가능한 글입니다.");
+            model.addAttribute("url", "/layout/alert");
+            return "layout/alert";
+        }
     }
 
     @GetMapping("/mainImage")

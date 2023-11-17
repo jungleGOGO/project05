@@ -28,6 +28,6 @@ public class ReportService {
     public List<Report> reportUserList(Page page){ return reportMapper.reportUserList(page); }
     public int reportUserCount(Page page) { return reportMapper.reportUserCount(page); }
     public void activeUpdate(User user) { reportMapper.activeUpdate(user); }
-    public int reportchkReq(Report report) { return reportMapper.reportchkReq(report); }
-    public int reportchkMar(Report report) { return reportMapper.reportchkMar(report); }
+    public int reportchkReq(int reqNo, String loginId) { return reportMapper.reportchkReq(reqNo, loginId); }
+    public int reportchkMar(int marketNo, String loginId) { return reportMapper.reportchkMar(marketNo, loginId); }
 }

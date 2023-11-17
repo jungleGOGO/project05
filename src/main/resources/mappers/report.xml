@@ -4,7 +4,6 @@
 
     <resultMap id="Report" type="com.tsherpa.team35.entity.Report">
         <result property="reportId" column="report_id" />
-        <result property="marketNo" column="marketNo" />
         <result property="reqNo" column="req_no" />
         <result property="title" column="title" />
         <result property="loginId" column="login_id" />
@@ -18,7 +17,7 @@
     </resultMap>
 
     <insert id="reportMarInsert">
-        insert into report (marketNo, loginId, title, reporter, reason) values (#{marketNo}, #{loginId}, #{title}, #{reporter}, #{reason})
+        insert into report (marketNo, login_id, title, reporter, reason) values (#{marketNo}, #{loginId}, #{title}, #{reporter}, #{reason})
     </insert>
 
     <insert id="reportReqInsert">
@@ -36,7 +35,7 @@
         FROM (
                  SELECT marketNo, COUNT(marketNo) AS report_count
                  FROM report
-                 GROUP BY req_no
+                 GROUP BY marketNo
              ) AS sub
                  JOIN report a ON (sub.marketNo = a.marketNo)
                  JOIN market b ON (a.marketNo = b.marketNo)
@@ -90,19 +89,19 @@
     <select id="reasonReqList" resultType="com.tsherpa.team35.entity.Report">
         SELECT a.req_no, b.title, a.reason, sub.reason_count FROM (SELECT reason, COUNT(reason) AS reason_count FROM report GROUP BY reason) AS sub
         JOIN report a ON(sub.reason=a.reason) JOIN request b ON (a.req_no=b.req_no)
-        WHERE b.req_no=#{reqNo} GROUP BY b.title  ORDER BY a.report_date LIMIT #{postStart}, #{postCount}
+        WHERE b.req_no=#{reqNo} GROUP BY b.title
     </select>
 
     <select id="reasonMarList" resultType="com.tsherpa.team35.entity.Report">
-        SELECT a.marketNo, b.title, a.reason, sub.reason_count FROM (SELECT reason, COUNT(reason) AS reason_count FROM report GROUP BY reason) AS sub
-        JOIN report a ON(sub.reason=a.reason) JOIN market b ON (a.marketNo=b.marketNo)
-        WHERE b.marketNo=#{marketNo} GROUP BY b.title  ORDER BY a.report_date LIMIT #{postStart}, #{postCount}
+        SELECT a.marketNo, a.title, a.reason, sub.reason_count FROM (SELECT reason, COUNT(reason) AS reason_count FROM report GROUP BY reason ) AS sub
+        JOIN report a ON(sub.reason=a.reason)
+        WHERE a.marketNo=#{marketNo} GROUP BY a.title
     </select>
 
     <select id="reportUserList" resultType="com.tsherpa.team35.entity.Report">
         SELECT a.reporter, b.ACTIVE , b.user_name,  sub.reporter_count FROM (SELECT reporter, COUNT(reporter) AS reporter_count FROM report GROUP BY reporter) AS sub
         JOIN report a ON(sub.reporter=a.reporter) JOIN user b ON (a.login_id=b.login_id)
-        HAVING COUNT(reporter_count) >5 LIMIT #{postStart}, #{postCount}
+        HAVING COUNT(reporter_count) >0 LIMIT #{postStart}, #{postCount}
     </select>
 
     <select id="reportUserCount" resultType="integer">
@@ -124,6 +123,6 @@
     </select>
 
     <select id="reportchkMar" resultType="integer">
-        SELECT COUNT(*) FROM report WHERE market_no = #{marketNo} AND login_id = #{loginId}
+        SELECT COUNT(*) FROM report WHERE marketNo = #{marketNo} AND login_id = #{loginId}
     </select>
 </mapper>

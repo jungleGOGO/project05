@@ -38,4 +38,8 @@
         delete from market where marketNo=#{marketNo}
     </delete>
 
+    <update id="readable">
+        UPDATE market SET readable=#{readable} WHERE marketNo=#{marketNo}
+    </update>
+
 </mapper>
