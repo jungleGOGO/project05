@@ -87,10 +87,39 @@ public class ChatCtrl {
     }
 
     @GetMapping("/myChatList")
-    public String roomList(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, Model model, Principal principal) throws Exception {
+    public String roomList(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, @PathVariable(required = false) Long roomId, Model model, Principal principal) throws Exception {
         if(principal != null) {
+            String sid = principal.getName();
+
             List<ChatRoomVO> roomList = chatService.chatRoomAllListByProduct(productId, productTable);
             model.addAttribute("roomList", roomList);
+
+            if(roomId != null) {
+                ChatRoomVO chatRoomVO = chatService.getRoom(roomId);
+
+                String id = "";
+
+                if(chatRoomVO.getProductTable().equals("market")) {
+                    Market market = new Market();
+                    market.setLoginId("kim");
+
+                    id = market.getLoginId();
+
+                } else if (chatRoomVO.getProductTable().equals("request")) {
+                    Request request = new Request();
+                    request.setLoginId("kim");
+
+                    id = request.getLoginId();
+                }
+
+                if(chatRoomVO != null && (id.equals(sid) || chatRoomVO.getBuyerId().equals(sid))) {
+                    List<ChatListVO> chatList = chatService.getChat(roomId);
+                    model.addAttribute("roomId", roomId);
+                    model.addAttribute("chatList", chatList);
+                    //return "chat/get";
+                }
+            }
+
             return "chat/list";
         } else {
             String path = "redirect:/";

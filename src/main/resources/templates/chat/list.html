@@ -18,7 +18,8 @@
                     <table class="table mt-5">
                         <tbody>
                         <tr th:each="room : ${roomList}">
-                            <td><a class="text-lg-start" th:href="@{/chat/getChat/{roomId}(roomId=${room.getRoomId()})}" th:text="${room.getBuyerId() + '님과의 채팅'}"></a></td>
+                            <!--<td><a class="text-lg-start" th:href="@{/chat/getChat/{roomId}(roomId=${room.getRoomId()})}" th:text="${room.getBuyerId() + '님과의 채팅'}"></a></td>-->
+                            <td><a class="text-lg-start" th:text="${room.getBuyerId() + '님과의 채팅'}"></a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -30,7 +31,7 @@
                                 <table id="conversation" class="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th>Chat</th>
+                                        <th>채팅</th>
                                     </tr>
                                     </thead>
                                     <tbody id="chatting"></tbody>
@@ -52,13 +53,6 @@
                 </div>
             </div>
         </div>
-        <!--<table class="table">
-            <tbody>
-            <tr th:each="room : ${roomList}">
-                <td><a th:href="@{/chat/getChat/{roomId}(roomId=${room.getRoomId()})}" th:text="${room.getBuyerId() + '님과의 채팅'}"></a></td>
-            </tr>
-            </tbody>
-        </table>-->
         <!-- content 영역 종료 -->
 
         <th:block th:insert="~{layout/footer :: footer}"></th:block>
