@@ -55,4 +55,13 @@ public class MarketService {
     public void readable(int readable,int marketNo){
         marketMapper.readable(readable, marketNo);
     }
+
+    public int getMarketCnt() throws Exception {
+        return marketMapper.getMarketCnt();
+    }
+
+    public List<MainVO> getMarketListForMain() throws Exception {
+        return marketMapper.getMarketListForMain();
+    }
+
 }

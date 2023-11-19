@@ -45,4 +45,13 @@ public class RequestService {
     public void readable(int readable,int reqNo){
         requestMapper.readable(readable, reqNo);
     }
+
+    public int getRequestCnt() throws Exception {
+        return requestMapper.getRequestCnt();
+    }
+
+    public List<Request> getRequestListForMain() throws Exception {
+        return requestMapper.getRequestListForMain();
+    }
+
 }
