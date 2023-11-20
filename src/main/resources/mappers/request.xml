@@ -50,6 +50,10 @@
         UPDATE request SET readable=#{readable} WHERE req_no=#{reqNo}
     </update>
 
+    <select id="userRequestList" resultType="com.tsherpa.team35.entity.Request">
+        select * from request where login_id = #{loginId} order by regdate desc
+    </select>
+
     <select id="getRequestCnt" resultType="Integer">
         select count(*) from request
     </select>

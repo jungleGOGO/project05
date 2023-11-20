@@ -1,6 +1,12 @@
 package com.tsherpa.team35.ctrl;
 
+import com.tsherpa.team35.biz.MarketService;
+import com.tsherpa.team35.biz.ReportService;
+import com.tsherpa.team35.biz.RequestService;
 import com.tsherpa.team35.biz.UserService;
+import com.tsherpa.team35.entity.MainVO;
+import com.tsherpa.team35.entity.Report;
+import com.tsherpa.team35.entity.Request;
 import com.tsherpa.team35.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,12 +19,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 public class UserCtrl {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MarketService marketService;
+
+    @Autowired
+    private RequestService requestService;
+
+    @Autowired
+    private ReportService reportService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -77,10 +97,48 @@ public class UserCtrl {
     public String mypage(Model model,Principal principal) {
         String sid = principal != null ? principal.getName() : "";
         User user = userService.getUserByLoginId(sid);
-
         model.addAttribute("user",user);
+
+        //상점 개설일
+        String regDateString = user.getRegDate();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime regDateTime = LocalDateTime.parse(regDateString, formatter);
+        LocalDate regDate = regDateTime.toLocalDate();
+
+        LocalDate now = LocalDate.now();
+        Period period = Period.between(regDate, now);
+        long days = period.getDays();
+
+        model.addAttribute("marketOpen", days + "일 전");
+
+        // 판매중인 상품 수
+        int cntSell = marketService.cntSell(sid);
+        model.addAttribute("cntSell",cntSell);
+
+        //판매 목록
+        List<MainVO> mainList = marketService.userMainVOList(sid);
+        System.out.println(mainList.toString());
+        model.addAttribute("mainList",mainList);
+
+        //삽니다 목록
+        List<Request> requestList = requestService.userRequestList(sid);
+        model.addAttribute("requestList",requestList);
+
+        //신고 목록
+        List<Report> reportList = reportService.userReportList(sid);
+        System.out.println("-------"+reportList.toString());
+        model.addAttribute("reportList",reportList);
+
+        //좋아요 목록
+
+        // 거래 누적 수
+
+
+
         return "user/mypage";
     }
+
 
 
     //회원 정보 수정

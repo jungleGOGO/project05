@@ -125,4 +125,11 @@
     <select id="reportchkMar" resultType="integer">
         SELECT COUNT(*) FROM report WHERE marketNo = #{marketNo} AND login_id = #{loginId}
     </select>
+
+    <select id="userReportList" resultType="com.tsherpa.team35.entity.Report">
+        select * from report where login_id = #{loginId}
+    </select>
+    <delete id="reportCancel">
+        delete from report where report_id = #{reportId}
+    </delete>
 </mapper>
