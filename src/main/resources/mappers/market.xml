@@ -38,9 +38,17 @@
         delete from market where marketNo=#{marketNo}
     </delete>
 
+
+    <update id="marketEdit">
+        update market
+        set title=#{title}, content=#{content},price=#{price},conditions=#{conditions},selected_address=#{selectedAddress},detail_address=#{detailAddress},xdata=#{xdata},ydata=#{ydata}
+        where marketNo = #{marketNo}
+    </update>
+
     <update id="readable">
         UPDATE market SET readable=#{readable} WHERE marketNo=#{marketNo}
     </update>
+
 
 
     <select id="cntSell" resultType="int">
@@ -59,8 +67,11 @@
         select * from mainlist order by regdate desc limit 3
     </select>
 
+<<<<<<< HEAD
     <select id="getInfo" resultType="com.tsherpa.team35.entity.MainVO">
         select * from mainlist where login_id = #{loginId}
     </select>
+=======
+>>>>>>> 6cc5f0959deaa835acdb395dd7faa3ef99239a8a
 
 </mapper>

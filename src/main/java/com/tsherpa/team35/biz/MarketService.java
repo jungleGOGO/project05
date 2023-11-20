@@ -50,6 +50,7 @@ public class MarketService {
 
     public Market marketDetail(int marketNo) throws Exception {
         return marketMapper.marketDetail(marketNo);
+
     }
 
     public void readable(int readable,int marketNo){
@@ -62,6 +63,17 @@ public class MarketService {
 
     public List<MainVO> getMarketListForMain() throws Exception {
         return marketMapper.getMarketListForMain();
+    }
+    @Transactional
+    public void marketEdit(Market market) throws Exception{
+        marketMapper.marketEdit(market);
+        if(market.getFileInfoList().get(0).getSaveFolder() != null && market.getMainphotoList().get(0).getSaveFolder()!= null){
+            photosMapper.photosDelete(market.getMarketNo());
+            mainphotoMapper.mainphotoDelete(market.getMarketNo());
+            photosMapper.photosInsert(market);
+            mainphotoMapper.mainphotoInsert(market);
+        }
+
     }
 
     public List<MainVO> getInfo(String loginId) throws Exception {
