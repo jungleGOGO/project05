@@ -103,7 +103,7 @@ public class ChatCtrl {
 
             model.addAttribute("path", "/chat/productChatList");
 
-            return "chat/list";
+            return "listMyPage";
         } else {
             String path = "redirect:/";
             if (productTable.equals("market")) {
@@ -157,7 +157,7 @@ public class ChatCtrl {
 
             model.addAttribute("path", "/chat/myChatList");
 
-            return "chat/list";
+            return "listMyPage";
         }
         return "redirect:/";
     }

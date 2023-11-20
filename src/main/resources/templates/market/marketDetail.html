@@ -185,8 +185,14 @@
                 <input type="hidden" id="marketNo" name="marketNo" th:value="${market.marketNo}">
                 <input type="hidden" class="form-control border-0" id="reporter" name="reporter" th:value="${market.loginId}" readonly style="height: 55px;">
                 <input type="hidden" class="form-control border-0" id="title" name="title" th:value="${market.title}" readonly style="height: 55px;">
-                <button class="btn btn-primary w-25 py-3" type="submit">찜하기</button>
-                  <button type="button" id="ck_btn" class="btn btn-primary w-25 py-3" onclick="repCheck()" style="height:72px">신고하기</button>
+                  <button class="btn btn-primary w-25 py-3" type="button">
+                      찜하기
+                      <i class="fa-solid fa-heart" th:if="${isLiked }" th:onclick="|toggleLike()|"></i>
+                      <i class="fa-solid fa-heart" th:unless="${isLiked }" th:onclick="|toggleLike()|"></i>
+                  </button>
+                  <button class="btn btn-primary w-25 py-3" type="button">신고하기
+                      <img th:src="${'/image/siren5050.png'}"  id="ck_btn" onclick="repCheck()" style="width: 20px; height: 20px;" />
+                  </button>
                   <a class="btn btn-primary w-25 py-3" th:href="@{/request/requestList}" type="button">목록</a>
               </div>
                 <div class="col-12" style="margin-left: 70px;">
@@ -232,6 +238,32 @@
                 // window.location="/login";
             }
         });
+    }
+    function toggleLike() {
+        let marketNo=parseInt($("#marketNo").val());
+
+        $.ajax({
+            url: "/market/marketLike",
+            method: "POST",
+            data: {marketNo: marketNo},
+            success: function (result) {
+                var likeButton = $(".fa-solid.fa-heart");
+                console.log(result);
+                var chk = result;
+
+                if (chk == "liked") {
+                    likeButton.css('color', '#f20202');
+                } else if (chk == "unliked") {
+                    likeButton.css('color', '#ffffff');
+                } else {
+                    alert("로그인 후 다시 시도해주세요.");
+                }
+            }, error(e,f,g) {
+                console.log(">>>>>>>>" + e);
+                console.log(">>>>>>>>" + f);
+                console.log(">>>>>>>>" + g);
+            }
+        })
     }
 </script>
 

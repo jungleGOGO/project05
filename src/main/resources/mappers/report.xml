@@ -110,7 +110,7 @@
                  SELECT b.title, COUNT(a.report_id) AS report_count
                  FROM report a
                           JOIN request b ON a.req_no = b.req_no
-                 GROUP BY b.title HAVING COUNT(*) > 5
+                 GROUP BY b.title HAVING COUNT(*) > 0
              ) AS sub
     </select>
 

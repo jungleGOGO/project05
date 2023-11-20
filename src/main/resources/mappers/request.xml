@@ -17,7 +17,7 @@
     </insert>
 
     <select id="requestList" resultType="com.tsherpa.team35.entity.Request">
-        select * from request order by regdate desc
+        select * from request WHERE readable=0 order by regdate desc
     </select>
 
     <select id="requestDetail" resultType="com.tsherpa.team35.entity.Request">
