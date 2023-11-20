@@ -20,4 +20,7 @@ public interface RequestMapper {
     public List<Request> allRequest() throws Exception;
     public void requestEditAll(Request request) throws Exception;
     public void readable(int readable,int reqNo);
+    public int getRequestCnt() throws Exception;
+    public List<Request> getRequestListForMain() throws Exception;
+
 }

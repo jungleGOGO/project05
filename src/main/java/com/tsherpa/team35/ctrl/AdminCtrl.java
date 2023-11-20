@@ -43,6 +43,8 @@ public class AdminCtrl {
         int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
 
         Page page = new Page();
+        page.setType(request.getParameter("type"));
+        page.setKeyword(request.getParameter("keyword"));
 
         int total = userService.getCount(page);
         page.makeBlock(curPage, total);

@@ -1,6 +1,10 @@
 package com.tsherpa.team35.ctrl;
 
+<<<<<<< HEAD
 import com.tsherpa.team35.biz.MainPhotoService;
+=======
+import com.tsherpa.team35.biz.LikesService;
+>>>>>>> 472f43babb21bc91cbefbb8a60d01202f8cbbbe0
 import com.tsherpa.team35.biz.MarketService;
 import com.tsherpa.team35.biz.PhotosService;
 import com.tsherpa.team35.entity.*;
@@ -39,7 +43,11 @@ public class MarketCtrl {
     @Autowired
     PhotosService photosService;
     @Autowired
+<<<<<<< HEAD
     MainPhotoService mainphotoService;
+=======
+    LikesService likesService;
+>>>>>>> 472f43babb21bc91cbefbb8a60d01202f8cbbbe0
     @Value("${spring.servlet.multipart.location}")
     String uploadFolder;
 
@@ -152,6 +160,7 @@ public class MarketCtrl {
         return "redirect:/market/marketList";
     }
 
+<<<<<<< HEAD
 
     private boolean isValidFileExtension(MultipartFile[] files) {
         // 허용할 파일 확장자 목록
@@ -168,6 +177,8 @@ public class MarketCtrl {
 
         return true; // 모든 파일이 허용된 확장자일 경우 true 반환
     }
+=======
+>>>>>>> 472f43babb21bc91cbefbb8a60d01202f8cbbbe0
     @GetMapping("/detail")
     public String marketDetail(@RequestParam("marketNo") int marketNo, Model model)throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
@@ -180,10 +191,34 @@ public class MarketCtrl {
             return "market/marketDetail";
         }else {
             model.addAttribute("msg", "열람 불가능한 글입니다.");
-            model.addAttribute("url", "/layout/alert");
+            model.addAttribute("url", "/market/marketList");
             return "layout/alert";
         }
 
+    }
+
+    @PostMapping("/marketLike")
+    @ResponseBody
+    public String marketList(HttpServletRequest request, Principal principal, Model model) {
+
+        String sid = principal != null ? principal.getName() : "";
+        int marketNo = Integer.parseInt(request.getParameter("marketNo"));
+        String result = "unliked";
+
+        Likes like = new Likes();
+        like.setLoginId(sid);
+        like.setMarketNo(marketNo);
+        int chk = likesService.checkLikedMar(like);
+
+        if(chk==0) {
+            likesService.addLikeMar(like);
+            result = "liked";
+        } else if ( chk == 1) {
+            likesService.removeLikeMar(like);
+            result = "unliked";
+        }
+
+        return result;
     }
 
     @GetMapping("/mainImage")
