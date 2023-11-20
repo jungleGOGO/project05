@@ -170,6 +170,8 @@ public class RequestCtrl {
             result = "unliked";
         }
 
+        model.addAttribute("isLiked", chk);
+
         return result;
     }
 
