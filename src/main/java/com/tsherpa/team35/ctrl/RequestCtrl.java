@@ -3,6 +3,7 @@ package com.tsherpa.team35.ctrl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tsherpa.team35.biz.LikesService;
 import com.tsherpa.team35.biz.ReportService;
 import com.tsherpa.team35.biz.RequestService;
 import com.tsherpa.team35.entity.*;
@@ -30,6 +31,9 @@ public class RequestCtrl {
 
     @Autowired
     private ReportService reportService;
+
+    @Autowired
+    private LikesService likesService;
 
     @GetMapping("/reqList")
     public String reqList(Model model)throws Exception{
@@ -143,8 +147,30 @@ public class RequestCtrl {
             model.addAttribute("url", "/request/reqList");
             return "layout/alert";
         }
+    }
 
+    @PostMapping("/requestLike")
+    @ResponseBody
+    public String requestLike(HttpServletRequest request,Principal principal, Model model){
 
+        String sid = principal != null ? principal.getName() : "";
+        int reqNo = Integer.parseInt(request.getParameter("reqNo"));
+        String result = "unliked";
+
+        Likes like=new Likes();
+        like.setLoginId(sid);
+        like.setReqNo(reqNo);
+        int chk = likesService.checkLikedReq(like);
+
+        if(chk==0) {
+            likesService.addLikeReq(like);
+            result = "liked";
+        } else if (chk==1){
+            likesService.removeLikeReq(like);
+            result = "unliked";
+        }
+
+        return result;
     }
 
 
