@@ -94,6 +94,7 @@
             <div class="editContent">
                 <div class="card-body p-5 text-center">
                     <form th:action="@{/userEdit}" autocomplete="off" th:object="${user}" method="post">
+<!--                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
                         <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
 
                         <div class="form-outline mb-4" style="margin-top: 20px">

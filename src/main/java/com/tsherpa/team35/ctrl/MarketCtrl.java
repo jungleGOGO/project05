@@ -81,8 +81,8 @@ public class MarketCtrl {
     public String write(Market market, @RequestParam("upfile") MultipartFile[] repImage,@RequestParam("detailFile") MultipartFile[] detailImages ,HttpServletRequest req, Model model, RedirectAttributes rttr, Principal principal) throws Exception {
         String sid = principal != null ? principal.getName() : "";
 
-        String realPath = "C://upload/";
-//        String realPath = "/Users/juncheol/Desktop/fileupload";    // 업로드 경로 설정
+//        String realPath = "C://upload/";
+        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
 
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
         String repImageSaveFolder = "rep_images/" + today;
