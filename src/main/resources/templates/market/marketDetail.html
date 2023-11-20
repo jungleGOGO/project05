@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <th:block th:insert="~{layout/head :: head}"></th:block>
   <link rel="stylesheet" th:href="@{/css/main.css}">
@@ -192,18 +192,20 @@
                 <input type="hidden" class="form-control border-0" id="title" name="title" th:value="${market.title}" readonly style="height: 55px;">
                   <button class="btn btn-primary w-25 py-3" type="button">
                       찜하기
-                      <i class="fa-solid fa-heart" th:if="${isLiked}" th:onclick="|toggleLike()|"></i>
-                      <i class="fa-solid fa-heart" th:unless="${isLiked}" th:onclick="|toggleLike()|"></i>
+                      <i class="fa-solid fa-heart" th:if="${chkLiked == 1}" th:onclick="|toggleLike()|" style="color: red"></i>
+                      <i class="fa-solid fa-heart" th:unless="${chkLiked == 1}" th:onclick="|toggleLike()|"></i>
                   </button>
                   <button class="btn btn-primary w-25 py-3" type="button">신고하기
                       <img th:src="${'/image/siren5050.png'}"  id="ck_btn" onclick="repCheck()" style="width: 20px; height: 20px;" />
                   </button>
                   <a class="btn btn-primary w-25 py-3" th:href="@{/request/requestList}" type="button">목록</a>
               </div>
+                <th:block sec:authorize="${hasRole('USER')}">
                 <div class="col-12" style="margin-left: 70px;">
-                    <a class="btn btn-primary w-25 py-3" th:href="@{/market/edit(marketNo=${market.marketNo})}" type="button">수정하기</a>
-                    <a class="btn btn-primary w-25 py-3" th:href="@{/market/delete(marketNo=${market.marketNo})}" type="button">삭제하기</a>
+                    <a class="btn btn-primary w-25 py-3" th:if="${sid eq market.loginId}" th:href="@{/market/edit(marketNo=${market.marketNo})}" type="button">수정하기</a>
+                    <a class="btn btn-primary w-25 py-3" th:if="${sid eq market.loginId}" th:href="@{/market/delete(marketNo=${market.marketNo})}" type="button">삭제하기</a>
                 </div>
+                </th:block>
             </div>
           </form>
         </div>

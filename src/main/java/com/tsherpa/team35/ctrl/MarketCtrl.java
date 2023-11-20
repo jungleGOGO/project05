@@ -76,7 +76,9 @@ public class MarketCtrl {
     }
 
     @GetMapping("/marketInsert")
-    public String insertMarket(Model model,String msg) throws Exception {
+    public String insertMarket(Model model,String msg, Principal principal) throws Exception {
+        String sid = principal != null ? principal.getName() : "";
+        model.addAttribute("sid",sid);
         model.addAttribute("msg", msg);
         System.out.println(msg);
         return "market/marketInsert";
@@ -181,17 +183,25 @@ public class MarketCtrl {
     }
 
     @GetMapping("/detail")
-    public String marketDetail(@RequestParam("marketNo") int marketNo, Model model,Principal principal)throws Exception{
+    public String marketDetail(@RequestParam("marketNo") int marketNo, Principal principal,Model model)throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
         List<Photos> photosList = photosService.photosList(marketNo);
 
-
         String sid = principal != null ? principal.getName() : "";
+
+        Likes likes = new Likes();
+        likes.setLoginId(sid);
+        likes.setMarketNo(marketNo);
+        int chkLiked = likesService.checkLikedMar(likes);
+        model.addAttribute("chkLiked",chkLiked);
+        System.out.println("chkLiked : "+chkLiked);
+
 
 
         if(marketService.marketDetail(marketNo).getReadable() == 0){
             model.addAttribute("photosList",photosList);
             model.addAttribute("market",market);
+            model.addAttribute("sid",sid);
             return "market/marketDetail";
         }else {
             model.addAttribute("msg", "열람 불가능한 글입니다.");
@@ -207,18 +217,21 @@ public class MarketCtrl {
 
         String sid = principal != null ? principal.getName() : "";
         int marketNo = Integer.parseInt(request.getParameter("marketNo"));
+
         String result = "unliked";
 
-        Likes like = new Likes();
-        like.setLoginId(sid);
-        like.setMarketNo(marketNo);
-        int chk = likesService.checkLikedMar(like);
+        Likes likes = new Likes();
+        likes.setLoginId(sid);
+        likes.setMarketNo(marketNo);
+        int chkLiked = likesService.checkLikedMar(likes);
+        model.addAttribute("chkLiked",chkLiked);
+        System.out.println("chkLiked : "+chkLiked);
 
-        if(chk==0) {
-            likesService.addLikeMar(like);
+        if(chkLiked==0) {
+            likesService.addLikeMar(likes);
             result = "liked";
-        } else if ( chk == 1) {
-            likesService.removeLikeMar(like);
+        } else if ( chkLiked == 1) {
+            likesService.removeLikeMar(likes);
             result = "unliked";
         }
 
@@ -272,6 +285,7 @@ public class MarketCtrl {
 
     @GetMapping("/delete")
     public String marketDelete(@RequestParam int marketNo)throws Exception{
+
         marketService.marketDelete(marketNo);
         return "redirect:/market/marketList";
     }

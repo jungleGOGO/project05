@@ -134,9 +134,19 @@ public class RequestCtrl {
     }
 
     @GetMapping("/reqDetail")
-    public String reqDetail(Model model,@RequestParam int reqNo) throws Exception{
+    public String reqDetail(Model model,@RequestParam int reqNo, Principal principal) throws Exception{
 
         Request request = requestService.requestDetail(reqNo);
+
+        String sid = principal != null ? principal.getName() : "";
+
+        Likes likes = new Likes();
+        likes.setLoginId(sid);
+        likes.setReqNo(reqNo);
+        int chkLiked = likesService.checkLikedReq(likes);
+        model.addAttribute("chkLiked",chkLiked);
+        System.out.println("chkLiked : "+chkLiked);
+
         if(requestService.requestDetail(reqNo).getReadable() == 0){
             List<Request> requestList = requestService.allRequest();
             model.addAttribute("requestList", requestList);
@@ -155,22 +165,25 @@ public class RequestCtrl {
 
         String sid = principal != null ? principal.getName() : "";
         int reqNo = Integer.parseInt(request.getParameter("reqNo"));
+
         String result = "unliked";
 
-        Likes like=new Likes();
-        like.setLoginId(sid);
-        like.setReqNo(reqNo);
-        int chk = likesService.checkLikedReq(like);
+        Likes likes = new Likes();
+        likes.setLoginId(sid);
+        likes.setReqNo(reqNo);
+        int chkLiked = likesService.checkLikedReq(likes);
 
-        if(chk==0) {
-            likesService.addLikeReq(like);
+        model.addAttribute("chkLiked",chkLiked);
+        System.out.println("chkLiked : "+chkLiked);
+
+        if(chkLiked==0) {
+            likesService.addLikeReq(likes);
             result = "liked";
-        } else if (chk==1){
-            likesService.removeLikeReq(like);
+            model.addAttribute("liked", result);
+        } else if (chkLiked==1){
+            likesService.removeLikeReq(likes);
             result = "unliked";
         }
-
-        model.addAttribute("isLiked", chk);
 
         return result;
     }
