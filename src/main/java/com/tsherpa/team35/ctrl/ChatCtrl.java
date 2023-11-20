@@ -12,11 +12,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,10 +88,10 @@ public class ChatCtrl {
     }
 
     @GetMapping("/productChatList")
-    public String productChatList(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, @RequestParam("roomId") Long roomId, Model model, Principal principal) throws Exception {
+    public String productChatList(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, HttpServletRequest req, Model model, Principal principal) throws Exception {
 
-        System.out.println("판매자 제품 채팅");
-        System.out.println(">>>>>>>>>>>>>>>>>>" + roomId);
+        Long roomId = req.getParameter("roomId") != null ? Long.valueOf(req.getParameter("roomId")) : 0L;
+
         if(principal != null) {
             String sid = principal.getName();
             List<ChatRoomVO> roomList = chatService.chatRoomAllListByProduct(productId, productTable);
@@ -116,12 +114,12 @@ public class ChatCtrl {
     }
 
     @GetMapping("/myChatList")
-    public String myChatList(@RequestParam("roomId") Long roomId, Model model, Principal principal) throws Exception {
+    public String myChatList(HttpServletRequest req, Model model, Principal principal) throws Exception {
 
-        System.out.println("내 채팅 내역");
-        System.out.println(">>>>>>>>>>>>>>>>>>" + roomId);
+        Long roomId = req.getParameter("roomId") != null ? Long.valueOf(req.getParameter("roomId")) : 0L;
+
         if(principal != null) {
-            System.out.println("dddddddddd");
+
             List<ChatRoomVO> roomList = new ArrayList<>();
             String sid = principal.getName();
             roomList = chatService.chatRoomAllListByBuyerId(sid);
@@ -156,11 +154,35 @@ public class ChatCtrl {
                 model.addAttribute("roomList", roomList);
             }
 
+            if(roomId != 0L) {
+                String id = "";
+                ChatRoomVO chatRoomVO = chatService.getRoom(roomId);
+                if(chatRoomVO.getProductTable().equals("market")) {
+                    Market market = new Market();
+                    market.setLoginId("kim");
+
+                    id = market.getLoginId();
+
+                } else if (chatRoomVO.getProductTable().equals("request")) {
+                    Request request = new Request();
+                    request.setLoginId("kim");
+
+                    id = request.getLoginId();
+                }
+
+                if(chatRoomVO != null && (id.equals(sid) || chatRoomVO.getBuyerId().equals(sid))) {
+                    List<ChatListVO> chatList = chatService.getChat(roomId);
+                    model.addAttribute("roomId", roomId);
+                    model.addAttribute("chatList", chatList);
+                    model.addAttribute("productTable", chatRoomVO.getProductTable());
+                    model.addAttribute("productNo", chatRoomVO.getProductId());
+                }
+            }
+
             model.addAttribute("path", "/chat/myChatList");
 
             return "chat/list";
         } else {
-            System.out.println("xxxxx");
             return "redirect:/";
         }
     }
@@ -211,6 +233,14 @@ public class ChatCtrl {
         }
     }*/
 
+
+
+    @PostMapping("/getChatList")
+    @ResponseBody
+    public String getChatList (@RequestParam("roomId") Long roomId) throws Exception {
+        return "";
+    }
+
     @GetMapping("/getChat/{roomId}")
     public String joinRoom(@PathVariable(required = false) Long roomId, Model model, Principal principal) throws Exception {
 
@@ -231,6 +261,7 @@ public class ChatCtrl {
                 request.setLoginId("kim");
 
                 id = request.getLoginId();
+
             }
 
             if(chatRoomVO != null && (id.equals(sid) || chatRoomVO.getBuyerId().equals(sid))) {
@@ -252,7 +283,7 @@ public class ChatCtrl {
     }
 
     @MessageMapping("/{roomId}")
-    @SendTo("/chat/getChat/{roomId}")
+    @SendTo({"/chat/myChatList", "/chat/productChatList"})
     public ChatListVO chatInsert(@DestinationVariable Long roomId, ChatListVO message, Principal principal) throws Exception {
 
         String sid = principal.getName();

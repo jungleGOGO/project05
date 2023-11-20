@@ -32,7 +32,7 @@ public interface ChatMapper {
     @Insert("insert into chatRoom values(default, #{productId}, #{productTable}, #{buyerId}, default)")
     void createChatRoom(ChatRoom chatRoom) throws Exception;
 
-    @Select("select * from chatListView where roomId = #{roomId}")
+    @Select("select * from chatListView where roomId = #{roomId} order by sendDate")
     List<ChatListVO> getChat(Long roomId) throws Exception;
 
     @Select("select * from chatListView where roomId = #{roomId} order by sendDate desc limit 1")

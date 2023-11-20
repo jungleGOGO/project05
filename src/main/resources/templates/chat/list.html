@@ -19,7 +19,7 @@
                         <tbody>
                         <tr th:each="room : ${roomList}">
                             <!--<td><a class="text-lg-start" th:href="@{/chat/getChat/{roomId}(roomId=${room.getRoomId()})}" th:text="${room.getBuyerId() + '님과의 채팅'}"></a></td>-->
-                            <td class="text-start"><a class="text-start" th:href="${path} + @{?(roomId=${room.roomId}, productId=${room.productId}, productTable=${room.productTable})} + '/' + {roomId}" th:text="${room.productName + room.getBuyerId() + '님과의 채팅'}"></a></td>
+                            <td class="text-start"><a class="text-start" th:href="${path} + @{?(roomId=${room.roomId}, productId=${room.productId}, productTable=${room.productTable})}" th:text="${room.productName + room.getBuyerId() + '님과의 채팅'}"></a></td>
                             <!--<a th:href="${listUrl} + @{?(page=${page-1})}" th:text="${page}"></a></li>-->
                         </tr>
                         </tbody>
@@ -42,6 +42,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <form class="form-inline">
+                                    <input type="hidden" id="productNo" th:value="${productNo}" />
+                                    <input type="hidden" id="productTable" th:value="${productTable}" />
                                     <div class="form-group">
                                         <label for="message">내용</label>
                                         <input type="text" id="message" name="message" class="form-control" placeholder="메시지 내용">
@@ -64,6 +66,9 @@
             var stompClient = null;
             var roomId = [[${roomId}]];
             var chatList = [[${chatList}]];
+            var path = [[${path}]];
+            var productNo = $("#productNo").val();
+            var productTable = $("#productTable").val();
 
             function setConnected(connected) {
                 $("#connect").prop("disabled", connected);
@@ -85,7 +90,7 @@
                     //console.log('Connected: ' + frame);
                     loadChat(chatList)  //저장된 채팅 불러오기
 
-                    stompClient.subscribe('/chat/getChat/'+roomId, function (chatListVO) {
+                    stompClient.subscribe(path + '?productId=' + productNo + '&productTable=' + productTable + '&roomId=' + roomId, function (chatListVO) {
                         showChat(JSON.parse(chatListVO.body));
                     });
                 });
