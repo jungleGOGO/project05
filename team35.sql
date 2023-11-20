@@ -128,6 +128,7 @@ SELECT
     m.marketNo AS marketNo,
     m.title,
     m.price,
+    m.readable,
     m.content,
     m.login_id,
     m.active,
@@ -294,3 +295,11 @@ CREATE TABLE chatList(
 );
 
 CREATE VIEW chatListView AS (SELECT r.chatId AS chatId, r.sendDate AS sendDate, r.message AS message, r.readYn AS readYn, r.roomId AS roomId, r.senderId AS senderId, u.user_name AS userName FROM chatList r LEFT JOIN user u ON r.senderId = u.login_id);
+
+CREATE TABLE likes (
+   lno INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   login_id VARCHAR(20) NOT NULL,
+   marketNo INT,
+   req_no INT,
+   liketime DATETIME DEFAULT CURRENT_TIMESTAMP
+);

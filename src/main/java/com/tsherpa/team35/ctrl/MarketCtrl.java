@@ -1,5 +1,6 @@
 package com.tsherpa.team35.ctrl;
 
+import com.tsherpa.team35.biz.LikesService;
 import com.tsherpa.team35.biz.MarketService;
 import com.tsherpa.team35.biz.PhotosService;
 import com.tsherpa.team35.entity.*;
@@ -39,6 +40,8 @@ public class MarketCtrl {
     MarketService marketService;
     @Autowired
     PhotosService photosService;
+    @Autowired
+    LikesService likesService;
     @Value("${spring.servlet.multipart.location}")
     String uploadFolder;
 
@@ -142,7 +145,6 @@ public class MarketCtrl {
     }
 
     @GetMapping("/detail")
-
     public String marketDetail(@RequestParam("marketNo") int marketNo, Model model)throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
         List<Photos> photosList = photosService.photosList(marketNo);
@@ -156,6 +158,30 @@ public class MarketCtrl {
             model.addAttribute("url", "/market/marketList");
             return "layout/alert";
         }
+    }
+
+    @PostMapping("/marketLike")
+    @ResponseBody
+    public String marketList(HttpServletRequest request, Principal principal, Model model) {
+
+        String sid = principal != null ? principal.getName() : "";
+        int marketNo = Integer.parseInt(request.getParameter("marketNo"));
+        String result = "unliked";
+
+        Likes like = new Likes();
+        like.setLoginId(sid);
+        like.setMarketNo(marketNo);
+        int chk = likesService.checkLikedMar(like);
+
+        if(chk==0) {
+            likesService.addLikeMar(like);
+            result = "liked";
+        } else if ( chk == 1) {
+            likesService.removeLikeMar(like);
+            result = "unliked";
+        }
+
+        return result;
     }
 
     @GetMapping("/mainImage")
