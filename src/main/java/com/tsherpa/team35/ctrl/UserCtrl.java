@@ -88,8 +88,11 @@ public class UserCtrl {
     public String userEdit(Model model, Principal principal) {
         String sid = principal != null ? principal.getName() : "";
 
+        System.out.println("따란");
+
         User user = userService.getUserByLoginId(sid);
         model.addAttribute("user",user);
+        System.out.println("user >>> " + user.toString());
 
         return "user/userEdit";
     }

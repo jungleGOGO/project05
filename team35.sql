@@ -25,7 +25,7 @@ CREATE TABLE user(
                      postcode VARCHAR(10),									-- 회원 우편 번호
                      reg_date DATETIME DEFAULT CURRENT_TIMESTAMP(),	-- 회원 가입일
                      birth DATE,													-- 회원 생일
-                     pt INT DEFAULT 0,											-- 회원 포인트
+                     pt INT DEFAULT 50,										-- 회원 매너온도
                      visited INT DEFAULT 0,									-- 회원 방문 횟수
                      role_id INT NOT NULL DEFAULT 99						-- 회원 권한 등급
 );
