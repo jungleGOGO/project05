@@ -89,7 +89,7 @@ public class ChatCtrl {
         return path;
     }
 
-    @GetMapping("/productChatList")
+    @GetMapping("/productChatList/{roomId}")
     public String productChatList(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, @PathVariable(required = false) Long roomId, Model model, Principal principal) throws Exception {
 
         System.out.println("판매자 제품 채팅");
@@ -103,7 +103,7 @@ public class ChatCtrl {
 
             model.addAttribute("path", "/chat/productChatList");
 
-            return "listMyPage";
+            return "chat/list";
         } else {
             String path = "redirect:/";
             if (productTable.equals("market")) {
@@ -115,12 +115,13 @@ public class ChatCtrl {
         }
     }
 
-    @GetMapping("/myChatList")
+    @GetMapping("/myChatList/{roomId}")
     public String myChatList(@PathVariable(required = false) Long roomId, Model model, Principal principal) throws Exception {
-        
+
         System.out.println("내 채팅 내역");
         System.out.println(">>>>>>>>>>>>>>>>>>" + roomId);
         if(principal != null) {
+            System.out.println("dddddddddd");
             List<ChatRoomVO> roomList = new ArrayList<>();
             String sid = principal.getName();
             roomList = chatService.chatRoomAllListByBuyerId(sid);
@@ -157,8 +158,9 @@ public class ChatCtrl {
 
             model.addAttribute("path", "/chat/myChatList");
 
-            return "listMyPage";
+            return "chat/list";
         }
+        System.out.println("xxxxx");
         return "redirect:/";
     }
 

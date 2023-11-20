@@ -64,17 +64,16 @@ public class MarketService {
         return marketMapper.getMarketListForMain();
     }
 
-<<<<<<< HEAD
     public List<MainVO> getInfo(String loginId) throws Exception {
         return marketMapper.getInfo(loginId);
-=======
+    }
+
     public int cntSell(String loginId) {
         return marketMapper.cntSell(loginId);
     }
 
     public List<MainVO> userMainVOList(String loginId) {
         return marketMapper.userMainVOList(loginId);
->>>>>>> 9476d9dbccde0274dfaddb69c8345be0aced38fb
     }
 
 }
