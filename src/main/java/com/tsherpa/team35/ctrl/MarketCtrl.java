@@ -1,10 +1,8 @@
 package com.tsherpa.team35.ctrl;
 
-<<<<<<< HEAD
+
 import com.tsherpa.team35.biz.MainPhotoService;
-=======
 import com.tsherpa.team35.biz.LikesService;
->>>>>>> 472f43babb21bc91cbefbb8a60d01202f8cbbbe0
 import com.tsherpa.team35.biz.MarketService;
 import com.tsherpa.team35.biz.PhotosService;
 import com.tsherpa.team35.entity.*;
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -43,11 +42,10 @@ public class MarketCtrl {
     @Autowired
     PhotosService photosService;
     @Autowired
-<<<<<<< HEAD
     MainPhotoService mainphotoService;
-=======
+    @Autowired
     LikesService likesService;
->>>>>>> 472f43babb21bc91cbefbb8a60d01202f8cbbbe0
+
     @Value("${spring.servlet.multipart.location}")
     String uploadFolder;
 
@@ -160,7 +158,7 @@ public class MarketCtrl {
         return "redirect:/market/marketList";
     }
 
-<<<<<<< HEAD
+
 
     private boolean isValidFileExtension(MultipartFile[] files) {
         // 허용할 파일 확장자 목록
@@ -177,8 +175,7 @@ public class MarketCtrl {
 
         return true; // 모든 파일이 허용된 확장자일 경우 true 반환
     }
-=======
->>>>>>> 472f43babb21bc91cbefbb8a60d01202f8cbbbe0
+
     @GetMapping("/detail")
     public String marketDetail(@RequestParam("marketNo") int marketNo, Model model)throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
@@ -272,6 +269,7 @@ public class MarketCtrl {
         return "redirect:/market/marketList";
     }
 
+
     @GetMapping("/edit")
     public String marketEdit(@RequestParam int marketNo,MainVO mainVO, Model model) throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
@@ -280,18 +278,11 @@ public class MarketCtrl {
         model.addAttribute("mainList",mainphotoList);
         model.addAttribute("photosList",photosList);
         model.addAttribute("market",market);
-    return "market/marketEdit";
+        return "market/marketEdit";
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public String edit(Market market, @RequestParam("upfile") MultipartFile[] repImage,@RequestParam("detailFile") MultipartFile[] detailImages ,HttpServletRequest req, Model model, RedirectAttributes rttr, Principal principal) throws Exception {
-
-        if (!isValidFileExtension(repImage) || !isValidFileExtension(detailImages)) {
-            // 확장자가 허용되지 않는 파일이 포함되어 있으면 에러 메시지 전달
-            String msg = "파일 형식을 확인해주세요";
-            model.addAttribute("msg",msg);
-            return "market/marketEdit";
-        }
 
         String sid = principal != null ? principal.getName() : "";
         System.out.println("대표사진 값들:"+repImage);
@@ -306,7 +297,6 @@ public class MarketCtrl {
         File repImageFolder = new File(realPath, repImageSaveFolder);
         File detailImageFolder = new File(realPath, detailImageSaveFolder);
 
-
         if (!repImageFolder.exists()) {
             repImageFolder.mkdirs();
         }
@@ -314,6 +304,32 @@ public class MarketCtrl {
         if (!detailImageFolder.exists()) {
             detailImageFolder.mkdirs();
         }
+        if(repImage[0].getSize() != 0){
+            List<Mainphoto> mainphotoList = mainphotoService.mainphotoList(market.getMarketNo());
+            System.out.println("메인사진:"+mainphotoList);
+            ServletContext application = req.getSession().getServletContext();
+            for (Mainphoto mainphoto : mainphotoList) {
+                File oldFile = new File(realPath+mainphoto.getSaveFolder()+"/"+mainphoto.getSaveFile());
+                System.out.println("경로확인"+realPath+mainphoto.getSaveFolder()+"/"+mainphoto.getSaveFile());
+                if(oldFile.exists()){
+                    oldFile.delete();
+                }
+            }
+        }
+
+        if(detailImages[0].getSize() != 0){
+            List<Photos> photosList = photosService.photosList(market.getMarketNo());
+            System.out.println("상세사진:"+photosList);
+            ServletContext application = req.getSession().getServletContext();
+            for (Photos photos : photosList) {
+                File oldFile = new File(realPath+photos .getSaveFolder()+"/"+photos .getSaveFile());
+                System.out.println(realPath+photos .getSaveFolder()+"/"+photos.getSaveFile());
+                if(oldFile.exists()){
+                    oldFile.delete();
+                }
+            }
+        }
+
         List<Mainphoto> mainphotoList = new ArrayList<>();
         for (MultipartFile mainphoto : repImage) {
             Mainphoto main = new Mainphoto();
@@ -324,7 +340,7 @@ public class MarketCtrl {
                 main.setSaveFile(savemainName);
                 main.setOriginFile(originalmainName);
                 main.setSaveFolder(repImageSaveFolder);
-                mainphoto.transferTo(new File(repImageSaveFolder, savemainName));
+                mainphoto.transferTo(new File(repImageFolder, savemainName));
             }
             mainphotoList.add(main);
         }
@@ -350,7 +366,7 @@ public class MarketCtrl {
         market.setLoginId(sid);
 
         try {
-            marketService.marketInsert(market);
+            marketService.marketEdit(market);
             rttr.addFlashAttribute("msg", "자료실에 글을 등록하였습니다");
         } catch(Exception e) {
             e.printStackTrace();

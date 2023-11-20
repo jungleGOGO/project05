@@ -22,10 +22,8 @@ public interface MarketMapper {
 
 
     public void readable(int readable,int marketNo);
-<<<<<<< HEAD
 
-=======
     public int getMarketCnt() throws Exception;
     public List<MainVO> getMarketListForMain() throws Exception;
->>>>>>> 472f43babb21bc91cbefbb8a60d01202f8cbbbe0
+
 }

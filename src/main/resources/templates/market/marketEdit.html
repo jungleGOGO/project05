@@ -27,11 +27,13 @@
 </div>
 <div class="container mt-5">
   <h2 class="mb-4">중고거래 게시글 작성</h2>
+
   <form th:action="@{/market/edit}" method="post" enctype="multipart/form-data">
     <div class="form-group">
       <h3>"jpg", "jpeg", "png" 형식의 이미지 파일만 첨부가능합니다.</h3>
       <h2 th:if="${msg}" th:text="${msg}" style="color: red;"></h2>
       <label for="product_detail_image" class="form-label">대표 이미지</label>
+        <input type="hidden" th:value="${market.marketNo}" name="marketNo">
       <input class="form-control form-control-user" type="file" multiple="multiple"
              name="upfile" id="product_detail_image" onchange="setDetailImage(event);" accept="image/*"  oninput="fileMax(this)">
       <script>
@@ -46,7 +48,7 @@
       </script>
     </div>
     <div id="images_container"></div>
-    <img class="col-lg-6" th:each="market: ${mainList}" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}">
+<!--    <img class="col-lg-6" th:each="market: ${mainList}" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}">-->
     <div class="form-group">
       <label for="product_detail_image2" class="form-label">상세 이미지 (* 첨부되는 파일들만 이미지를 보여줍니다.)</label>
       <input class="form-control form-control-user" type="file" multiple="multiple"
@@ -63,7 +65,7 @@
       </script>
     </div>
     <div id="images_container2">
-      <img class="col-lg-6" th:each="photo : ${photosList}" th:src="${'/market/detailImage?saveFile='+photo.getSaveFile()+'&originFile='+photo.getOriginFile()+'&saveFolder='+photo.getSaveFolder()}">
+<!--      <img class="col-lg-6" th:each="photo : ${photosList}" th:src="${'/market/detailImage?saveFile='+photo.getSaveFile()+'&originFile='+photo.getOriginFile()+'&saveFolder='+photo.getSaveFolder()}">-->
     </div>
 
     <div class="mb-3">
