@@ -183,10 +183,18 @@ public class MarketCtrl {
     }
 
     @GetMapping("/detail")
-    public String marketDetail(@RequestParam("marketNo") int marketNo, Model model, Principal principal)throws Exception{
+    public String marketDetail(@RequestParam("marketNo") int marketNo, Principal principal,Model model)throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
         List<Photos> photosList = photosService.photosList(marketNo);
+
         String sid = principal != null ? principal.getName() : "";
+
+        Likes likes = new Likes();
+        likes.setLoginId(sid);
+        likes.setMarketNo(marketNo);
+        int chkLiked = likesService.checkLikedMar(likes);
+        model.addAttribute("chkLiked",chkLiked);
+        System.out.println("chkLiked : "+chkLiked);
 
         if(marketService.marketDetail(marketNo).getReadable() == 0){
             model.addAttribute("photosList",photosList);
@@ -207,18 +215,21 @@ public class MarketCtrl {
 
         String sid = principal != null ? principal.getName() : "";
         int marketNo = Integer.parseInt(request.getParameter("marketNo"));
+
         String result = "unliked";
 
-        Likes like = new Likes();
-        like.setLoginId(sid);
-        like.setMarketNo(marketNo);
-        int chk = likesService.checkLikedMar(like);
+        Likes likes = new Likes();
+        likes.setLoginId(sid);
+        likes.setMarketNo(marketNo);
+        int chkLiked = likesService.checkLikedMar(likes);
+        model.addAttribute("chkLiked",chkLiked);
+        System.out.println("chkLiked : "+chkLiked);
 
-        if(chk==0) {
-            likesService.addLikeMar(like);
+        if(chkLiked==0) {
+            likesService.addLikeMar(likes);
             result = "liked";
-        } else if ( chk == 1) {
-            likesService.removeLikeMar(like);
+        } else if ( chkLiked == 1) {
+            likesService.removeLikeMar(likes);
             result = "unliked";
         }
 
