@@ -76,7 +76,9 @@ public class MarketCtrl {
     }
 
     @GetMapping("/marketInsert")
-    public String insertMarket(Model model,String msg) throws Exception {
+    public String insertMarket(Model model,String msg, Principal principal) throws Exception {
+        String sid = principal != null ? principal.getName() : "";
+        model.addAttribute("sid",sid);
         model.addAttribute("msg", msg);
         System.out.println(msg);
         return "market/marketInsert";
@@ -181,7 +183,7 @@ public class MarketCtrl {
     }
 
     @GetMapping("/detail")
-    public String marketDetail(@RequestParam("marketNo") int marketNo, Principal principal, Model model)throws Exception{
+    public String marketDetail(@RequestParam("marketNo") int marketNo, Principal principal,Model model)throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
         List<Photos> photosList = photosService.photosList(marketNo);
 
@@ -197,6 +199,7 @@ public class MarketCtrl {
         if(marketService.marketDetail(marketNo).getReadable() == 0){
             model.addAttribute("photosList",photosList);
             model.addAttribute("market",market);
+            model.addAttribute("sid",sid);
             return "market/marketDetail";
         }else {
             model.addAttribute("msg", "열람 불가능한 글입니다.");
@@ -280,6 +283,7 @@ public class MarketCtrl {
 
     @GetMapping("/delete")
     public String marketDelete(@RequestParam int marketNo)throws Exception{
+
         marketService.marketDelete(marketNo);
         return "redirect:/market/marketList";
     }
