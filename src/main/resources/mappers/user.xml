@@ -56,11 +56,41 @@
     </insert>
 
     <select id="userList" resultType="com.tsherpa.team35.entity.User">
-        select * from user where role_id != 1
+        select * from user
+        <where>
+            <if test="type != null">
+                <trim prefixOverrides="OR">
+                    <choose>
+                        <when test="type == 'I'.toString()">
+                            login_id LIKE concat('%', #{keyword}, '%')
+                        </when>
+                        <when test="type == 'N'.toString()">
+                            user_name LIKE concat('%', #{keyword}, '%')
+                        </when>
+                    </choose>
+                </trim>
+            </if>
+            AND role_id != 1
+        </where>
     </select>
 
     <select id="getCount" resultType="integer">
-        select COUNT(*) from user where role_id != 1
+        select COUNT(*) from user
+        <where>
+            <if test="type != null">
+                <trim prefixOverrides="OR">
+                    <choose>
+                        <when test="type == 'I'.toString()">
+                            login_id LIKE concat('%', #{keyword}, '%')
+                        </when>
+                        <when test="type == 'N'.toString()">
+                            user_name LIKE concat('%', #{keyword}, '%')
+                        </when>
+                    </choose>
+                </trim>
+            </if>
+            AND role_id != 1
+        </where>
     </select>
 
     <!--    회원 정보 수정-->
