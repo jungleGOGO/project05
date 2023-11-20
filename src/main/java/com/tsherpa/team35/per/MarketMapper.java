@@ -17,7 +17,12 @@ public interface MarketMapper {
     public DetailVO detailVOList(int marketNo) throws Exception;
     public MainVO mainlistForDetailVOList(int marketNo) throws Exception;
     public void marketDelete(int marketNo) throws Exception;
+
+    public void marketEdit(Market market) throws Exception;
+
+
     public void readable(int readable,int marketNo);
+
 
     public int cntSell(String loginId);
     public List<MainVO> userMainVOList(String loginId);

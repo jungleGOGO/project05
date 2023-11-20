@@ -95,31 +95,36 @@
           <form>
             <div class="row g-3">
               <div class="col-12 col-sm-6">
+                  <label for="titles" class="form-label">제목</label>
 <!--                <input type="text" th:value="${market.title}" class="form-control border-0" placeholder="상품이름" style="height: 55px;">-->
-                <p th:text="${market.title}"></p>
+                <p class="form-control border-1" th:text="${market.title}" id="titles"></p>
               </div>
               <div class="col-12 col-sm-6">
+                  <label for="price" class="form-label">희망가격</label>
 <!--                <input type="text" class="form-control border-0" placeholder="상품 가격" style="height: 55px;">-->
-                  <p th:text="${market.price+' 원'}"></p>
+                  <p class="form-control border-1"  th:text="${market.price+' 원'}" id="price"></p>
               </div>
               <div class="col-12 col-sm-6">
+                  <label for="loginId" class="form-label">작성자</label>
 <!--                <input type="text" class="form-control border-0" placeholder="작성자" style="height: 55px;">-->
-                  <p th:text="${market.loginId}"></p>
+                  <p class="form-control border-1"  th:text="${market.loginId}" id="loginId"></p>
               </div>
-              <div class="col-12 col-sm-6">
-<!--                <input type="text" class="form-control border-0" placeholder="상품상태" style="height: 55px;">-->
-                  <p th:text="${'상태 : '+market.conditions}"></p>
-              </div>
+                <div class="col-12 col-sm-6">
+                    <label for="conditions" class="form-label">상품 상태</label>
+                    <p class="form-control border-1"  id="conditions" th:text="${market.conditions == '0' ? '상' : (market.conditions == '1' ? '중' : '하')}"></p>
+                </div>
               <div class="col-12">
+                  <label for="content" class="form-label">내용</label>
 <!--                <textarea class="form-control border-0" placeholder="상품설명" style="height: 150px;"></textarea>-->
-                  <p th:text="${market.content}"></p>
+                  <p class="form-control border-4"  id="content" th:text="${market.content}"></p>
               </div>
 
               <div id="map" style="width:100%;height:400px; position: relative; overflow: hidden; background: rgb(248, 249, 250);" tabindex="0">
 
               </div>
               <div>
-                  <p th:text="${market.selectedAddress}"></p>
+                  <label for="addr" class="form-label">거래희망지역</label>
+                  <p th:text="${market.selectedAddress}" id="addr"></p>
                   <p th:text="${market.detailAddress}"></p>
 <!--                  <input type="text" th:value="${market.selectedAddress}" placeholder="선택 위치" id="selectedAddress" name="selectedAddress" style="width: 300px" readonly>-->
 <!--                <input type="text" th:value="${market.detailAddress}" placeholder="상세 위치" id="detailAddress" name="detailAddress"><br>-->
