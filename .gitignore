@@ -17,7 +17,7 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-/log/team35RestApiLog.log
+/log/**
 .DS_Store
 
 ### IntelliJ IDEA ###
