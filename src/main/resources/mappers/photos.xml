@@ -18,4 +18,15 @@
     <select id="photosList" resultType="com.tsherpa.team35.entity.Photos">
         select * from photos where marketNo=#{marketNo}
     </select>
+
+    <update id="photosEdit">
+        update photos
+        set
+        <foreach collection="fileInfoList" item="photos" separator=" , ">
+            marketNo = #{marketNo},
+            savefolder = #{photos.saveFolder},
+            originfile = #{photos.originFile},
+            savefile = #{photos.saveFile}
+        </foreach>
+    </update>
 </mapper>

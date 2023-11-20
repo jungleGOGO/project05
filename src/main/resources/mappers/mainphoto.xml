@@ -14,4 +14,19 @@
     <delete id="mainphotoDelete">
         delete from mainphoto where marketNo=#{marketNo}
     </delete>
+
+    <update id="mainphotoEdit">
+        update mainphoto
+        set
+        <foreach collection="mainphotoList" item="mainphoto" separator=" , ">
+            marketNo = #{marketNo},
+            savefolder = #{mainphoto.saveFolder},
+            originfile = #{mainphoto.originFile},
+            savefile = #{mainphoto.saveFile}
+        </foreach>
+    </update>
+
+    <select id="mainphotoList" resultType="com.tsherpa.team35.entity.Mainphoto">
+        select * from mainphoto where marketNo=#{marketNo}
+    </select>
 </mapper>
