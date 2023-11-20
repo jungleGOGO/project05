@@ -106,8 +106,8 @@
               <div class="col-12" style="margin-left: 70px;">
                 <button class="btn btn-primary w-25 py-3" type="button">
                   찜하기
-                  <i class="fa-solid fa-heart" th:if="${chkLiked == 1}" th:onclick="|toggleLike()|" style="color: red"></i>
-                  <i class="fa-solid fa-heart" th:unless="${chkLiked == 1}" th:onclick="|toggleLike()|"></i>
+                  <i class="fa-solid fa-heart" th:if="${chkLiked == 1 }" th:onclick="|toggleLike()|" style="color: red"></i>
+                  <i class="fa-solid fa-heart" th:unless="${chkLiked == 1 }" th:onclick="|toggleLike()|"></i>
                 </button>
                 <button class="btn btn-primary w-25 py-3" type="button">신고하기
                 <img th:src="${'/image/siren5050.png'}"  id="ck_btn" onclick="repCheck()" style="width: 20px; height: 20px;" />
