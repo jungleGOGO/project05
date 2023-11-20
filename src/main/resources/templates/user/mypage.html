@@ -200,7 +200,14 @@
                         <p th:text="${mk.marketNo != null and mk.marketNo != 0} ? '삽니다' : '팝니다'" id="cate" style="margin-bottom: 0"></p>
                     </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </td>
                     <td class="border-bottom-0">
-                            <a th:text="${mk.title}" th:href="@{/market/detail(marketNo=${mk.marketNo})}" id="title" ></a>
+                        <a th:text="${mk.title}"
+                           th:href="${(mk.marketNo != null and mk.marketNo != 0) ? ('/market/detail?marketNo=' + mk.marketNo) : ('/request/reqDetail?reqNo=' + mk.reqNo)}"
+                           id="title"></a>
+
+
+                        <!--                            <a th:text="${mk.title}" th:href="@{/market/detail(marketNo=${mk.marketNo})}" id="title" ></a>-->
+<!--                            <a th:text="${mk.title}" th:href="@{/request/reqDetail(reqNo=${request.reqNo})}" id="title" ></a>-->
+
                     </td>
                     <td class="border-bottom-0">
                             <p class="mb-0 fw-normal" th:text="${mk.reason}"></p>
