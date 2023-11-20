@@ -181,9 +181,12 @@ public class MarketCtrl {
     }
 
     @GetMapping("/detail")
-    public String marketDetail(@RequestParam("marketNo") int marketNo, Model model)throws Exception{
+    public String marketDetail(@RequestParam("marketNo") int marketNo, Model model,Principal principal)throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
         List<Photos> photosList = photosService.photosList(marketNo);
+
+
+        String sid = principal != null ? principal.getName() : "";
 
 
         if(marketService.marketDetail(marketNo).getReadable() == 0){
