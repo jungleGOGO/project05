@@ -26,4 +26,6 @@ public interface ReportMapper {
     void activeUpdate(User user);
     int reportchkReq(int reqNo, String loginId);
     int reportchkMar(int marketNo,String loginId);
+    List<Report> userReportList(String loginId);
+    public void reportCancel(int reportId);
 }

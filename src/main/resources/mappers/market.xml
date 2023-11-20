@@ -42,6 +42,15 @@
         UPDATE market SET readable=#{readable} WHERE marketNo=#{marketNo}
     </update>
 
+
+    <select id="cntSell" resultType="int">
+        select count(*) from market where login_id = #{loginId}
+    </select>
+
+    <select id="userMainVOList" resultType="com.tsherpa.team35.entity.MainVO">
+        select * from mainlist where login_id = #{loginId} order by regdate desc
+    </select>
+
     <select id="getMarketCnt" resultType="Integer">
         select count(*) from market
     </select>

@@ -47,6 +47,11 @@ public class RequestService {
         requestMapper.readable(readable, reqNo);
     }
 
+
+    public List<Request> userRequestList(String loginId) {
+        return requestMapper.userRequestList(loginId);
+    }
+
     public int getRequestCnt() throws Exception {
         return requestMapper.getRequestCnt();
     }
