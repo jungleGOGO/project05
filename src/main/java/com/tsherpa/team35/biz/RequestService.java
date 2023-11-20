@@ -45,4 +45,8 @@ public class RequestService {
     public void readable(int readable,int reqNo){
         requestMapper.readable(readable, reqNo);
     }
+
+    public List<Request> userRequestList(String loginId) {
+        return requestMapper.userRequestList(loginId);
+    }
 }

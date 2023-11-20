@@ -78,7 +78,7 @@
 <!--    <h2 class="mb-4">MyPage</h2>-->
     <!-- Bootstrap 탭 컨테이너 -->
     <div class="row">
-        <div class="col-8" style="background-color: #ececec; height: 250px; margin: 0 auto">
+        <div class="col-9" style="background-color: #ececec; height: 250px; margin: 0 auto">
             <div style="float: left">
                 <div style="background-color: #d5d5d5; width: 120px; margin: 30px 0 0 30px; border-radius: 10px">
                     <img th:src="@{/image/person.svg}" alt="" width="120px">
@@ -95,11 +95,11 @@
                         <tr>
                             <td>
                                 <img th:src="@{/image/storefront.svg}" alt="">마켓 개설일
-                                <p th:text="'1234일'+'&nbsp;'+'전'">1234</p>
+                                <p th:text="${marketOpen}">1234</p>
                             </td>
                             <td>
                                 <img th:src="@{/image/sell.svg}" alt="">판매 상품
-                                <p th:text="'1234'+'&nbsp;'+'개'">1234</p>
+                                <p th:text="${cntSell}+'&nbsp;'+'개'">1234</p>
                             </td>
                             <td>
                                 <img th:src="@{/image/bag.svg}" alt="">거래 수
@@ -120,7 +120,7 @@
 
     </div>
 
-    <ul class="nav nav-tabs justify-content-center col-8" id="myTab" role="tablist" style="margin: 0 auto; padding-top: 20px;">
+    <ul class="nav nav-tabs justify-content-center col-9" id="myTab" role="tablist" style="margin: 0 auto; padding-top: 20px;">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="sell-tab" data-bs-toggle="tab" data-bs-target="#sell" type="button" role="tab" aria-controls="home" aria-selected="true">판매</button>
         </li>
@@ -128,19 +128,94 @@
             <button class="nav-link" id="buy-tab" data-bs-toggle="tab" data-bs-target="#buy" type="button" role="tab" aria-controls="profile" aria-selected="false">구매</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="like-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">좋아요</button>
+            <button class="nav-link" id="like-tab" data-bs-toggle="tab" data-bs-target="#like" type="button" role="tab" aria-controls="like" aria-selected="false">좋아요</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="report-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">신고</button>
+            <button class="nav-link" id="report-tab" data-bs-toggle="tab" data-bs-target="#report" type="button" role="tab" aria-controls="report" aria-selected="false">신고</button>
         </li>
     </ul>
 
     <!-- 탭 콘텐츠 -->
-    <div class="tab-content col-8" id="myTabContent" style="margin: 0 auto; padding-top: 20px">
-        <div class="tab-pane fade col-8 show active" id="sell" role="tabpanel" aria-labelledby="sell-tab">...Home content...</div>
-        <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">...Profile content...</div>
-        <div class="tab-pane fade" id="like" role="tabpanel" aria-labelledby="like-tab">...Contact content...</div>
-        <div class="tab-pane fade" id="report" role="tabpanel" aria-labelledby="report-tab">...Contact content...</div>
+    <div class="tab-content col-9" id="myTabContent" style="margin: 0 auto; padding-top: 20px">
+        <div class="tab-pane fade col-9 show active" id="sell" role="tabpanel" aria-labelledby="sell-tab">
+
+                <div class="col-md-4 col-lg-4 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" style="width: 350px;height:430.58px;">
+                    <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
+                        <div class="overflow-hidden">
+                            <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
+                        </div>
+                        <div class="p-4 text-center border border-5 border-light border-top-0">
+                            <h4 class="mb-3" th:text="${market.title}"></h4>
+                            <p>거래장소: <span th:text="${#strings.length(market.selectedAddress) &lt;= 15} ? ${market.selectedAddress} : ${#strings.substring(market.selectedAddress, 0, 10) + '...'}"></span></p><p>등록일:  <span th:if="${market.regdate != null}" th:text="${#strings.substring(market.regdate.toString(), 0, 10)}"></span></p>
+                            <a class="fw-medium" th:href="@{/market/detail(marketNo=${market.marketNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+        <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">
+            <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" style="width: 431.98px;height:430.58px;">
+                <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
+                    <div class="overflow-hidden">
+                        <img class="img-fluid" th:src="${request.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
+                    </div>
+                    <div class="p-4 text-center border border-5 border-light border-top-0">
+                        <h4 class="mb-3" th:text="${request.title}"></h4>
+                        <p>거래희망장소: <span th:text="${request.addr}"></span></p><p>등록일: <span th:text="${request.regdate}"></span></p>
+                        <a class="fw-medium" th:href="@{/request/reqDetail(reqNo=${request.reqNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="tab-pane fade" id="like" role="tabpanel" aria-labelledby="like-tab">
+
+
+        </div>
+        <div class="tab-pane fade" id="report" role="tabpanel" aria-labelledby="report-tab">
+            <table class="table text-nowrap mb-0 align-middle">
+                <thead class="text-dark fs-4">
+                <tr>
+                    <th class="border-bottom-0" style="width: 10%">
+                        <h6 class="fw-semibold mb-0" style="text-align: center">번호</h6>
+                    </th>
+                    <th class="border-bottom-0" style="width: 10%">
+                        <h6 class="fw-semibold mb-0" style="text-align: center">분류</h6>
+                    </th>
+                    <th class="border-bottom-0" style="width: 35%">
+                        <h6 class="fw-semibold mb-0" style="text-align: center">제목</h6>
+                    </th>
+                    <th class="border-bottom-0" style="width: 35%">
+                        <h6 class="fw-semibold mb-0" style="text-align: center">사유</h6>
+                    </th>
+                    <th class="border-bottom-0" style="width: 10%">
+                        <h6 class="fw-semibold mb-0" style="text-align: center">비고</h6>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="mk, mkStat : ${reportList}">
+                    <td class="border-bottom-0"><h6 class="fw-semibold mb-0"  style="text-align: center" th:text="${mkStat.index+1}"></h6></td>
+                    <td class="border-bottom-0">
+                        <p th:text="${mk.marketNo != null and mk.marketNo != 0} ? '삽니다' : '팝니다'" id="cate" style="margin-bottom: 0"></p>
+                    </td>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </td>
+                    <td class="border-bottom-0">
+                            <a th:text="${mk.title}" th:href="@{/market/detail(marketNo=${mk.marketNo})}" id="title" ></a>
+                    </td>
+                    <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal" th:text="${mk.reason}"></p>
+                    </td>
+                    <td class="border-bottom-0">
+                            <a class="button" th:href="@{/report/reportCancel(reportId=${mk.reportId})}" >취소</a>
+                    </td>
+                </tr>
+                <tr th:if="${reportList.isEmpty()}">
+                    <td colspan="6">신고 내역이 없습니다.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
 </div>
