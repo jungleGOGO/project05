@@ -89,8 +89,8 @@ public class ChatCtrl {
         return path;
     }
 
-    @GetMapping("/productChatList/{roomId}")
-    public String productChatList(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, @PathVariable(required = false) Long roomId, Model model, Principal principal) throws Exception {
+    @GetMapping("/productChatList")
+    public String productChatList(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, @RequestParam("roomId") Long roomId, Model model, Principal principal) throws Exception {
 
         System.out.println("판매자 제품 채팅");
         System.out.println(">>>>>>>>>>>>>>>>>>" + roomId);
@@ -115,8 +115,8 @@ public class ChatCtrl {
         }
     }
 
-    @GetMapping("/myChatList/{roomId}")
-    public String myChatList(@PathVariable(required = false) Long roomId, Model model, Principal principal) throws Exception {
+    @GetMapping("/myChatList")
+    public String myChatList(@RequestParam("roomId") Long roomId, Model model, Principal principal) throws Exception {
 
         System.out.println("내 채팅 내역");
         System.out.println(">>>>>>>>>>>>>>>>>>" + roomId);
@@ -159,9 +159,10 @@ public class ChatCtrl {
             model.addAttribute("path", "/chat/myChatList");
 
             return "chat/list";
+        } else {
+            System.out.println("xxxxx");
+            return "redirect:/";
         }
-        System.out.println("xxxxx");
-        return "redirect:/";
     }
 
     /*@GetMapping("/myChatList")
