@@ -3,6 +3,7 @@
 <mapper namespace="com.tsherpa.team35.per.LikesMapper">
 
     <resultMap id="Likes" type="com.tsherpa.team35.entity.Likes">
+        <result property="lno" column="lno" />
         <result property="loginId" column="login_id" />
         <result property="marketNo" column="marketNo" />
         <result property="reqNo" column="req_no" />
@@ -35,12 +36,12 @@
 
     <select id="marketLikeList" resultType="com.tsherpa.team35.entity.Likes">
         select a.marketNo, a.login_id, a.liketime, b.title
-        from likes a join market b on b.marketNo=b.marketNo where login_id = #{loginId} order by liketime desc
+        from likes a join market b on b.marketNo=b.marketNo where a.login_id = #{loginId} order by liketime desc
     </select>
 
     <select id="requestLikeList" resultType="com.tsherpa.team35.entity.Likes">
         select a.req_no, a.login_id, a.liketime, b.title
-        from likes a join request b on b.req_no=b.req_no where login_id = #{loginId} order by liketime desc
+        from likes a join request b on b.req_no=b.req_no where a.login_id = #{loginId} order by liketime desc
     </select>
 
 </mapper>
