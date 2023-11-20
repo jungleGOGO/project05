@@ -76,4 +76,12 @@ public class MarketService {
 
     }
 
+    public int cntSell(String loginId) {
+        return marketMapper.cntSell(loginId);
+    }
+
+    public List<MainVO> userMainVOList(String loginId) {
+        return marketMapper.userMainVOList(loginId);
+    }
+
 }

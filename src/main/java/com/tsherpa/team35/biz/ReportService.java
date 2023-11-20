@@ -30,4 +30,6 @@ public class ReportService {
     public void activeUpdate(User user) { reportMapper.activeUpdate(user); }
     public int reportchkReq(int reqNo, String loginId) { return reportMapper.reportchkReq(reqNo, loginId); }
     public int reportchkMar(int marketNo, String loginId) { return reportMapper.reportchkMar(marketNo, loginId); }
+    public List<Report> userReportList(String loginId) {return reportMapper.userReportList(loginId);    }
+    public void reportCancel(int reportId) { reportMapper.reportCancel(reportId); }
 }

@@ -50,6 +50,16 @@
     </update>
 
 
+<<<<<<< HEAD
+=======
+    <select id="cntSell" resultType="int">
+        select count(*) from market where login_id = #{loginId}
+    </select>
+
+    <select id="userMainVOList" resultType="com.tsherpa.team35.entity.MainVO">
+        select * from mainlist where login_id = #{loginId} order by regdate desc
+    </select>
+>>>>>>> fae8ca9d1fc6b860fe4f5d4a5e05b84219fe843a
 
     <select id="getMarketCnt" resultType="Integer">
         select count(*) from market

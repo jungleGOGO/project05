@@ -160,4 +160,10 @@ public class ReportCtrl {
         return "report/reportSuc";
     }
 
+    @GetMapping("/report/reportCancel")
+    public String reportCancel(@RequestParam("reportId") int reportId) {
+        reportService.reportCancel(reportId);
+        return "redirect:/mypage";
+    }
+
 }

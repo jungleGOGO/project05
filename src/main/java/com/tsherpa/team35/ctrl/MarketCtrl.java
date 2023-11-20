@@ -85,6 +85,7 @@ public class MarketCtrl {
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     public String write(Market market, @RequestParam("upfile") MultipartFile[] repImage,@RequestParam("detailFile") MultipartFile[] detailImages ,HttpServletRequest req, Model model, RedirectAttributes rttr, Principal principal) throws Exception {
 
+<<<<<<< HEAD
         if (!isValidFileExtension(repImage) || !isValidFileExtension(detailImages)) {
             // 확장자가 허용되지 않는 파일이 포함되어 있으면 에러 메시지 전달
             String msg = "파일 형식을 확인해주세요";
@@ -97,6 +98,10 @@ public class MarketCtrl {
         System.out.println("상세사진 값들:"+detailImages);
         String realPath = "C://upload/";
 //        String realPath = "/Users/juncheol/Desktop/fileupload";    // 업로드 경로 설정
+=======
+//        String realPath = "C://upload/";
+        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
+>>>>>>> fae8ca9d1fc6b860fe4f5d4a5e05b84219fe843a
 
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
         String repImageSaveFolder = "rep_images/" + today;
