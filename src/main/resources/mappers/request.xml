@@ -58,4 +58,8 @@
         select * from request order by regdate desc limit 3
     </select>
 
+    <select id="getInfo" resultType="com.tsherpa.team35.entity.Request">
+        select * from request where login_id = #{loginId}
+    </select>
+
 </mapper>

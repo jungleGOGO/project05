@@ -1,5 +1,6 @@
 package com.tsherpa.team35.biz;
 
+import com.tsherpa.team35.entity.MainVO;
 import com.tsherpa.team35.entity.Request;
 import com.tsherpa.team35.per.RequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,10 @@ public class RequestService {
 
     public List<Request> getRequestListForMain() throws Exception {
         return requestMapper.getRequestListForMain();
+    }
+
+    public List<Request> getInfo(String loginId) throws Exception {
+        return requestMapper.getInfo(loginId);
     }
 
 }

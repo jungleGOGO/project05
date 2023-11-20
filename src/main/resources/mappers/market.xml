@@ -50,4 +50,8 @@
         select * from mainlist order by regdate desc limit 3
     </select>
 
+    <select id="getInfo" resultType="com.tsherpa.team35.entity.MainVO">
+        select * from mainlist where login_id = #{loginId}
+    </select>
+
 </mapper>

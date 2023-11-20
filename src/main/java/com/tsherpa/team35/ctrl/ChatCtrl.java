@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -59,7 +60,8 @@ public class ChatCtrl {
 
             if(id.equals(sid)){
                 // 로그인한 아이디가 판매자 아이디가 같을 때
-                path += "myChatList?productId=" + productNo + "&productTable=" + productTable;
+                //path += "myChatList?productId=" + productNo + "&productTable=" + productTable;
+                path += "productChatList?productId=" + productNo + "&productTable=" + productTable;
             } else {
                 // 로그인한 아이디가 판매자 아이디가 아닐 때
                 ChatRoomVO chatRoomVO = chatService.chatRoomAllList(productNo, productTable, sid);
@@ -74,7 +76,8 @@ public class ChatCtrl {
                 } else {
                     roomId = chatRoomVO.getRoomId();
                 }
-                path += "getChat/" + roomId;
+                path += "myChatList?roomId=" + roomId;
+                //path += "getChat/" + roomId;
             }
         } else {
             if(productTable.equals("market")) {
@@ -86,7 +89,80 @@ public class ChatCtrl {
         return path;
     }
 
+    @GetMapping("/productChatList")
+    public String productChatList(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, @PathVariable(required = false) Long roomId, Model model, Principal principal) throws Exception {
+
+        System.out.println("판매자 제품 채팅");
+        System.out.println(">>>>>>>>>>>>>>>>>>" + roomId);
+        if(principal != null) {
+            String sid = principal.getName();
+            List<ChatRoomVO> roomList = chatService.chatRoomAllListByProduct(productId, productTable);
+            if (roomList != null) {
+                model.addAttribute("roomList", roomList);
+            }
+
+            model.addAttribute("path", "/chat/productChatList");
+
+            return "chat/list";
+        } else {
+            String path = "redirect:/";
+            if (productTable.equals("market")) {
+                path += "market/marketList";
+            } else if (productTable.equals("request")) {
+                path += "request/reqList";
+            }
+            return path;
+        }
+    }
+
     @GetMapping("/myChatList")
+    public String myChatList(@PathVariable(required = false) Long roomId, Model model, Principal principal) throws Exception {
+        
+        System.out.println("내 채팅 내역");
+        System.out.println(">>>>>>>>>>>>>>>>>>" + roomId);
+        if(principal != null) {
+            List<ChatRoomVO> roomList = new ArrayList<>();
+            String sid = principal.getName();
+            roomList = chatService.chatRoomAllListByBuyerId(sid);
+
+            List<MainVO> marketList = marketService.getInfo(sid);
+            if(marketList != null) {
+                for(MainVO market : marketList) {
+                    List<ChatRoomVO> marketRoomList = chatService.chatRoomAllListByProduct(market.getMarketNo(), "market");
+                    if(marketRoomList != null) {
+                        for(ChatRoomVO marketChat : marketRoomList) {
+                            marketChat.setProductName("[ " + market.getTitle() + " ] ");
+                        }
+                        roomList.addAll(marketRoomList);
+                    }
+                }
+            }
+
+            List<Request> requestList = requestService.getInfo(sid);
+            if(requestList != null) {
+                for(Request request : requestList) {
+                    List<ChatRoomVO> requestRoomList = chatService.chatRoomAllListByProduct(request.getReqNo(), "request");
+                    if(requestRoomList != null) {
+                        for(ChatRoomVO requestChat : requestRoomList) {
+                            requestChat.setProductName("[ " + request.getTitle() + " ] ");
+                        }
+                        roomList.addAll(requestRoomList);
+                    }
+                }
+            }
+
+            if (roomList != null) {
+                model.addAttribute("roomList", roomList);
+            }
+
+            model.addAttribute("path", "/chat/myChatList");
+
+            return "chat/list";
+        }
+        return "redirect:/";
+    }
+
+    /*@GetMapping("/myChatList")
     public String roomList(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, @PathVariable(required = false) Long roomId, Model model, Principal principal) throws Exception {
         if(principal != null) {
             String sid = principal.getName();
@@ -130,7 +206,7 @@ public class ChatCtrl {
             }
             return path;
         }
-    }
+    }*/
 
     @GetMapping("/getChat/{roomId}")
     public String joinRoom(@PathVariable(required = false) Long roomId, Model model, Principal principal) throws Exception {
