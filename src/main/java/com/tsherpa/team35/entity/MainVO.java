@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class MainVO {
     private int marketNo;
     private String title;
+    private int readable;
     private int price;
     private String content;
     private String loginId;

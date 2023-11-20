@@ -40,7 +40,7 @@
                             <a th:href="@{/mypage}" class="nav-item nav-link">마이페이지</a>
                         </th:block>
                         <th:block sec:authorize="hasRole('EMP') || hasRole('ADMIN')">
-                            <a th:href="@{/admin/dashboard}" class="nav-item nav-link">관리자 홈페이지</a>
+                            <a th:href="@{/admin/userList}" class="nav-item nav-link">관리자 홈페이지</a>
                         </th:block>
                     </th:block>
                 </div>
