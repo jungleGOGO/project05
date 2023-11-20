@@ -196,6 +196,8 @@ public class MarketCtrl {
         model.addAttribute("chkLiked",chkLiked);
         System.out.println("chkLiked : "+chkLiked);
 
+
+
         if(marketService.marketDetail(marketNo).getReadable() == 0){
             model.addAttribute("photosList",photosList);
             model.addAttribute("market",market);
