@@ -19,6 +19,7 @@ bin/
 
 /log/**
 .DS_Store
+log/
 
 ### IntelliJ IDEA ###
 .idea
