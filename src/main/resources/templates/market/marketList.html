@@ -61,7 +61,14 @@
 </div>
 
 <div>
-  <a class="btn btn-primary px-4" th:href="@{/market/marketInsert}">글쓰기</a>
+    <th:block sec:authorize="isAnonymous()">
+  <a class="btn btn-primary px-4"   th:href="@{/login}">글쓰기</a>
+    </th:block>
+    <th:block sec:authorize="isAuthenticated()">
+        <th:block sec:authorize="hasRole('USER') || hasRole('ADMIN')">
+  <a class="btn btn-primary px-4"  th:href="@{/market/marketInsert}">글쓰기</a>
+        </th:block>
+    </th:block>
 </div>
 <!-- Service End -->
 
