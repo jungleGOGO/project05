@@ -6,6 +6,7 @@ import com.tsherpa.team35.biz.LikesService;
 import com.tsherpa.team35.biz.MarketService;
 import com.tsherpa.team35.biz.PhotosService;
 import com.tsherpa.team35.entity.*;
+import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -56,7 +57,14 @@ public class MarketCtrl {
     }
 
     @GetMapping("/marketList")
-    public String list(Model model)throws Exception{
+    public String list(HttpServletRequest request, Model model)throws Exception{
+
+        Page page = new Page();
+        page.setType(request.getParameter("type"));
+        page.setKeyword(request.getParameter("keyword"));
+
+
+        model.addAttribute("page", page);
 
         List<MainVO> mainList = marketService.mainVOList();
         model.addAttribute("mainList",mainList);
