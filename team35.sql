@@ -128,6 +128,7 @@ SELECT
     m.marketNo AS marketNo,
     m.title,
     m.price,
+    m.readable,
     m.content,
     m.login_id,
     m.active,
@@ -166,19 +167,19 @@ CREATE TABLE request(
 
 INSERT INTO request (title, price, content, login_id, readable, addr, bookTitle, bookAuthor, publisher, bookImage, isbn, pubdate, discount)
 VALUES
-    ('책 제목 1', 5000, '책 설명 1', 'kim', 1,'주소 1', '도서 1', '저자 1', '출판사 1', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1234567890', '2022-01-01', '10'),
-    ('책 제목 2', 7000, '책 설명 2', 'user2',1, '주소 2', '도서 2', '저자 2', '출판사 2', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '0987654321', '2022-02-01', '15'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3',1, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3',1, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3', 1,'주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3',1, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3',1, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3',1, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3',1, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3',1, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3',1, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3',1, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
-    ('책 제목 3', 8000, '책 설명 3', 'user3',1, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20');
+    ('책 제목 1', 5000, '책 설명 1', 'kim', 0,'주소 1', '도서 1', '저자 1', '출판사 1', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1234567890', '2022-01-01', '10'),
+    ('책 제목 2', 7000, '책 설명 2', 'user2',0, '주소 2', '도서 2', '저자 2', '출판사 2', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '0987654321', '2022-02-01', '15'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', 0,'주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20');
 
 CREATE TABLE notice(
                        no INT PRIMARY KEY AUTO_INCREMENT,
@@ -294,3 +295,11 @@ CREATE TABLE chatList(
 );
 
 CREATE VIEW chatListView AS (SELECT r.chatId AS chatId, r.sendDate AS sendDate, r.message AS message, r.readYn AS readYn, r.roomId AS roomId, r.senderId AS senderId, u.user_name AS userName FROM chatList r LEFT JOIN user u ON r.senderId = u.login_id);
+
+CREATE TABLE likes (
+   lno INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   login_id VARCHAR(20) NOT NULL,
+   marketNo INT,
+   req_no INT,
+   liketime DATETIME DEFAULT CURRENT_TIMESTAMP
+);
