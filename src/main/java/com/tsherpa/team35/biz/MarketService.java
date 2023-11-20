@@ -56,6 +56,14 @@ public class MarketService {
         marketMapper.readable(readable, marketNo);
     }
 
+    public int getMarketCnt() throws Exception {
+        return marketMapper.getMarketCnt();
+    }
+
+    public List<MainVO> getMarketListForMain() throws Exception {
+        return marketMapper.getMarketListForMain();
+    }
+
     public int cntSell(String loginId) {
         return marketMapper.cntSell(loginId);
     }
@@ -63,4 +71,5 @@ public class MarketService {
     public List<MainVO> userMainVOList(String loginId) {
         return marketMapper.userMainVOList(loginId);
     }
+
 }

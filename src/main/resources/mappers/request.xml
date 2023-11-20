@@ -54,5 +54,12 @@
         select * from request where login_id = #{loginId} order by regdate desc
     </select>
 
+    <select id="getRequestCnt" resultType="Integer">
+        select count(*) from request
+    </select>
+
+    <select id="getRequestListForMain" resultType="com.tsherpa.team35.entity.Request">
+        select * from request order by regdate desc limit 3
+    </select>
 
 </mapper>

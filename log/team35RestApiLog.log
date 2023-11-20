@@ -1,0 +1,68 @@
+2023-11-20 00:03:08.529 INFO  [SpringApplicationShutdownHook] [o.s.m.s.b.SimpleBrokerMessageHandler] - Stopping...
+2023-11-20 00:03:08.532 INFO  [SpringApplicationShutdownHook] [o.s.m.s.b.SimpleBrokerMessageHandler] - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@17ac38ce]]
+2023-11-20 00:03:08.532 INFO  [SpringApplicationShutdownHook] [o.s.m.s.b.SimpleBrokerMessageHandler] - Stopped.
+2023-11-20 00:03:08.547 INFO  [SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] - HikariPool-2 - Shutdown initiated...
+2023-11-20 00:03:08.550 INFO  [SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] - HikariPool-2 - Shutdown completed.
+2023-11-20 00:03:11.508 INFO  [background-preinit] [o.h.validator.internal.util.Version] - HV000001: Hibernate Validator 6.2.5.Final
+2023-11-20 00:03:11.509 INFO  [restartedMain] [com.tsherpa.team35.Team35Application] - Starting Team35Application using Java 17.0.7 on Novah with PID 12880 (C:\Dev\IdeaProjects\project\team\project05\build\classes\java\main started by soumu in C:\Dev\IdeaProjects\project\team\project05)
+2023-11-20 00:03:11.510 INFO  [restartedMain] [com.tsherpa.team35.Team35Application] - No active profile set, falling back to 1 default profile: "default"
+2023-11-20 00:03:11.747 INFO  [restartedMain] [o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-11-20 00:03:11.748 INFO  [restartedMain] [o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-11-20 00:03:12.750 INFO  [restartedMain] [o.s.b.w.embedded.tomcat.TomcatWebServer] - Tomcat initialized with port(s): 8088 (http)
+2023-11-20 00:03:12.757 INFO  [restartedMain] [o.apache.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-8088"]
+2023-11-20 00:03:12.759 INFO  [restartedMain] [org.apache.catalina.core.StandardService] - Starting service [Tomcat]
+2023-11-20 00:03:12.759 INFO  [restartedMain] [org.apache.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/9.0.82]
+2023-11-20 00:03:12.886 INFO  [restartedMain] [org.apache.jasper.servlet.TldScanner] - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2023-11-20 00:03:12.894 INFO  [restartedMain] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2023-11-20 00:03:12.894 INFO  [restartedMain] [o.s.b.w.s.c.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 1146 ms
+2023-11-20 00:03:13.487 INFO  [restartedMain] [o.s.s.web.DefaultSecurityFilterChain] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@183a6c94, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@14fa4b83, org.springframework.security.web.context.SecurityContextPersistenceFilter@3f644446, org.springframework.security.web.header.HeaderWriterFilter@205b60bd, org.springframework.security.web.authentication.logout.LogoutFilter@4cb2242b, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@75e274b0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3136185, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@78ab9b24, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@74dabc07, org.springframework.security.web.session.SessionManagementFilter@374b151a, org.springframework.security.web.access.ExceptionTranslationFilter@55ac5904, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1e8e90bd]
+2023-11-20 00:03:13.743 INFO  [restartedMain] [o.s.b.d.a.OptionalLiveReloadServer] - LiveReload server is running on port 35729
+2023-11-20 00:03:13.759 INFO  [restartedMain] [o.apache.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-8088"]
+2023-11-20 00:03:13.780 INFO  [restartedMain] [o.s.b.w.embedded.tomcat.TomcatWebServer] - Tomcat started on port(s): 8088 (http) with context path ''
+2023-11-20 00:03:13.781 INFO  [restartedMain] [o.s.m.s.b.SimpleBrokerMessageHandler] - Starting...
+2023-11-20 00:03:13.782 INFO  [restartedMain] [o.s.m.s.b.SimpleBrokerMessageHandler] - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1a294588]]
+2023-11-20 00:03:13.782 INFO  [restartedMain] [o.s.m.s.b.SimpleBrokerMessageHandler] - Started.
+2023-11-20 00:03:13.792 INFO  [restartedMain] [com.tsherpa.team35.Team35Application] - Started Team35Application in 2.607 seconds (JVM running for 3.191)
+2023-11-20 00:03:23.302 INFO  [http-nio-8088-exec-1] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-20 00:03:23.302 INFO  [http-nio-8088-exec-1] [o.s.web.servlet.DispatcherServlet] - Initializing Servlet 'dispatcherServlet'
+2023-11-20 00:03:23.303 INFO  [http-nio-8088-exec-1] [o.s.web.servlet.DispatcherServlet] - Completed initialization in 1 ms
+2023-11-20 00:03:23.353 INFO  [http-nio-8088-exec-1] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2023-11-20 00:03:23.423 INFO  [http-nio-8088-exec-1] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+2023-11-20 00:04:13.579 INFO  [MessageBroker-2] [o.s.w.s.c.WebSocketMessageBrokerStats] - WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 3 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(3)-CONNECTED(3)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 16, active threads = 0, queued tasks = 0, completed tasks = 24], outboundChannel[pool size = 5, active threads = 0, queued tasks = 0, completed tasks = 5], sockJsScheduler[pool size = 8, active threads = 1, queued tasks = 2, completed tasks = 8]
+2023-11-20 00:05:42.133 INFO  [SpringApplicationShutdownHook] [o.s.m.s.b.SimpleBrokerMessageHandler] - Stopping...
+2023-11-20 00:05:42.133 INFO  [SpringApplicationShutdownHook] [o.s.m.s.b.SimpleBrokerMessageHandler] - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1a294588]]
+2023-11-20 00:05:42.133 INFO  [SpringApplicationShutdownHook] [o.s.m.s.b.SimpleBrokerMessageHandler] - Stopped.
+2023-11-20 00:05:42.156 INFO  [SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown initiated...
+2023-11-20 00:05:42.159 INFO  [SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown completed.
+2023-11-20 00:05:44.693 INFO  [background-preinit] [o.h.validator.internal.util.Version] - HV000001: Hibernate Validator 6.2.5.Final
+2023-11-20 00:05:44.697 INFO  [restartedMain] [com.tsherpa.team35.Team35Application] - Starting Team35Application using Java 17.0.7 on Novah with PID 10564 (C:\Dev\IdeaProjects\project\team\project05\build\classes\java\main started by soumu in C:\Dev\IdeaProjects\project\team\project05)
+2023-11-20 00:05:44.698 INFO  [restartedMain] [com.tsherpa.team35.Team35Application] - No active profile set, falling back to 1 default profile: "default"
+2023-11-20 00:05:44.919 INFO  [restartedMain] [o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-11-20 00:05:44.919 INFO  [restartedMain] [o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-11-20 00:05:45.945 INFO  [restartedMain] [o.s.b.w.embedded.tomcat.TomcatWebServer] - Tomcat initialized with port(s): 8088 (http)
+2023-11-20 00:05:45.951 INFO  [restartedMain] [o.apache.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-8088"]
+2023-11-20 00:05:45.953 INFO  [restartedMain] [org.apache.catalina.core.StandardService] - Starting service [Tomcat]
+2023-11-20 00:05:45.953 INFO  [restartedMain] [org.apache.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/9.0.82]
+2023-11-20 00:05:46.082 INFO  [restartedMain] [org.apache.jasper.servlet.TldScanner] - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2023-11-20 00:05:46.088 INFO  [restartedMain] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2023-11-20 00:05:46.088 INFO  [restartedMain] [o.s.b.w.s.c.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 1169 ms
+2023-11-20 00:05:46.143 WARN  [restartedMain] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Cannot deserialize session attribute [SPRING_SECURITY_CONTEXT] for session [B6603A9073D69BE779F9CB7BCB8238F5]
+2023-11-20 00:05:46.711 INFO  [restartedMain] [o.s.s.web.DefaultSecurityFilterChain] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@44eb3d7c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6030ab7f, org.springframework.security.web.context.SecurityContextPersistenceFilter@98abdfb, org.springframework.security.web.header.HeaderWriterFilter@248615c4, org.springframework.security.web.authentication.logout.LogoutFilter@630eaec3, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5b6f2b84, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5a629f06, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@461b6b64, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6eaf5ecb, org.springframework.security.web.session.SessionManagementFilter@1613a734, org.springframework.security.web.access.ExceptionTranslationFilter@5ebb8586, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6dbd405f]
+2023-11-20 00:05:46.961 INFO  [restartedMain] [o.s.b.d.a.OptionalLiveReloadServer] - LiveReload server is running on port 35729
+2023-11-20 00:05:46.977 INFO  [restartedMain] [o.apache.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-8088"]
+2023-11-20 00:05:46.998 INFO  [restartedMain] [o.s.b.w.embedded.tomcat.TomcatWebServer] - Tomcat started on port(s): 8088 (http) with context path ''
+2023-11-20 00:05:46.999 INFO  [restartedMain] [o.s.m.s.b.SimpleBrokerMessageHandler] - Starting...
+2023-11-20 00:05:47.000 INFO  [restartedMain] [o.s.m.s.b.SimpleBrokerMessageHandler] - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@62046e78]]
+2023-11-20 00:05:47.000 INFO  [restartedMain] [o.s.m.s.b.SimpleBrokerMessageHandler] - Started.
+2023-11-20 00:05:47.009 INFO  [restartedMain] [com.tsherpa.team35.Team35Application] - Started Team35Application in 2.663 seconds (JVM running for 3.48)
+2023-11-20 00:05:52.143 INFO  [http-nio-8088-exec-1] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-20 00:05:52.143 INFO  [http-nio-8088-exec-1] [o.s.web.servlet.DispatcherServlet] - Initializing Servlet 'dispatcherServlet'
+2023-11-20 00:05:52.144 INFO  [http-nio-8088-exec-1] [o.s.web.servlet.DispatcherServlet] - Completed initialization in 1 ms
+2023-11-20 00:05:52.207 INFO  [http-nio-8088-exec-5] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2023-11-20 00:05:52.278 INFO  [http-nio-8088-exec-5] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+2023-11-20 00:06:46.804 INFO  [MessageBroker-1] [o.s.w.s.c.WebSocketMessageBrokerStats] - WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 1 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(1)-CONNECTED(1)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 9, active threads = 0, queued tasks = 0, completed tasks = 9], outboundChannel[pool size = 2, active threads = 0, queued tasks = 0, completed tasks = 2], sockJsScheduler[pool size = 8, active threads = 1, queued tasks = 2, completed tasks = 9]
+2023-11-20 00:09:24.897 INFO  [SpringApplicationShutdownHook] [o.s.m.s.b.SimpleBrokerMessageHandler] - Stopping...
+2023-11-20 00:09:24.898 INFO  [SpringApplicationShutdownHook] [o.s.m.s.b.SimpleBrokerMessageHandler] - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@62046e78]]
+2023-11-20 00:09:24.898 INFO  [SpringApplicationShutdownHook] [o.s.m.s.b.SimpleBrokerMessageHandler] - Stopped.
+2023-11-20 00:09:24.938 INFO  [SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown initiated...
+2023-11-20 00:09:24.942 INFO  [SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Shutdown completed.
