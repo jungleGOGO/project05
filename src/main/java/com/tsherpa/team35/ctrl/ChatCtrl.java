@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,11 +44,11 @@ public class ChatCtrl {
         String path = "redirect:/";
 
         if(principal != null) {
-            
+
             path += "chat/";
             String sid = principal.getName();
             String id = "";
-            
+
             // 상품에 판매자 정보 가져오기
             if(productTable.equals("market")) {
                 DetailVO market = marketService.detailVOList(productNo);
@@ -59,7 +60,7 @@ public class ChatCtrl {
 
             if(id.equals(sid)){
                 // 로그인한 아이디가 판매자 아이디가 같을 때
-                path += "myChatList?productId=" + productNo + "&productTable=" + productTable;
+                path += "myProList?productId=" + productNo + "&productTable=" + productTable;
             } else {
                 // 로그인한 아이디가 판매자 아이디가 아닐 때
                 ChatRoomVO chatRoomVO = chatService.chatRoomAllList(productNo, productTable, sid);
@@ -86,39 +87,13 @@ public class ChatCtrl {
         return path;
     }
 
-    @GetMapping("/myChatList")
-    public String roomList(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, @PathVariable(required = false) Long roomId, Model model, Principal principal) throws Exception {
+    @GetMapping("/myProList")
+    public String roomList(@RequestParam("productId") int productId, @RequestParam("productTable") String productTable, Model model, Principal principal) throws Exception {
         if(principal != null) {
             String sid = principal.getName();
 
             List<ChatRoomVO> roomList = chatService.chatRoomAllListByProduct(productId, productTable);
             model.addAttribute("roomList", roomList);
-
-            if(roomId != null) {
-                ChatRoomVO chatRoomVO = chatService.getRoom(roomId);
-
-                String id = "";
-
-                if(chatRoomVO.getProductTable().equals("market")) {
-                    Market market = new Market();
-                    market.setLoginId("kim");
-
-                    id = market.getLoginId();
-
-                } else if (chatRoomVO.getProductTable().equals("request")) {
-                    Request request = new Request();
-                    request.setLoginId("kim");
-
-                    id = request.getLoginId();
-                }
-
-                if(chatRoomVO != null && (id.equals(sid) || chatRoomVO.getBuyerId().equals(sid))) {
-                    List<ChatListVO> chatList = chatService.getChat(roomId);
-                    model.addAttribute("roomId", roomId);
-                    model.addAttribute("chatList", chatList);
-                    //return "chat/get";
-                }
-            }
 
             return "chat/list";
         } else {
@@ -129,6 +104,42 @@ public class ChatCtrl {
                 path += "request/reqList";
             }
             return path;
+        }
+    }
+
+    @GetMapping("/myChatList")
+    public String myRoomList(Model model, Principal principal) throws Exception {
+        if(principal != null) {
+            String sid = principal.getName();
+
+            List<ChatRoomVO> roomList = new ArrayList<>();
+
+            //chatRoomAllListByProduct
+            List<MainVO> marketList = marketService.userMainVOList(sid);
+            if(marketList != null) {
+                for(MainVO market : marketList) {
+                    List<ChatRoomVO> marketChat = chatService.chatRoomAllListByProduct(market.getMarketNo(), "market");
+                    if(marketChat != null) roomList.addAll(marketChat);
+                }
+            }
+
+            List<Request> requestList = requestService.userRequestList(sid);
+            if(requestList != null) {
+                for(Request req : requestList) {
+                    List<ChatRoomVO> requestChat = chatService.chatRoomAllListByProduct(req.getReqNo(), "request");
+                    if(requestChat != null) roomList.addAll(requestChat);
+                }
+            }
+
+            //chatRoomAllListByBuyerId
+            List<ChatRoomVO> buyerList = chatService.chatRoomAllListByBuyerId(sid);
+            if(buyerList != null) roomList.addAll(buyerList);
+
+            model.addAttribute("roomList", roomList);
+
+            return "chat/list";
+        } else {
+            return "redirect:/";
         }
     }
 

@@ -88,4 +88,11 @@
     </select>
 
 
+    <select id="likeMarketList" resultType="com.tsherpa.team35.entity.MainVO">
+        select m.* from mainlist m join likes l on m.marketNo  = l.marketNo where l.login_id = #{loginId}
+    </select>
+    <select id="getInfo" resultType="com.tsherpa.team35.entity.MainVO">
+        select * from mainlist where login_id = #{loginId}
+    </select>
+
 </mapper>

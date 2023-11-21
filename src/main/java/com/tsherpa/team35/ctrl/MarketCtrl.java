@@ -107,7 +107,7 @@ public class MarketCtrl {
         System.out.println("대표사진 값들:"+repImage);
         System.out.println("상세사진 값들:"+detailImages);
         String realPath = "C://upload/";
-//        String realPath = "/Users/juncheol/Desktop/fileupload";    // 업로드 경로 설정
+//        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
 
 
 
@@ -120,12 +120,16 @@ public class MarketCtrl {
         File detailImageFolder = new File(realPath, detailImageSaveFolder);
 
 
-        if (!repImageFolder.exists()) {
-            repImageFolder.mkdirs();
-        }
+        try {
+            if (!repImageFolder.exists()) {
+                repImageFolder.mkdirs();
+            }
 
-        if (!detailImageFolder.exists()) {
-            detailImageFolder.mkdirs();
+            if (!detailImageFolder.exists()) {
+                detailImageFolder.mkdirs();
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // 로그 출력 또는 적절한 예외 처리
         }
         List<Mainphoto> mainphotoList = new ArrayList<>();
         for (MultipartFile mainphoto : repImage) {
@@ -300,10 +304,17 @@ public class MarketCtrl {
 
 
     @GetMapping("/edit")
-    public String marketEdit(@RequestParam int marketNo,MainVO mainVO, Model model) throws Exception{
+    public String marketEdit(@RequestParam int marketNo,MainVO mainVO, Model model,Principal principal) throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
         List<Photos> photosList = photosService.photosList(marketNo);
         List<Mainphoto> mainphotoList = mainphotoService.mainphotoList(marketNo);
+
+        //로그인한 사용자 아이디와 작성자 아이디 비교
+        String sid = principal != null ? principal.getName() : "";
+        if (!sid.equals(market.getLoginId())){
+            return "redirect:/";
+        }
+
         model.addAttribute("mainList",mainphotoList);
         model.addAttribute("photosList",photosList);
         model.addAttribute("market",market);

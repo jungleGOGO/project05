@@ -103,4 +103,12 @@
         </where>
     </select>
 
+
+    <select id="likeRequestList" resultType="com.tsherpa.team35.entity.Request">
+        select r.* from request r join likes l on r.req_no =l.req_no where l.login_id = #{loginId}
+    </select>
+    <select id="getInfo" resultType="com.tsherpa.team35.entity.Request">
+        select * from request where login_id = #{loginId}
+    </select>
+
 </mapper>

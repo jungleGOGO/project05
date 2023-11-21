@@ -1,9 +1,6 @@
 package com.tsherpa.team35.ctrl;
 
-import com.tsherpa.team35.biz.MarketService;
-import com.tsherpa.team35.biz.ReportService;
-import com.tsherpa.team35.biz.RequestService;
-import com.tsherpa.team35.biz.UserService;
+import com.tsherpa.team35.biz.*;
 import com.tsherpa.team35.entity.MainVO;
 import com.tsherpa.team35.entity.Report;
 import com.tsherpa.team35.entity.Request;
@@ -39,6 +36,9 @@ public class UserCtrl {
 
     @Autowired
     private ReportService reportService;
+
+    @Autowired
+    private LikesService likesService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -131,6 +131,12 @@ public class UserCtrl {
         model.addAttribute("reportList",reportList);
 
         //좋아요 목록
+        //팝니다
+        List<MainVO> likeMarket = marketService.likeMarketList(sid);
+        model.addAttribute("likeMarket",likeMarket);
+        //삽니다
+        List<Request> likeRequestList = requestService.likeRequestList(sid);
+        model.addAttribute("likeRequestList",likeRequestList);
 
         // 거래 누적 수
 
@@ -205,5 +211,11 @@ public class UserCtrl {
         }
 
         return "user/pwEdit";
+    }
+
+
+    @GetMapping("/findId")
+    public String findId() {
+        return "user/findId";
     }
 }

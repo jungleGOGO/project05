@@ -1,5 +1,6 @@
 package com.tsherpa.team35.per;
 
+import com.tsherpa.team35.entity.MainVO;
 import com.tsherpa.team35.entity.Request;
 import com.tsherpa.team35.util.Page;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,8 +21,10 @@ public interface RequestMapper {
     public void requestEditAll(Request request) throws Exception;
     public void readable(int readable,int reqNo);
     public List<Request> userRequestList(String loginId);
+    public List<Request> getInfo(String loginId) throws Exception;
     public int getRequestCnt() throws Exception;
     public List<Request> getRequestListForMain() throws Exception;
-    public int getReqCount(Page page);
+    public int getReqCount(Page page);    
+    public List<Request> likeRequestList(String loginId);
 
 }

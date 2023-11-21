@@ -1,5 +1,6 @@
 package com.tsherpa.team35.biz;
 
+import com.tsherpa.team35.entity.MainVO;
 import com.tsherpa.team35.entity.Request;
 import com.tsherpa.team35.per.RequestMapper;
 import com.tsherpa.team35.util.Page;
@@ -58,6 +59,13 @@ public class RequestService {
 
     public List<Request> getRequestListForMain() throws Exception {
         return requestMapper.getRequestListForMain();
+    }
+    public List<Request> likeRequestList(String loginId) {
+        return requestMapper.likeRequestList(loginId);
+    }
+
+    public List<Request> getInfo(String loginId) throws Exception {
+        return requestMapper.getInfo(loginId);
     }
 
     public int getReqCount(Page page){

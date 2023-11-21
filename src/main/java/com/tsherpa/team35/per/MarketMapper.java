@@ -22,8 +22,11 @@ public interface MarketMapper {
     public void readable(int readable,int marketNo);
     public int cntSell(String loginId);
     public List<MainVO> userMainVOList(String loginId);
+    public List<MainVO> getInfo(String loginId) throws Exception;
     public int getMarketCnt() throws Exception;
     public List<MainVO> getMarketListForMain() throws Exception;
     public int mainListCount(Page page);
+    public List<MainVO> likeMarketList(String loginId);
+
 
 }
