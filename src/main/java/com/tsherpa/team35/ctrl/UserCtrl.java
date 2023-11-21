@@ -146,8 +146,8 @@ public class UserCtrl {
         model.addAttribute("likeRequestList",likeRequestList);
 
         // 거래 누적 수
-
-
+        int cntDeal = userService.cntDeal(sid);
+        model.addAttribute("cntDeal",cntDeal);
 
         return "user/mypage";
     }
@@ -246,13 +246,12 @@ public class UserCtrl {
     }
 
 
+    //비밀번호 찾기
     @PostMapping("/findPw")
     @ResponseBody
     public String findPassword(@RequestParam String name, @RequestParam String email, @RequestParam String id, Model model) {
         User user = userService.getUserByLoginId(id);
-
         String result = "fail";
-
         if(name.equals(user.getUserName()) && email.equals(user.getEmail()) && id.equals(user.getLoginId())){
             //임시비밀번호 암호화해서 DB에 저장
             String tempPassword = userService.getRamdomPassword(8);
