@@ -215,7 +215,22 @@ public class UserCtrl {
 
 
     @GetMapping("/findId")
-    public String findId() {
-        return "user/findId";
+    public String findIdForm() {return "user/findId";}
+
+    @PostMapping("/findId")
+    public String findId(@RequestParam("email") String email, @RequestParam("tel") String tel, Model model) {
+
+        User user = userService.findId(email, tel);
+        String firstId = user.getLoginId().substring(0,3);
+
+        String lastId ="";
+        for(int i =0; i< (user.getLoginId().length()-3); i++) {
+            lastId += "*";
+        }
+
+        model.addAttribute("id",firstId+lastId);
+
+        return "user/findIdSuc";
     }
+
 }
