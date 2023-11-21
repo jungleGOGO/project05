@@ -199,14 +199,23 @@ public class ChatCtrl {
 
         if(principal != null) {
             String id = "";
+            String productNm = "";
+            String productTable = "";
+            Integer productId = 0;
 
             if(chatRoomVO.getProductTable().equals("market")) {
                 Market market = marketService.marketDetail(chatRoomVO.getProductId());
                 id = market.getLoginId();
+                productNm = market.getTitle();
+                productTable = "market";
+                productId = market.getMarketNo();
 
             } else if (chatRoomVO.getProductTable().equals("request")) {
                 Request request = requestService.requestDetail(chatRoomVO.getProductId());
                 id = request.getLoginId();
+                productNm = request.getTitle();
+                productTable = "request";
+                productId = request.getReqNo();
             }
 
             if(chatRoomVO != null && (id.equals(sid) || chatRoomVO.getBuyerId().equals(sid))) {
@@ -214,6 +223,9 @@ public class ChatCtrl {
                 model.addAttribute("roomId", roomId);
                 model.addAttribute("chatList", chatList);
                 model.addAttribute("loginId", sid);
+                model.addAttribute("productNm", productNm);
+                model.addAttribute("productTable", productTable);
+                model.addAttribute("productId", productId);
                 return "chat/get";
             }
         }

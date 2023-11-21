@@ -54,7 +54,6 @@ public class ReportCtrl {
         String sid = principal != null ? principal.getName() : "";
         int marketNo = Integer.parseInt(request.getParameter("marketNo"));
 
-
         int chk = reportService.reportchkMar(marketNo, sid);
 
         boolean result;

@@ -46,11 +46,11 @@ function loadChat(chatList){
         for(chat in chatList) {
             if(chatList[chat].senderId == loginId){
                 $("#chatting").append(
-                    "<div class='row right'><div class='col-md-auto align-self-end task-tooltip me-3 mt-3 p-3'>" + chatList[chat].message + "</div></div>"
+                    "<div class='row right'><div class='col'></div><div class='col-md-auto align-self-end task-tooltip me-3 mt-3 p-3'>" + chatList[chat].message + "</div></div>"
                 );
             } else {
                 $("#chatting").append(
-                    "<div class='row left'><div class='col-md-auto align-self-star task-tooltip ms-3 mt-3 p-3'>" + "[" + chatList[chat].userName + "] " + chatList[chat].message + "</div></div>"
+                    "<div class='row left'><div class='col-md-auto align-self-star task-tooltip ms-3 mt-3 p-3'>" + "[" + chatList[chat].userName + "] " + chatList[chat].message + "</div><div class='col'></div>"
                 );
             }
         }
@@ -61,13 +61,16 @@ function loadChat(chatList){
 function showChat(chatListVO) {
     if(chatListVO.senderId == loginId){
         $("#chatting").append(
-            "<div class='row right'><div class='col-md-auto align-self-end task-tooltip me-3 mt-3 p-3'>" + chatListVO.message + "</div></div>"
+            "<div class='row right'><div class='col'></div><div class='col-md-auto align-self-end task-tooltip me-3 mt-3 p-3'>" + chatListVO.message + "</div></div>"
         );
     } else {
         $("#chatting").append(
-            "<div class='row left'><div class='col-md-auto align-self-star task-tooltip ms-3 mt-3 p-3'>" + "[" + chatListVO.userName + "] " + chatListVO.message + "</div></div>"
+            "<div class='row left'><div class='col-md-auto align-self-star task-tooltip ms-3 mt-3 p-3'>" + "[" + chatListVO.userName + "] " + chatListVO.message + "</div><div class='col'></div></div>"
         );
     }
+
+    //this.scrollTo(0, $("#chatting").height());
+
     $("#message").val("");
 }
 
