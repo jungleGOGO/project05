@@ -304,10 +304,19 @@ public class MarketCtrl {
     }
 
     @GetMapping("/delete")
-    public String marketDelete(@RequestParam int marketNo)throws Exception{
+    public String marketDelete(@RequestParam("marketNo") int marketNo, Principal principal)throws Exception{
+
+        String sid = principal != null ? principal.getName() : "";
 
         marketService.marketDelete(marketNo);
-        return "redirect:/market/marketList";
+        System.out.println(marketNo);
+
+        if(sid.equals("admin")){
+            return "redirect:/admin/reportList";
+        } else {
+            return "redirect:/market/marketList";
+        }
+
     }
 
 
