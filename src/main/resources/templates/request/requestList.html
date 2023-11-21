@@ -68,14 +68,15 @@
     </div>
 
     <div class="row g-4 mb-5" >
-     <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" >
-        <div class="service-item" style="border: 5px solid #000;">
+     <div class="col-md-6 col-lg-3 border border-1 border-light wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" >
+        <div class="service-item">
           <div class="overflow-hidden">
-            <img class="img-fluid" th:src="${request.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
+            <a th:href="@{/request/reqDetail(reqNo=${request.reqNo})}"><img class="img-fluid" th:src="${request.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;"></a>
           </div>
-          <div class="p-4 text-center border border-5 border-light border-top-0">
-            <h4 class="mb-3" th:text="${request.title}"></h4>
-            <p><span id="addr" th:text="'거래희망장소:'+${request.addr}"></span></p><p>등록일: <span th:text="${#strings.substring(request.regdate.toString(), 0, 10)}"></span></p>
+          <div class="p-4 text-center">
+            <h4 th:if="${request.active == '0'}" class="mb-3" th:text="${request.title}"></h4>
+            <h4 th:if="${request.active == '1'}" style="color:#555" class="mb-3" th:text="${'[판매완료]' + request.title}"></h4>
+            <p><span id="addr" th:text="${'희망 가격 : ' + request.price + ' 원'}"></span></p><p>등록일: <span th:text="${#strings.substring(request.regdate.toString(), 0, 10)}"></span></p>
             <a class="fw-medium" th:href="@{/request/reqDetail(reqNo=${request.reqNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
           </div>
         </div>

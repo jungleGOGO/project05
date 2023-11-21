@@ -15,12 +15,12 @@
 <!-- Page Header Start -->
 <div class="container-fluid page-header py-5 mb-5">
     <div class="container py-5">
-        <h1 class="display-3 text-white mb-3 animated slideInDown">마켓</h1>
+        <h1 class="display-3 text-white mb-3 animated slideInDown">삽니다</h1>
         <nav aria-label="breadcrumb animated slideInDown">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-                <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-                <li class="breadcrumb-item text-white active" aria-current="page">마켓</li>
+                <li class="breadcrumb-item"><a class="text-white" href="#">장터</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">삽니다</li>
             </ol>
         </nav>
     </div>
@@ -73,12 +73,15 @@
             <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" >
                 <div class="service-item border border-1 border-light">
                     <div class="overflow-hidden">
-                        <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
+                        <a th:href="@{/market/detail(marketNo=${market.marketNo})}">
+                            <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
+                        </a>
                     </div>
                     <div class="p-4 text-center">
                         <h4 th:if="${market.active == '0'}" class="mb-3" th:text="${market.title}"></h4>
                         <h4 th:if="${market.active == '1'}" style="color:#555" class="mb-3" th:text="${'[판매완료]' + market.title}"></h4>
-                        <p>거래장소: <span th:text="${#strings.length(market.selectedAddress) &lt;= 15} ? ${market.selectedAddress} : ${#strings.substring(market.selectedAddress, 0, 9) + '...'}"></span></p><p>등록일:  <span th:if="${market.regdate != null}" th:text="${#strings.substring(market.regdate.toString(), 0, 10)}"></span></p>
+                            <!--<p>거래장소: <span th:text="${#strings.length(market.selectedAddress) &lt;= 15} ? ${market.selectedAddress} : ${#strings.substring(market.selectedAddress, 0, 9) + '...'}"></span></p><p>등록일:  <span th:if="${market.regdate != null}" th:text="${#strings.substring(market.regdate.toString(), 0, 10)}"></span></p>-->
+                        <p>가격 : <span th:text="${market.price} + ' 원'"></span></p>
                         <a class="fw-medium" th:href="@{/market/detail(marketNo=${market.marketNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>

@@ -38,6 +38,11 @@
         width: 100%;
       }
     }
+
+    .product_info dt, .product_info dd {display:inline-block;vertical-align:middle;}
+    .product_info dt {width:100px;font-family:"Open Sans",sans-serif !important;}
+    .product_info dd {width:calc(100% - 110px);}
+    .product_info dd span {font-family:"Open Sans",sans-serif !important;}
   </style>
 </head>
 
@@ -51,17 +56,89 @@
 <!-- Page Header Start -->
 <div class="container-fluid page-header py-5 mb-5">
   <div class="container py-5">
-    <h1 class="display-3 text-white mb-3 animated slideInDown">마켓</h1>
+    <h1 class="display-3 text-white mb-3 animated slideInDown">팝니다</h1>
     <nav aria-label="breadcrumb animated slideInDown">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-        <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-        <li class="breadcrumb-item text-white active" aria-current="page">마켓</li>
+        <li class="breadcrumb-item"><a class="text-white" href="#">장터</a></li>
+        <li class="breadcrumb-item text-white active" aria-current="page">팝니다</li>
       </ol>
     </nav>
   </div>
 </div>
-<div class="container-fluid bg-light overflow-hidden px-lg-0" style="margin: 6rem 0;">
+
+<!-- -->
+<div class="container py-5">
+  <div class="row my-5 border-bottom border-top py-5">
+    <div class="col-6 wow fadeIn" data-wow-delay="0.5s">
+      <div id="myCarousel" class="carousel slide" data-ride="false">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="d-flex" style="width: 423.98px; height: 300px; overflow: hidden;margin:0 auto;">
+              <!--<img th:src="${'/market/detailImage?saveFile='+photo.getSaveFile()+'&originFile='+photo.getOriginFile()+'&saveFolder='+photo.getSaveFolder()}" class="img-fluid" style="object-fit: cover; max-width: 100%; max-height: 100%;" alt="">-->
+              <img th:src="${request.bookImage}" style="width: 423.98px; contain: strict;" alt="bookImage">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="product_info pt-4 px-1">
+        <h3 class="mb-3" th:text="${request.title}"></h3>
+        <h2 class="fw-bold" th:text="${'희망가격 : ' + request.price + '원'}"></h2>
+        <hr>
+        <dl>
+          <dt>출판사</dt>
+          <dd class="mb-0"><span th:text="${request.publisher}"></span></dd>
+        </dl>
+        <dl>
+          <dt>저자</dt>
+          <dd class="mb-0"><span th:text="${request.bookAuthor}"></span></dd>
+        </dl>
+        <dl>
+          <dt>거래지역</dt>
+          <dd class="mb-0"><i class="fas fa-map-marker-alt pe-2"></i><span th:text="${request.addr}"></span></dd>
+        </dl>
+        <div class="row">
+          <div class="col me-2">
+            <button class="btn btn-primary w-100 py-2" type="button">
+              찜하기
+              <i class="fa-solid fa-heart" th:if="${chkLiked == 1}" th:onclick="|toggleLike()|" style="color: red"></i>
+              <i class="fa-solid fa-heart" th:unless="${chkLiked == 1}" th:onclick="|toggleLike()|"></i>
+            </button>
+          </div>
+          <div class="col ms-2">
+            <button class="btn btn-outline-primary w-100 py-2" type="button">신고하기
+              <img th:src="${'/image/siren5050.png'}"  id="ck_btn" onclick="repCheck()" style="width: 20px; height: 20px;" />
+            </button>
+          </div>
+          <div class="col ms-2">
+            <button class="btn btn-primary w-100 py-2" type="button"  th:onclick="|location.href='@{/chat/chat(productNo=${request.reqNo}, productTable=request)}'|">대화하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-3">
+    <h3>상품 정보</h3>
+    <hr>
+    <p th:text="${request.content}"></p>
+  </div>
+    <div class="row mt-5">
+      <th:block sec:authorize="${hasRole('USER') || hasRole('ADMIN') }">
+        <div class="col mx-2">
+          <a class="btn btn-primary w-100 py-3" th:if="${sid eq request.getLoginId()}" th:href="@{/request/edit(reqNo=${request.reqNo})}" type="button">수정하기</a>
+        </div>
+        <div class="col mx-2">
+          <a class="btn btn-primary w-100 py-3" th:if="${sid eq request.getLoginId()}" th:href="@{/request/delete(reqNo=${request.reqNo})}" type="button">삭제하기</a>
+        </div>
+      </th:block>
+      <div class="col mx-2"><a class="btn btn-primary w-100 py-2" th:href="@{/request/requestList}" type="button">목록</a></div>
+    </div>
+</div>
+<!-- -->
+
+<!--<div class="container-fluid overflow-hidden px-lg-0" style="margin: 6rem 0;">
   <div class="container quote px-lg-0">
     <div class="row g-0 mx-lg-0">
       <div class="col-lg-6 quote-text py-5 wow fadeIn" data-wow-delay="0.5s" style="margin-left: 600px; height: 1600px;">
@@ -126,8 +203,8 @@
       </div>
     </div>
   </div>
-</div>
-<div class="row g-4" >
+</div>-->
+<!--<div class="row g-4" >
   <div class="col-md-10 col-lg-6  wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" style="width: 431.98px;height:430.58px;">
     <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
       <div class="overflow-hidden">
@@ -140,14 +217,8 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 <script>
-    // let token = $("meta[name='_csrf']").attr("content");
-    // let header = $("meta[name='_csrf_header']").attr("content");
-    // $(document).ajaxSend(function(e, xhr, options) {
-    //   xhr.setRequestHeader(header, token);
-    // });
-
     function repCheck(){
     let reqNo=parseInt($("#reqNo").val());
     let params = {"reqNo" : reqNo };

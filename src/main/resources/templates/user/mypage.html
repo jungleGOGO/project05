@@ -52,7 +52,7 @@
             font-weight: bold;
             color: black;
         }
-        #dropdownMenuLink::after {display:none;}
+        #dropdownMenuLink::after, #dropdownMenuLink2::after {display:none;}
         .sellInfo {position:relative;}
         .sellInfo .dropdown {position:absolute !important;right:0;bottom:16px;}
 
@@ -146,11 +146,11 @@
                 <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" >
                     <div class="service-item border border-1 sellInfo">
                         <div class="overflow-hidden">
-                            <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px; object-fit: contain; object-position: center center;">
+                            <a th:href="@{/market/detail(marketNo=${market.marketNo})}"><img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px; object-fit: contain; object-position: center center;"></a>
                         </div>
                         <div class="p-4 text-center">
                             <h4 class="mb-3" th:text="${market.title}"></h4>
-                            <p>거래장소: <span th:text="${#strings.length(market.selectedAddress) &lt;= 15} ? ${market.selectedAddress} : ${#strings.substring(market.selectedAddress, 0, 10) + '...'}"></span></p><p>등록일:  <span th:if="${market.regdate != null}" th:text="${#strings.substring(market.regdate.toString(), 0, 10)}"></span></p>
+                            <p>가격: <span th:text="${market.price + ' 원'}"></span></p>
                             <a class="fw-medium" th:href="@{/market/detail(marketNo=${market.marketNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
                         </div>
                         <div class="dropdown">
@@ -165,19 +165,25 @@
         </div>
         <!-- ---------------------------------이하 삽니다 탭------------------------------------->
         <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">
-            <div class="row g-4 mb-5">
-            <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" >
-                <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
-                    <div class="overflow-hidden">
-                        <img class="img-fluid" th:src="${request.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
-                    </div>
-                    <div class="p-4 text-center border border-5 border-light border-top-0">
-                        <h4 class="mb-3" th:text="${request.title}"></h4>
-                        <p>거래희망장소: <span th:text="${request.addr}"></span></p><p>등록일: <span th:text="${request.regdate}"></span></p>
-                        <a class="fw-medium" th:href="@{/request/reqDetail(reqNo=${request.reqNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
+            <div class="row g-4 mb-5 border border-1 border-light sellInfo">
+                <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" >
+                    <div class="service-item">
+                        <div class="overflow-hidden">
+                            <a th:href="@{/request/reqDetail(reqNo=${request.reqNo})}"><img class="img-fluid" th:src="${request.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;"></a>
+                        </div>
+                        <div class="p-4 text-center">
+                            <h4 class="mb-3" th:text="${request.title}"></h4>
+                            <p>가격 : <span th:text="${request.price}"></span></p><p>등록일: <span th:text="${request.regdate}"></span></p>
+                            <a class="fw-medium" th:href="@{/request/reqDetail(reqNo=${request.reqNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
+                        </div>
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink2" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><button class="dropdown-item" th:onclick="trade2([[${request.reqNo}]])">거래상태</button></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
         <!-- ---------------------------------이하 좋아요 탭------------------------------------->
@@ -285,6 +291,9 @@
 <script th:inline="javascript">
     function trade(num) {
         let child = window.open("/chat/tradeInfo?marketNo=" + num, "child", "width=500, height=200");;
+    }
+    function trade2(num) {
+        let child = window.open("/chat/tradeInfo2?reqNo=" + num, "child", "width=500, height=200");;
     }
 </script>
 </body>
