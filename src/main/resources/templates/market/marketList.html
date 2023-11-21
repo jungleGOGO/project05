@@ -77,7 +77,7 @@
                     </div>
                     <div class="p-4 text-center border border-5 border-light border-top-0">
                         <h4 class="mb-3" th:text="${market.title}"></h4>
-                        <p>거래장소: <span th:text="${#strings.length(market.selectedAddress) &lt;= 15} ? ${market.selectedAddress} : ${#strings.substring(market.selectedAddress, 0, 17) + '...'}"></span></p><p>등록일:  <span th:if="${market.regdate != null}" th:text="${#strings.substring(market.regdate.toString(), 0, 10)}"></span></p>
+                        <p>거래장소: <span th:text="${#strings.length(market.selectedAddress) >= 17 ? #strings.substring(market.selectedAddress, 0, 17) + '...' : market.selectedAddress}"></span></p><p>등록일:  <span th:if="${market.regdate != null}" th:text="${#strings.substring(market.regdate.toString(), 0, 10)}"></span></p>
                         <a class="fw-medium" th:href="@{/market/detail(marketNo=${market.marketNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>

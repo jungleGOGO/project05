@@ -102,7 +102,8 @@ public class MarketCtrl {
         String sid = principal != null ? principal.getName() : "";
         System.out.println("대표사진 값들:"+repImage);
         System.out.println("상세사진 값들:"+detailImages);
-        String realPath = "C://upload/";
+        ServletContext application = req.getSession().getServletContext();
+        String realPath = "src/main/resources/static/upload/";
 //        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
 
 
