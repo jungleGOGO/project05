@@ -22,7 +22,7 @@
                         <tr th:each="room : ${roomList}">
                             <td class="text-start">
                                 <a th:if="${myChat}" th:href="@{/chat/getChat/{roomId}(roomId=${room.getRoomId()})}" th:text="${'[ ' + room.productName + ' ] ' + room.getBuyerId() + '님과의 채팅'}"></a>
-                                <a th:unless="${myChat}" th:href="@{/chat/getChat/{roomId}(roomId=${room.getRoomId()})}" th:text="${room.getBuyerId() + '님과의 채팅'}"></a>
+                                <a th:unless="${myChat}" th:href="@{/chat/getChat/{roomId}(roomId=${room.getRoomId()})}" th:text="${'[ ' + productNm + ' ] ' + room.getBuyerId() + '님과의 채팅'}"></a>
                             </td>
                         </tr>
                         </tbody>

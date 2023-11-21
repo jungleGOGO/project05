@@ -159,7 +159,6 @@ public class ChatCtrl {
             List<ChatRoomVO> buyerList = chatService.chatRoomAllListByBuyerId(sid);
             if(buyerList != null) roomList.addAll(buyerList);
 
-
             model.addAttribute("myChat", true);
             model.addAttribute("roomList", roomList);
 
@@ -179,15 +178,11 @@ public class ChatCtrl {
             String id = "";
 
             if(chatRoomVO.getProductTable().equals("market")) {
-                Market market = new Market();
-                market.setLoginId("kim");
-
+                Market market = marketService.marketDetail(chatRoomVO.getProductId());
                 id = market.getLoginId();
 
             } else if (chatRoomVO.getProductTable().equals("request")) {
-                Request request = new Request();
-                request.setLoginId("kim");
-
+                Request request = requestService.requestDetail(chatRoomVO.getProductId());
                 id = request.getLoginId();
             }
 
@@ -195,6 +190,7 @@ public class ChatCtrl {
                 List<ChatListVO> chatList = chatService.getChat(roomId);
                 model.addAttribute("roomId", roomId);
                 model.addAttribute("chatList", chatList);
+                model.addAttribute("loginId", sid);
                 return "chat/get";
             }
         }

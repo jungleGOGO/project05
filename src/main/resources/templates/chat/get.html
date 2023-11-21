@@ -48,9 +48,10 @@
         <script th:src="@{/js/sockjs.min.js}"></script>
         <script th:src="@{/js/stomp.min.js}"></script>
         <script th:inline="javascript">
-            var stompClient = null;
-            var roomId = [[${roomId}]];
-            var chatList = [[${chatList}]];
+            let stompClient = null;
+            let roomId = [[${roomId}]];
+            let chatList = [[${chatList}]];
+            let loginId = [[${loginId}]];
         </script>
         <script th:src="@{/js/chat.js}"></script>
     </body>
