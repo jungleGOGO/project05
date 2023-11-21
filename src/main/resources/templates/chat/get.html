@@ -100,7 +100,7 @@
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><button class="dropdown-item" onclick="repCheck()">신고하기</button></li>
-                                    <li><a class="dropdown-item" href="#">거래상태</a></li>
+                                    <li><button class="dropdown-item" onclick="checkType()">거래상태</button></li>
                                 </ul>
                             </div>
                         </div>
@@ -140,6 +140,8 @@
             let productId = [[${productId}]];
             let productTable = [[${productTable}]];
 
+            let child;
+
             function repCheck(){
                 let params;
                 let url;
@@ -151,8 +153,6 @@
                     params = {"reqNo" : productId };
                     url = "/report/repCheck";
                 }
-
-                let child;
 
                 $.ajax({
                     url: url,
