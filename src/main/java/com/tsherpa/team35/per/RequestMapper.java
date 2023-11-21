@@ -1,5 +1,6 @@
 package com.tsherpa.team35.per;
 
+import com.tsherpa.team35.entity.MainVO;
 import com.tsherpa.team35.entity.Request;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -20,11 +21,9 @@ public interface RequestMapper {
     public List<Request> allRequest() throws Exception;
     public void requestEditAll(Request request) throws Exception;
     public void readable(int readable,int reqNo);
-
     public List<Request> userRequestList(String loginId);
-
+    public List<Request> getInfo(String loginId) throws Exception;
     public int getRequestCnt() throws Exception;
     public List<Request> getRequestListForMain() throws Exception;
-
 
 }
