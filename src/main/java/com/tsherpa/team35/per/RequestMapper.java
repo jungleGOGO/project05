@@ -2,6 +2,7 @@ package com.tsherpa.team35.per;
 
 import com.tsherpa.team35.entity.MainVO;
 import com.tsherpa.team35.entity.Request;
+import com.tsherpa.team35.util.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +12,10 @@ import java.util.List;
 @Mapper
 public interface RequestMapper {
     public void requestInsert(Request request) throws Exception;
-    public List<Request> requestList() throws Exception;
+    public List<Request> requestList(Page page) throws Exception;
     public Request requestDetail(int reqNo) throws Exception;
-
     List<Request> getMoreRequests(int offset, int limit) ;
     public void requestEdit(Request request) throws Exception;
-
     public void requestDelete(int reqNo) throws Exception;
     public List<Request> allRequest() throws Exception;
     public void requestEditAll(Request request) throws Exception;
@@ -25,6 +24,7 @@ public interface RequestMapper {
     public List<Request> getInfo(String loginId) throws Exception;
     public int getRequestCnt() throws Exception;
     public List<Request> getRequestListForMain() throws Exception;
+    public int getReqCount(Page page);    
     public List<Request> likeRequestList(String loginId);
 
 }

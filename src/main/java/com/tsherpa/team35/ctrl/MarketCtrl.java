@@ -6,6 +6,7 @@ import com.tsherpa.team35.biz.LikesService;
 import com.tsherpa.team35.biz.MarketService;
 import com.tsherpa.team35.biz.PhotosService;
 import com.tsherpa.team35.entity.*;
+import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -56,23 +57,26 @@ public class MarketCtrl {
     }
 
     @GetMapping("/marketList")
-    public String list(Model model)throws Exception{
+    public String list(HttpServletRequest request, Model model)throws Exception{
 
-        List<MainVO> mainList = marketService.mainVOList();
+        int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+
+        Page page = new Page();
+        page.setType(request.getParameter("type"));
+        page.setKeyword(request.getParameter("keyword"));
+
+        int total = marketService.getMarCount(page);
+        page.makeBlock(curPage, total);
+        page.setPostCount(8);
+        page.makeLastPageNum(total);
+        page.makePostStart(curPage, total);
+
+        model.addAttribute("page", page);
+        model.addAttribute("curPage", curPage);
+
+        List<MainVO> mainList = marketService.mainVOList(page);
         model.addAttribute("mainList",mainList);
         return "market/marketList";
-    }
-
-    @PostMapping("/reqInsert")
-    public String reqInsert(Model model)throws Exception{
-
-        return "redirect:marketList";
-    }
-
-    @GetMapping("/reqInsert")
-    public String marketInsert(Model model)throws Exception{
-
-        return "market/reqInsert";
     }
 
     @GetMapping("/marketInsert")
