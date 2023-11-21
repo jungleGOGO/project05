@@ -87,8 +87,10 @@
 <script>
     $(document).ready(function () {
         // 첫 6개 이외의 모든 서비스 항목을 숨김
-        $('.service-item:gt(5)').hide();
-
+        var serviceItems = document.querySelectorAll('.service-item');
+        for (var i = 6; i < serviceItems.length; i++) {
+            serviceItems[i].classList.add('hidden'); // hidden 클래스를 정의하고 스타일시트에 추가
+        }
         // "더 보기" 클릭 시 추가 항목을 표시
         $('#loadMore').on('click', function (e) {
             e.preventDefault();
