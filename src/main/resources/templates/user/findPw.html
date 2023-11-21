@@ -12,6 +12,7 @@
             margin-bottom: 4px;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <body>
 
@@ -22,7 +23,7 @@
                   <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                       <div class="card shadow-2-strong" style="border-radius: 1rem;">
                           <div class="card-body p-5 text-center">
-
+                              <form id="findPwForm" th:action="@{/findPw}" method="post">
                                   <div class="form-outline mb-4 text-center">
                                       <a href="/"><img th:src="@{/image/common/logo.png}" style="width:30%" /></a>
                                   </div>
@@ -31,7 +32,7 @@
                                     </div>
                                   <div class="form-outline mb-4">
                                       <p>이름</p>
-                                      <input type="email" placeholder="이름을 입력하세요" class="form-control" id="name" name="name" required />
+                                      <input type="text" placeholder="이름을 입력하세요" class="form-control" id="name" name="name" required />
                                       <label class="form-label" for="name" style="display:none;">이름</label>
                                   </div>
                                   <div class="form-outline mb-4">
@@ -41,15 +42,48 @@
                                   </div>
                                   <div class="form-outline mb-4">
                                       <p>아이디</p>
-                                      <input type="tel" placeholder="아이디를 입력하세요" class="form-control" id="id" name="id" required />
+                                      <input type="text" placeholder="아이디를 입력하세요" class="form-control" id="id" name="id" required />
                                       <label class="form-label" for="id" style="display:none;">아이디</label>
                                   </div>
 
-
                                   <!-- Submit button -->
                                   <button type="submit" class="btn btn-primary btn-block mb-4">찾기</button>
-                                  <button type="submit" class="btn btn-primary btn-block mb-4">로그인</button>
+<!--                                  <button type="submit" class="btn btn-primary btn-block mb-4">로그인</button>-->
+                              </form>
+                              <script>
+                                  $(document).ready(function() {
+                                      $("#findPwForm").submit(function(event) {
+                                          event.preventDefault(); // 폼의 기본 제출 방지
 
+                                          $.ajax({
+                                              type: "POST",
+                                              url: "/findPw",
+                                              // dataType: "json",
+                                              data: {
+                                                  name: $("#name").val(),
+                                                  email: $("#email").val(),
+                                                  id: $("#id").val()
+                                              },
+                                              success: function(result) {
+                                                  console.log(result);
+                                                  var chk = result;
+
+                                                  if (chk == "success"){
+                                                      alert("등록된 주소로 메일이 발송되었습니다.");
+                                                      window.location.href = '/login';
+
+                                                  } else {
+                                                      alert("입력하신 정보가 일치하지 않습니다.")
+                                                  }
+
+                                              },
+                                              error: function(error) {
+                                                  alert("오류가 발생했습니다.");
+                                              }
+                                          });
+                                      });
+                                  });
+                              </script>
                           </div>
                       </div>
                   </div>

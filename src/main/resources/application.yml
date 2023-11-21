@@ -28,6 +28,16 @@ spring:
   messages:
     basename: messages
     encoding: UTF-8
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: juncheol08@naver.com
+    password: cjswo0825!
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+      mail.smtp.ssl.trust: smtp.naver.com
+      mail.smtp.starttls.enable: true
 
 mybatis:
   configuration:
@@ -45,3 +55,4 @@ logging:
 #uploadPath: file:///C:/team35
 itemImgLocation: /Users/juncheol/Desktop/file/item
 uploadPath: /Users/juncheol/Desktop/file
+
