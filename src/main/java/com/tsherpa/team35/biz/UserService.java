@@ -64,4 +64,8 @@ public class UserService implements UserDetailsService {
          userMapper.pwEdit(user);
     }
 
+    public User findId(String email, String tel){
+       return userMapper.findId(email, tel);
+    }
+
 }
