@@ -75,6 +75,7 @@ public class UserService implements UserDetailsService {
          userMapper.pwEdit(user);
     }
 
+
     public void sendTempPasswordEmail(String email, String tempPassword) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
@@ -101,5 +102,10 @@ public class UserService implements UserDetailsService {
              sb.append(charSet[idx]);
              }
              return sb.toString();    }
+
+    public User findId(String email, String tel){
+       return userMapper.findId(email, tel);
+    }
+
 
 }
