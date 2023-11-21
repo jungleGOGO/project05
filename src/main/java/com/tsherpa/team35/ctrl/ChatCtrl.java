@@ -12,10 +12,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -256,9 +253,26 @@ public class ChatCtrl {
     }
 
     @GetMapping("/tradeInfo")
-    public String trade(@RequestParam("roomId") Long roomId, Model model) throws Exception {
-
+    public String trade(@RequestParam("marketNo") int marketNo, Model model, Principal principal) throws Exception {
+        Market market = marketService.marketDetail(marketNo);
+        model.addAttribute("market", market);
         return "chat/trade";
+    }
+
+    @PostMapping("/tradePro")
+    @ResponseBody
+    public boolean activeUpdatePro(@RequestParam("active") int active, @RequestParam("marketNo") int marketNo, Principal principal) throws Exception {
+        boolean pass = false;
+
+        String loginId = principal.getName();
+        Market market = marketService.marketDetail(marketNo);
+        if(market.getLoginId().equals(loginId)) {
+            marketService.updateActive(active, marketNo);
+            pass = true;
+        }
+
+        return pass;
+
     }
 
 }
