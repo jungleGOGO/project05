@@ -237,9 +237,19 @@ public class RequestCtrl {
     }
 
     @GetMapping("/delete")
-    public String reqDelete(@RequestParam int reqNo,HttpServletRequest request, Model model) throws Exception {
+    public String reqDelete(@RequestParam int reqNo,HttpServletRequest request, Model model, Principal principal) throws Exception {
+
+        String sid = principal != null ? principal.getName() : "";
         requestService.requestDelete(reqNo);
-        return "redirect:/request/reqList";
+
+        if(sid.equals("admin")){
+            return "redirect:/admin/reportList";
+        }else {
+            return "redirect:/request/reqList";
+        }
+
+
+
     }
 
     @PostMapping("/editAll")
