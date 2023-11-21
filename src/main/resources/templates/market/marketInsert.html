@@ -71,7 +71,7 @@
 
         <div class="mb-3">
             <label for="price" class="form-label">가격</label>
-            <input type="number" class="form-control" id="price" name="price" placeholder="가격을 입력하세요" maxlength="10" required>
+            <input type="number" class="form-control" id="price" name="price" placeholder="가격을 입력하세요(최대 9999999까지 입력가능)"  max="9999999"required>
         </div>
 
         <div class="mb-3">
@@ -230,7 +230,7 @@
         reader.onload = function(event){
             var img = document.createElement("img");
             img.setAttribute("src", event.target.result);
-            img.setAttribute("class", "col-lg-6");
+            img.setAttribute("class", "col-lg-4");
             document.querySelector("div#image_container").appendChild(img);
         };
 
@@ -246,7 +246,8 @@
 
         for (var i = 0; i < files.length; i++) {
             var img = document.createElement("img");
-            img.setAttribute("class", "col-lg-6");
+            img.setAttribute("class", "col-lg-4");
+            img.setAttribute("style", "height: 300px");
 
             // File 객체에서 미리보기 URL 생성
             img.src = URL.createObjectURL(files[i]);
@@ -262,8 +263,8 @@
 
         for (var i = 0; i < files.length; i++) {
             var img = document.createElement("img");
-            img.setAttribute("class", "col-lg-6");
-
+            img.setAttribute("class", "col-lg-4");
+            img.setAttribute("style", "height: 300px");
             // File 객체에서 미리보기 URL 생성
             img.src = URL.createObjectURL(files[i]);
 
