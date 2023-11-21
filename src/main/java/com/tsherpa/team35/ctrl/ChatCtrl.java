@@ -275,4 +275,27 @@ public class ChatCtrl {
 
     }
 
+    @GetMapping("/tradeReqInfo")
+    public String trade2(@RequestParam("reqNo") int reqNo, Model model, Principal principal) throws Exception {
+        Request request = requestService.requestDetail(reqNo);
+        model.addAttribute("request", request);
+        return "chat/tradeReq";
+    }
+
+    @PostMapping("/tradeReqPro")
+    @ResponseBody
+    public boolean activeUpdatePro2(@RequestParam("active") int active, @RequestParam("reqNo") int reqNo, Principal principal) throws Exception {
+        boolean pass = false;
+
+        String loginId = principal.getName();
+        Request request = requestService.requestDetail(reqNo);
+        if(request.getLoginId().equals(loginId)) {
+            requestService.updateActive(active, reqNo);
+            pass = true;
+        }
+
+        return pass;
+
+    }
+
 }

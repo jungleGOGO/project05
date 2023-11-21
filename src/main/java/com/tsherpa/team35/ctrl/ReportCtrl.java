@@ -73,9 +73,6 @@ public class ReportCtrl {
         String sid = principal != null ? principal.getName() : "";
         Market market = marketService.marketDetail(marketNo);
 
-        System.out.println(sid);
-        System.out.println(marketNo);
-
         model.addAttribute("marketNo", marketNo);
         model.addAttribute("market", market);
 
