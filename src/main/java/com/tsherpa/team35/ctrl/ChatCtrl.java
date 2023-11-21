@@ -95,6 +95,20 @@ public class ChatCtrl {
             List<ChatRoomVO> roomList = chatService.chatRoomAllListByProduct(productId, productTable);
             model.addAttribute("roomList", roomList);
 
+            String productNm = "";
+            if(productTable.equals("market")) {
+                Market market = marketService.marketDetail(productId);
+                productNm = market.getTitle();
+            }
+
+            if(productTable.equals("request")) {
+                Request request = requestService.requestDetail(productId);
+                productNm = request.getTitle();
+            }
+
+            model.addAttribute("myChat", false);
+            model.addAttribute("productNm", productNm);
+
             return "chat/list";
         } else {
             String path = "redirect:/";
@@ -119,7 +133,12 @@ public class ChatCtrl {
             if(marketList != null) {
                 for(MainVO market : marketList) {
                     List<ChatRoomVO> marketChat = chatService.chatRoomAllListByProduct(market.getMarketNo(), "market");
-                    if(marketChat != null) roomList.addAll(marketChat);
+                    if(marketChat != null) {
+                        for(ChatRoomVO marketPro : marketChat) {
+                            marketPro.setProductName(market.getTitle());
+                        }
+                        roomList.addAll(marketChat);
+                    }
                 }
             }
 
@@ -127,7 +146,12 @@ public class ChatCtrl {
             if(requestList != null) {
                 for(Request req : requestList) {
                     List<ChatRoomVO> requestChat = chatService.chatRoomAllListByProduct(req.getReqNo(), "request");
-                    if(requestChat != null) roomList.addAll(requestChat);
+                    if(requestChat != null) {
+                        for(ChatRoomVO requestPro : requestChat) {
+                            requestPro.setProductName(req.getTitle());
+                        }
+                        roomList.addAll(requestChat);
+                    }
                 }
             }
 
@@ -135,6 +159,8 @@ public class ChatCtrl {
             List<ChatRoomVO> buyerList = chatService.chatRoomAllListByBuyerId(sid);
             if(buyerList != null) roomList.addAll(buyerList);
 
+
+            model.addAttribute("myChat", true);
             model.addAttribute("roomList", roomList);
 
             return "chat/list";
