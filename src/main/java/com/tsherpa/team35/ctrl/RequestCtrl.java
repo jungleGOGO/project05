@@ -210,8 +210,15 @@ public class RequestCtrl {
 
 
     @GetMapping("/edit")
-    public String editForm(@RequestParam int reqNo,HttpServletRequest request, Model model) throws Exception {
+    public String editForm(@RequestParam int reqNo,HttpServletRequest request, Model model,Principal principal) throws Exception {
         Request detail = requestService.requestDetail(reqNo);
+
+        //로그인한 사용자 아이디와 작성자 아이디 비교
+        String sid = principal != null ? principal.getName() : "";
+        if (!sid.equals(detail.getLoginId())){
+            return "redirect:/";
+        }
+
         model.addAttribute("detail", detail);
         return "/request/reqEdit";
     }

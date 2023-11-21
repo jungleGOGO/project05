@@ -23,11 +23,21 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 100MB
-      location: C://upload
-#      location: /Users/juncheol/Desktop/file
+#      location: C://upload
+      location: /Users/juncheol/Desktop/file
   messages:
     basename: messages
     encoding: UTF-8
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: juncheol08@naver.com
+    password: cjswo0825!
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+      mail.smtp.ssl.trust: smtp.naver.com
+      mail.smtp.starttls.enable: true
 
 mybatis:
   configuration:
@@ -41,7 +51,8 @@ logging:
     org:
       springframework: info
 
-itemImgLocation: C:/team35/item
-uploadPath: file:///C:/team35
-#itemImgLocation: /Users/juncheol/Desktop/file/item
-#uploadPath: /Users/juncheol/Desktop/file
+#itemImgLocation: C:/team35/item
+#uploadPath: file:///C:/team35
+itemImgLocation: /Users/juncheol/Desktop/file/item
+uploadPath: /Users/juncheol/Desktop/file
+
