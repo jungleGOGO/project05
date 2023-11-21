@@ -3,8 +3,8 @@ CREATE DATABASE tsherpa;
 USE tsherpa;
 
 CREATE TABLE role(
-    role_id INT PRIMARY KEY AUTO_INCREMENT,
-    role VARCHAR(255) DEFAULT NULL
+                     role_id INT PRIMARY KEY AUTO_INCREMENT,
+                     role VARCHAR(255) DEFAULT NULL
 );
 
 INSERT INTO ROLE VALUES(DEFAULT, 'ADMIN');
@@ -13,30 +13,173 @@ INSERT INTO ROLE VALUES(DEFAULT, 'TEACHER');
 INSERT INTO ROLE VALUES(99, 'USER');
 
 CREATE TABLE user(
-	user_id INT PRIMARY KEY AUTO_INCREMENT,			-- 회원 번호 : 자동증가
-	active INT DEFAULT 1, 									-- 회원 상태 [ 0 : 탈퇴, 1 : 활동중, 2: 활동 정지]
-	login_id VARCHAR(255) NOT NULL,						-- 회원 로그인 아이디
-	user_name VARCHAR(255) NOT NULL,						-- 회원 이름
-	password VARCHAR(300) NOT NULL,						-- 회원 비밀번호
-	email VARCHAR(50) NOT NULL,							-- 회원 이메일
-	tel VARCHAR(20) NOT NULL,								-- 회원 전화번호
-	addr1 VARCHAR(200),										-- 회원 기본 주소
-	addr2 VARCHAR(100),										-- 회원 상세 주소
-	postcode VARCHAR(10),									-- 회원 우편 번호
-	reg_date DATETIME DEFAULT CURRENT_TIMESTAMP(),	-- 회원 가입일
-	birth DATE,													-- 회원 생일
-	pt INT DEFAULT 0,											-- 회원 포인트
-	visited INT DEFAULT 0,									-- 회원 방문 횟수
-	role_id INT NOT NULL DEFAULT 99						-- 회원 권한 등급
+                     user_id INT PRIMARY KEY AUTO_INCREMENT,			-- 회원 번호 : 자동증가
+                     active INT DEFAULT 1, 									-- 회원 상태 [ 0 : 탈퇴, 1 : 활동중, 2: 활동 정지]
+                     login_id VARCHAR(255) NOT NULL,						-- 회원 로그인 아이디
+                     user_name VARCHAR(255) NOT NULL,						-- 회원 이름
+                     password VARCHAR(300) NOT NULL,						-- 회원 비밀번호
+                     email VARCHAR(50) NOT NULL,							-- 회원 이메일
+                     tel VARCHAR(20) NOT NULL,								-- 회원 전화번호
+                     addr1 VARCHAR(200),										-- 회원 기본 주소
+                     addr2 VARCHAR(100),										-- 회원 상세 주소
+                     postcode VARCHAR(10),									-- 회원 우편 번호
+                     reg_date DATETIME DEFAULT CURRENT_TIMESTAMP(),	-- 회원 가입일
+                     birth DATE,													-- 회원 생일
+                     pt INT DEFAULT 50,										-- 회원 매너온도
+                     visited INT DEFAULT 0,									-- 회원 방문 횟수
+                     role_id INT NOT NULL DEFAULT 99						-- 회원 권한 등급
 );
-SELECT * FROM user;
--- 비밀번호 : 1q2w3e4r!@
-insert into user (login_id, user_name, password, email, tel, addr1, addr2, postcode, birth, role_id) VALUES ('admin', '관리자', '$2a$10$LEclL83IcxKcJT7/RX34j./XrDz4BudorZpdUqL0giJCChr1Fa5Xy', 'admin@tsherpa.com', '010-8524-2580', '기본주소', '상세주소', '00101', '1990-11-09', 1);
 
-CREATE VIEW userList AS(SELECT u.user_id AS user_id, u.active AS ACTIVE, u.login_id AS login_id, u.user_name AS user_name, u.password AS PASSWORD, u.role_id AS role_id, r.role AS roleNm FROM user u
-                                LEFT JOIN role r ON u.role_id = r.role_id);
+CREATE VIEW userList AS(
+                       SELECT u.user_id AS user_id, u.active AS ACTIVE, u.login_id AS login_id, u.user_name AS user_name, u.password AS PASSWORD, u.role_id AS role_id, r.role AS roleNm
+                       FROM user u
+                                LEFT JOIN role r ON u.role_id = r.role_id
+                           );
 
-SELECT * FROM user;
+CREATE TABLE market(
+                       marketNo INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호
+                       title VARCHAR(100) NOT NULL,	-- 제목
+                       price int NOT NULL,		-- 가격
+                       content VARCHAR(5000),	-- 설명
+                       login_id VARCHAR(255) NOT NULL,	-- 작성자 id
+                       active INT DEFAULT 0 NOT NULL,	-- 거래 상태(거래 완료 여부)
+                       readable INT DEFAULT 0 NOT NULL,
+                       conditions varchar(20) NOT NULL,	-- 상품 상태(최상 상 중 하)
+                       regdate DATETIME DEFAULT CURRENT_TIMESTAMP,	-- 등록일
+                       selected_address VARCHAR(200),     -- 선택 주소
+                       detail_address VARCHAR(100),        -- 상세 주소
+                       xdata DOUBLE,                      -- x
+                       ydata DOUBLE                      -- y
+);
+
+CREATE TABLE photos(
+                       photo_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                       marketNo INT,
+                       saveFolder VARCHAR(300) NOT NULL,
+                       originFile VARCHAR(300) NOT NULL,
+                       saveFile VARCHAR(300) NOT NULL
+);
+
+CREATE TABLE mainphoto(
+                          mainphoto_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                          marketNo INT,
+                          saveFolder VARCHAR(300) NOT NULL,
+                          originFile VARCHAR(300) NOT NULL,
+                          saveFile VARCHAR(300) NOT NULL
+);
+
+
+
+
+
+
+CREATE VIEW detaillist AS
+SELECT
+    m.marketNo,
+    m.title,
+    m.price,
+    m.content,
+    m.login_id,
+    m.active,
+    m.conditions,
+    m.regdate,
+    m.selected_address,
+    m.detail_address,
+    m.xdata,
+    m.ydata,
+    p.saveFolder AS saveFolder,
+    p.originFile AS originFile,
+    p.saveFile AS saveFile
+FROM
+    market m
+        LEFT JOIN photos p ON m.marketNo = p.marketNo;
+
+
+CREATE VIEW totallist as
+SELECT
+    m.marketNo,
+    m.title,
+    m.price,
+    m.content,
+    m.login_id,
+    m.active,
+    m.conditions,
+    m.regdate,
+    m.selected_address,
+    m.detail_address,
+    m.xdata,
+    m.ydata,
+    p.saveFolder AS saveFolder,
+    p.originFile AS originFile,
+    p.saveFile AS saveFile,
+    mp.saveFolder AS mainSaveFolder,
+    mp.originFile AS mainOriginFile,
+    mp.saveFile AS mainSaveFile
+FROM
+    market m
+        LEFT JOIN photos p ON m.marketNo = p.marketNo
+        LEFT JOIN mainphoto mp ON m.marketNo = mp.marketNo;
+
+
+
+
+CREATE VIEW mainlist AS
+SELECT
+    m.marketNo AS marketNo,
+    m.title,
+    m.price,
+    m.readable,
+    m.content,
+    m.login_id,
+    m.active,
+    m.conditions,
+    m.regdate,
+    m.selected_address,
+    m.detail_address,
+    m.xdata,
+    m.ydata,
+    mp.saveFolder AS saveFolder,
+    mp.originFile AS originFile,
+    mp.saveFile AS saveFile
+FROM
+    market m
+        LEFT JOIN mainphoto mp ON m.marketNo = mp.marketNo;
+
+
+CREATE TABLE request(
+                        req_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호
+                        title VARCHAR(100) NOT NULL,	-- 제목
+                        price int NOT NULL,		-- 가격
+                        content VARCHAR(5000),	-- 설명
+                        login_id VARCHAR(255) NOT NULL,	-- 작성자 id
+                        active INT NOT NULL DEFAULT 0 ,	-- 거래 상태(거래 완료 여부)
+                        readable INT DEFAULT 0 NOT NULL,
+                        regdate DATETIME DEFAULT CURRENT_TIMESTAMP,	-- 등록일
+                        addr VARCHAR(200) NOT NULL,
+                        bookTitle VARCHAR(255) NOT NULL,
+                        bookAuthor VARCHAR(255) NOT NULL,
+                        publisher VARCHAR(255) NOT NULL,
+                        bookImage VARCHAR(255) NOT NULL,
+                        isbn VARCHAR(255) NOT NULL,
+                        pubdate VARCHAR(255) NOT NULL,
+                        discount VARCHAR(255) NOT NULL
+);
+
+INSERT INTO request (title, price, content, login_id, readable, addr, bookTitle, bookAuthor, publisher, bookImage, isbn, pubdate, discount)
+VALUES
+    ('책 제목 1', 5000, '책 설명 1', 'kim', 0,'주소 1', '도서 1', '저자 1', '출판사 1', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1234567890', '2022-01-01', '10'),
+    ('책 제목 2', 7000, '책 설명 2', 'user2',0, '주소 2', '도서 2', '저자 2', '출판사 2', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '0987654321', '2022-02-01', '15'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3', 0,'주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20'),
+    ('책 제목 3', 8000, '책 설명 3', 'user3',0, '주소 3', '도서 3', '저자 3', '출판사 3', 'https://shopping-phinf.pstatic.net/main_3248051/32480516321.20230927071045.jpg', '1357924680', '2022-03-01', '20');
 
 CREATE TABLE notice(
                        no INT PRIMARY KEY AUTO_INCREMENT,
@@ -44,7 +187,7 @@ CREATE TABLE notice(
                        content VARCHAR(1000) NOT NULL,
                        author INT,
                        regdate DATETIME DEFAULT CURRENT_TIME,
-                       cnt INT DEFAULT 0,
+                       cnt INT DEFAULT 0
 );
 
 INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목1  입니다.','여기는 샘플 글 1의 내용입니다.',1,DEFAULT, DEFAULT);
@@ -53,8 +196,6 @@ INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목3  입니다.','여기는 �
 INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목4  입니다.','여기는 샘플 글 4의 내용입니다.',1,DEFAULT, DEFAULT);
 INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목5  입니다.','여기는 샘플 글 5의 내용입니다.',1,DEFAULT, DEFAULT);
 INSERT INTO notice VALUES (DEFAULT,'샘플 글 제목6  입니다.','여기는 샘플 글 6의 내용입니다.',1,DEFAULT, DEFAULT);
-
-SELECT * FROM notice;
 
 CREATE TABLE faq (
                      fno INT  PRIMARY KEY AUTO_INCREMENT ,
@@ -111,82 +252,58 @@ INSERT INTO qna VALUES (DEFAULT, '강의 동영상을 더 깊이 이해하기 �
 INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 보면서 메모를 어떻게 작성하고 정리할 수 있을까요?','메모를 작성하고 정리하기 위해 중요한 내용을 요약하고, 주요 포인트를 강조하며, 메모를 주기적으로 정리하는 것이 도움이 됩니다.','admin', DEFAULT, 1,9);
 INSERT INTO qna VALUES (DEFAULT, '동영상 강의를 효과적으로 검색하고 필요한 내용을 찾는 방법이 뭐가 있나요?','동영상을 검색하기 위해 키워드를 사용하고, 정확한 제목 또는 주제를 입력하며, 검색 결과를 필터링하는 방법을 사용하여 원하는 내용을 빠르게 찾을 수 있습니다.','admin', DEFAULT, 1,10);
 
-SELECT * FROM qna;
-
-CREATE TABLE market(
-   market_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호
-   title VARCHAR(100) NOT NULL,	-- 제목
-   price int NOT NULL,		-- 가격
-   content VARCHAR(5000),	-- 설명
-   login_id INT NOT NULL,	-- 작성자 id
-   active varchar(20) NOT NULL,	-- 거래 상태(거래 완료 여부)
-   conditions varchar(20) NOT NULL,	-- 상품 상태(최상 상 중 하)
-   regdate DATETIME DEFAULT CURRENT_TIMESTAMP,	-- 등록일
-   selected_address VARCHAR(200),     -- 선택 주소
-   detail_address VARCHAR(100),        -- 상세 주소
-   xdata DOUBLE,                      -- x
-   ydata DOUBLE                      -- y
-);
-
-CREATE TABLE request(
-    req_no INT AUTO_INCREMENT PRIMARY KEY,	-- 상품 번호
-    title VARCHAR(100) NOT NULL,	-- 제목
-    price int NOT NULL,		-- 가격
-    content VARCHAR(5000),	-- 설명
-    login_id VARCHAR(255) NOT NULL,	-- 작성자 id
-    active varchar(20) NOT NULL,	-- 거래 상태(거래 완료 여부)
-    regdate DATETIME DEFAULT CURRENT_TIMESTAMP	-- 등록일
-);
-
-CREATE TABLE photos(
-   photo_no int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   market_no INT,
-   saveFolder VARCHAR(300) NOT NULL,
-   originFile VARCHAR(300) NOT NULL,
-   saveFile VARCHAR(300) NOT NULL
-);
-
 CREATE TABLE report (
-    report_id INT PRIMARY KEY AUTO_INCREMENT, -- 신고 번호
-    market_no INT, -- 게시글 번호
-    login_id  VARCHAR(255),
-    reporter VARCHAR(16), -- 신고자
-    reason VARCHAR(report), -- 이유
-    report_date DATETIME DEFAULT CURRENT_TIMESTAMP    
+                        report_id INT PRIMARY KEY AUTO_INCREMENT, -- 신고 번호
+                        marketNo INT,
+                        req_no int,
+                        title varchar(100),-- 게시글 번호
+                        login_id  VARCHAR(255),
+                        reporter VARCHAR(16), -- 신고자
+                        reason VARCHAR(300), -- 이유
+                        report_date DATETIME DEFAULT CURRENT_TIMESTAMP
 );
-
-SELECT * FROM report;
 
 
 CREATE TABLE chatRoom(
-	roomId BIGINT PRIMARY KEY AUTO_INCREMENT,			-- 채팅방 자동증가
-	productId INT NOT NULL,									-- 상품 아이디
-	productTable VARCHAR(20) NOT NULL,						-- 상품 테이블
-	buyerId VARCHAR(255) NOT NULL,							-- 구매자 희망자
-	regDate DATETIME DEFAULT CURRENT_TIMESTAMP()		-- 채팅방 생성일
+                         roomId BIGINT PRIMARY KEY AUTO_INCREMENT,			-- 채팅방 자동증가
+                         productId INT NOT NULL,									-- 상품 아이디
+                         productTable VARCHAR(20) NOT NULL,						-- 상품 테이블
+                         buyerId VARCHAR(255) NOT NULL,							-- 구매자 희망자
+                         regDate DATETIME DEFAULT CURRENT_TIMESTAMP()		-- 채팅방 생성일
 );
 
+CREATE TABLE chatRoom(
+                         roomId BIGINT PRIMARY KEY AUTO_INCREMENT,			-- 채팅방 자동증가
+                         productId INT NOT NULL,									-- 상품 아이디
+                         productTable VARCHAR(20) NOT NULL,						-- 상품 테이블
+                         buyerId VARCHAR(255) NOT NULL,							-- 구매자 희망자
+                         regDate DATETIME DEFAULT CURRENT_TIMESTAMP()		-- 채팅방 생성일
+);
 CREATE VIEW chatRoomView AS (
-	SELECT 
-		r.roomId AS roomId, 
-		r.productId AS productId, 
-		r.productTable AS productTable,
-		r.buyerId AS buyerId, 
-		u.user_name AS buyerName, 
-		u.active AS buyerActive,
-		r.regDate AS regDate
-	FROM chatRoom r 
-	LEFT JOIN user u ON r.buyerId = u.login_id
-);
-
+                            SELECT
+                                r.roomId AS roomId,
+                                r.productId AS productId,
+                                r.productTable AS productTable,
+                                r.buyerId AS buyerId,
+                                u.user_name AS buyerName,
+                                u.active AS buyerActive,
+                                r.regDate AS regDate
+                            FROM chatRoom r
+                                     LEFT JOIN user u ON r.buyerId = u.login_id
+                                );
 CREATE TABLE chatList(
-	chatId BIGINT PRIMARY KEY AUTO_INCREMENT,			-- 채팅 내역 번호 자동 증가
-	senderId VARCHAR(255) NOT NULL,							-- 채팅 보내는 사람 아이디
-	sendDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,		-- 채팅 보낸 일자
-	message TEXT NOT NULL,										-- 채팅 내역
-	readYn BOOLEAN DEFAULT FALSE,							-- 읽음 여부
-	roomId BIGINT NOT NULL										-- 채팅방 번호
+                         chatId BIGINT PRIMARY KEY AUTO_INCREMENT,			-- 채팅 내역 번호 자동 증가
+                         senderId VARCHAR(255) NOT NULL,							-- 채팅 보내는 사람 아이디
+                         sendDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,		-- 채팅 보낸 일자
+                         message TEXT NOT NULL,										-- 채팅 내역
+                         readYn BOOLEAN DEFAULT FALSE,							-- 읽음 여부
+                         roomId BIGINT NOT NULL										-- 채팅방 번호
 );
-
 CREATE VIEW chatListView AS (SELECT r.chatId AS chatId, r.sendDate AS sendDate, r.message AS message, r.readYn AS readYn, r.roomId AS roomId, r.senderId AS senderId, u.user_name AS userName FROM chatList r LEFT JOIN user u ON r.senderId = u.login_id);
-
+CREATE TABLE likes (
+                       lno INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                       login_id VARCHAR(20) NOT NULL,
+                       marketNo INT,
+                       req_no INT,
+                       liketime DATETIME DEFAULT CURRENT_TIMESTAMP
+);
