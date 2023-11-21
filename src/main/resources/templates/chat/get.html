@@ -173,6 +173,12 @@
                     }
                 });
             }
+
+            document.getElementById('send').addEventListener('click', function() {
+                var chattingDiv = document.getElementById('chatting');
+                chattingDiv.scrollTop = chattingDiv.scrollHeight;
+            });
+
         </script>
         <script th:src="@{/js/chat.js}"></script>
     </body>
