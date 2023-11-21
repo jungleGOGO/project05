@@ -44,7 +44,7 @@
                 <th scope="row" th:text="${noticeStat.index}"></th>
                 <td ><a th:text="${notice.title}" th:href="@{/notice/detail(no = ${notice.no})}" id="title" ></a></td>
                 <td th:text="${#dates.format(notice.regdate,'yyyy-MM-dd')}"></td>
-                <td th:text="${notice.author}"></td>
+                <td th:text="관리자"></td>
                 <td th:text="${notice.cnt}"></td>
             </tr>
             <tr th:if="${list.isEmpty()}">

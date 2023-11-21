@@ -96,7 +96,7 @@ public class MarketCtrl {
         String sid = principal != null ? principal.getName() : "";
         model.addAttribute("sid",sid);
         model.addAttribute("msg", msg);
-        System.out.println(msg);
+
         return "market/marketInsert";
     }
 
@@ -114,10 +114,8 @@ public class MarketCtrl {
         String sid = principal != null ? principal.getName() : "";
         System.out.println("대표사진 값들:"+repImage);
         System.out.println("상세사진 값들:"+detailImages);
-//        String realPath = "C://upload/";
-        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
-
-
+        String realPath = "C://upload/";
+//        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
 
 
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
@@ -214,7 +212,6 @@ public class MarketCtrl {
         likes.setMarketNo(marketNo);
         int chkLiked = likesService.checkLikedMar(likes);
         model.addAttribute("chkLiked",chkLiked);
-        System.out.println("chkLiked : "+chkLiked);
 
 
 
@@ -245,7 +242,6 @@ public class MarketCtrl {
         likes.setMarketNo(marketNo);
         int chkLiked = likesService.checkLikedMar(likes);
         model.addAttribute("chkLiked",chkLiked);
-        System.out.println("chkLiked : "+chkLiked);
 
         if(chkLiked==0) {
             likesService.addLikeMar(likes);
@@ -304,10 +300,18 @@ public class MarketCtrl {
     }
 
     @GetMapping("/delete")
-    public String marketDelete(@RequestParam int marketNo)throws Exception{
+    public String marketDelete(@RequestParam("marketNo") int marketNo, Principal principal)throws Exception{
+
+        String sid = principal != null ? principal.getName() : "";
 
         marketService.marketDelete(marketNo);
-        return "redirect:/market/marketList";
+
+        if(sid.equals("admin")){
+            return "redirect:/admin/reportList";
+        } else {
+            return "redirect:/market/marketList";
+        }
+
     }
 
 
@@ -335,8 +339,8 @@ public class MarketCtrl {
         String sid = principal != null ? principal.getName() : "";
         System.out.println("대표사진 값들:"+repImage);
         System.out.println("상세사진 값들:"+detailImages);
-//        String realPath = "C://upload/";
-        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
+
+        String realPath = "C://upload/";
 
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
         String repImageSaveFolder = "rep_images/" + today;
@@ -354,11 +358,9 @@ public class MarketCtrl {
         }
         if(repImage[0].getSize() != 0){
             List<Mainphoto> mainphotoList = mainphotoService.mainphotoList(market.getMarketNo());
-            System.out.println("메인사진:"+mainphotoList);
             ServletContext application = req.getSession().getServletContext();
             for (Mainphoto mainphoto : mainphotoList) {
                 File oldFile = new File(realPath+mainphoto.getSaveFolder()+"/"+mainphoto.getSaveFile());
-                System.out.println("경로확인"+realPath+mainphoto.getSaveFolder()+"/"+mainphoto.getSaveFile());
                 if(oldFile.exists()){
                     oldFile.delete();
                 }
@@ -367,11 +369,9 @@ public class MarketCtrl {
 
         if(detailImages[0].getSize() != 0){
             List<Photos> photosList = photosService.photosList(market.getMarketNo());
-            System.out.println("상세사진:"+photosList);
             ServletContext application = req.getSession().getServletContext();
             for (Photos photos : photosList) {
                 File oldFile = new File(realPath+photos .getSaveFolder()+"/"+photos .getSaveFile());
-                System.out.println(realPath+photos .getSaveFolder()+"/"+photos.getSaveFile());
                 if(oldFile.exists()){
                     oldFile.delete();
                 }
