@@ -114,11 +114,11 @@
                 </button>
                 <a class="btn btn-primary w-25 py-3" th:href="@{/request/requestList}" type="button">목록</a>
               </div>
-              <th:block sec:authorize="${hasRole('USER')}">
-              <div class="col-12" style="margin-left: 70px;">
-                <a class="btn btn-primary w-25 py-3" th:href="@{/request/edit(reqNo=${request.reqNo})}" type="button">수정하기</a>
-                <a class="btn btn-primary w-25 py-3" th:href="@{/request/delete(reqNo=${request.reqNo})}" type="button">삭제하기</a>
-              </div>
+              <th:block sec:authorize="${hasRole('USER') || hasRole('ADMIN')}">
+                <div class="col-12" style="margin-left: 70px;">
+                <a class="btn btn-primary w-25 py-3" th:if="${sid eq request.getLoginId()}" th:href="@{/request/edit(reqNo=${request.reqNo})}" type="button">수정하기</a>
+                <a class="btn btn-primary w-25 py-3" th:if="${sid eq request.getLoginId()}" th:href="@{/request/delete(reqNo=${request.reqNo})}" type="button">삭제하기</a>
+                </div>
               </th:block>
             </div>
           </form>

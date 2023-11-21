@@ -102,4 +102,8 @@
         update user set password=#{password} where login_id=#{loginId}
     </update>
 
+    <select id="findId" resultType="com.tsherpa.team35.entity.User">
+        select login_id from user where email=#{email} and tel=#{tel}
+    </select>
+
 </mapper>

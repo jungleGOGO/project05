@@ -53,7 +53,7 @@ public class RequestCtrl {
 
         model.addAttribute("page", page);
         model.addAttribute("curPage", curPage);
-        
+
         List<Request> requestList = requestService.requestList(page);
         model.addAttribute("requestList",requestList);
 
@@ -170,6 +170,7 @@ public class RequestCtrl {
             List<Request> requestList = requestService.allRequest();
             model.addAttribute("requestList", requestList);
             model.addAttribute("request", request);
+            model.addAttribute("sid", sid);
             return "request/reqDetail";
         }else {
             model.addAttribute("msg", "열람 불가능한 글입니다.");
@@ -209,8 +210,15 @@ public class RequestCtrl {
 
 
     @GetMapping("/edit")
-    public String editForm(@RequestParam int reqNo,HttpServletRequest request, Model model) throws Exception {
+    public String editForm(@RequestParam int reqNo,HttpServletRequest request, Model model,Principal principal) throws Exception {
         Request detail = requestService.requestDetail(reqNo);
+
+        //로그인한 사용자 아이디와 작성자 아이디 비교
+        String sid = principal != null ? principal.getName() : "";
+        if (!sid.equals(detail.getLoginId())){
+            return "redirect:/";
+        }
+
         model.addAttribute("detail", detail);
         return "/request/reqEdit";
     }

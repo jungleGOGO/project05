@@ -6,6 +6,8 @@ import com.tsherpa.team35.entity.Report;
 import com.tsherpa.team35.entity.Request;
 import com.tsherpa.team35.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -21,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class UserCtrl {
@@ -42,6 +46,11 @@ public class UserCtrl {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
+    @Value("${spring.mail.username}")
+    private String from;
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(value = "exception", required = false) String exception){
@@ -215,7 +224,66 @@ public class UserCtrl {
 
 
     @GetMapping("/findId")
-    public String findId() {
-        return "user/findId";
+    public String findIdForm() {return "user/findId";}
+
+    @PostMapping("/findId")
+    public String findId(@RequestParam("email") String email, @RequestParam("tel") String tel, Model model) {
+
+        User user = userService.findId(email, tel);
+        if(user != null) {
+                String firstId = user.getLoginId().substring(0, 3);
+
+                String lastId = "";
+                for (int i = 0; i < (user.getLoginId().length() - 3); i++) {
+                    lastId += "*";
+                }
+
+                model.addAttribute("id", firstId + lastId);
+
+                return "user/findIdSuc";
+
+        } else  {
+                model.addAttribute("msg", "등록된 정보가 없습니다. ");
+                model.addAttribute("url", "/login");
+                return "layout/alert";
+        }
     }
+
+    @GetMapping("/findPw")
+    public String findPw() {
+        return "user/findPw";
+    }
+
+
+    @PostMapping("/findPw")
+    @ResponseBody
+    public String findPassword(@RequestParam String name, @RequestParam String email, @RequestParam String id, Model model) {
+        User user = userService.getUserByLoginId(id);
+        System.out.println("name : "+name+" email : "+email+" id : "+id);
+        System.out.println("User : "+user.toString());
+
+        String result = "fail";
+
+        if(name.equals(user.getUserName()) && email.equals(user.getEmail()) && id.equals(user.getLoginId())){
+            //임시비밀번호 암호화해서 DB에 저장
+            String tempPassword = userService.getRamdomPassword(8);
+
+            user.setPassword(tempPassword);
+            userService.pwEdit(user);
+
+            //이메일 전송
+            userService.sendTempPasswordEmail(email, tempPassword);
+
+            result="success";
+            return result;
+//            return "user/login";
+        } else {
+            model.addAttribute("msg","정보가 일치하지 않습니다.");
+//            return "redirect:/findPw";
+            return result;
+        }
+
+
+    }
+
 }
