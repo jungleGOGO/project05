@@ -156,7 +156,8 @@
         </div>
         <!-- ---------------------------------이하 삽니다 탭------------------------------------->
         <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">
-            <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" style="width: 431.98px;height:430.58px;">
+            <div class="row g-4 mb-5">
+            <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" >
                 <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
                     <div class="overflow-hidden">
                         <img class="img-fluid" th:src="${request.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
@@ -168,41 +169,44 @@
                     </div>
                 </div>
             </div>
-
+            </div>
         </div>
         <!-- ---------------------------------이하 좋아요 탭------------------------------------->
         <div class="tab-pane fade" id="like" role="tabpanel" aria-labelledby="like-tab">
             <div class=""  style="height:34px; border-bottom: 1px solid gray; margin-bottom:12px ">
                 <h4 style="text-align: center">팝니다</h4>
             </div>
-            <div class="col-md-4 col-lg-4 wow fadeInUp" th:each="market: ${likeMarket}" data-wow-delay="0.1s" style="width: 350px;height:430.58px;">
-                <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
-                    <div class="overflow-hidden">
-                        <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
-                    </div>
-                    <div class="p-4 text-center border border-5 border-light border-top-0">
-                        <h4 class="mb-3" th:text="${market.title}"></h4>
-                        <p>거래장소: <span th:text="${#strings.length(market.selectedAddress) &lt;= 15} ? ${market.selectedAddress} : ${#strings.substring(market.selectedAddress, 0, 10) + '...'}"></span></p><p>등록일:  <span th:if="${market.regdate != null}" th:text="${#strings.substring(market.regdate.toString(), 0, 10)}"></span></p>
-                        <a class="fw-medium" th:href="@{/market/detail(marketNo=${market.marketNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
+            <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="market: ${likeMarket}" data-wow-delay="0.1s" >
+                    <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
+                        <div class="overflow-hidden">
+                            <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
+                        </div>
+                        <div class="p-4 text-center border border-5 border-light border-top-0">
+                            <h4 class="mb-3" th:text="${market.title}"></h4>
+                            <p>거래장소: <span th:text="${#strings.length(market.selectedAddress) &lt;= 15} ? ${market.selectedAddress} : ${#strings.substring(market.selectedAddress, 0, 10) + '...'}"></span></p><p>등록일:  <span th:if="${market.regdate != null}" th:text="${#strings.substring(market.regdate.toString(), 0, 10)}"></span></p>
+                            <a class="fw-medium" th:href="@{/market/detail(marketNo=${market.marketNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
 
 
 
-
             <div class=""  style="height:34px; border-bottom: 1px solid gray; margin-bottom:12px ">
                 <h4 style="text-align: center">삽니다</h4>
             </div>
-            <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="request: ${likeRequestList}" data-wow-delay="0.1s" style="width: 431.98px;height:430.58px;">
-                <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
-                    <div class="overflow-hidden">
-                        <img class="img-fluid" th:src="${request.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
-                    </div>
-                    <div class="p-4 text-center border border-5 border-light border-top-0">
-                        <h4 class="mb-3" th:text="${request.title}"></h4>
-                        <p>거래희망장소: <span th:text="${request.addr}"></span></p><p>등록일: <span th:text="${request.regdate}"></span></p>
-                        <a class="fw-medium" th:href="@{/request/reqDetail(reqNo=${request.reqNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
+            <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="request: ${likeRequestList}" data-wow-delay="0.1s" >
+                    <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
+                        <div class="overflow-hidden">
+                            <img class="img-fluid" th:src="${request.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
+                        </div>
+                        <div class="p-4 text-center border border-5 border-light border-top-0">
+                            <h4 class="mb-3" th:text="${request.title}"></h4>
+                            <p>거래희망장소: <span th:text="${request.addr}"></span></p><p>등록일: <span th:text="${request.regdate}"></span></p>
+                            <a class="fw-medium" th:href="@{/request/reqDetail(reqNo=${request.reqNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
