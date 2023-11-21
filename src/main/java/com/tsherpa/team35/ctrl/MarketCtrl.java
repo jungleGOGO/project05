@@ -66,7 +66,7 @@ public class MarketCtrl {
 
         model.addAttribute("page", page);
 
-        List<MainVO> mainList = marketService.mainVOList();
+        List<MainVO> mainList = marketService.mainVOList(page);
         model.addAttribute("mainList",mainList);
         return "market/marketList";
     }

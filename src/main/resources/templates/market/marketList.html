@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </form>
-            <div>
+            <div style="margin: 8px;">
                 <th:block sec:authorize="isAnonymous()">
                     <a class="btn btn-primary px-4"   th:href="@{/login}">글쓰기</a>
                 </th:block>
@@ -69,11 +69,8 @@
                 </th:block>
             </div>
         </div>
-        <th:block sec:authorize="hasRole('USER') || hasRole('TEACHER') || hasRole('EMP')">
-            <button type="button" class="btn btn-info"><a th:href="@{/market/bookSearch}">요청하기</a></button>
-        </th:block>
-        <div class="row g-4" >
-            <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" style="width: 431.98px;height:430.58px;">
+        <div class="row g-4 mb-5" >
+            <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" >
                 <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
                     <div class="overflow-hidden">
                         <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px;">

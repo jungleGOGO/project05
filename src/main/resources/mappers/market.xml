@@ -41,7 +41,7 @@
          </if>
            AND readable = 0
         </where>
-        order by regdate desc
+        order by regdate desc limit #{postStart}, #{postCount}
     </select>
 
     <select id="detailVOList" resultType="com.tsherpa.team35.entity.DetailVO">

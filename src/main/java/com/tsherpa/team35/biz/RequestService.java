@@ -2,6 +2,7 @@ package com.tsherpa.team35.biz;
 
 import com.tsherpa.team35.entity.Request;
 import com.tsherpa.team35.per.RequestMapper;
+import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +18,8 @@ public class RequestService {
     public void reqInsert(Request request) throws Exception{
         requestMapper.requestInsert(request);
     }
-    public List<Request> requestList() throws Exception{
-        return requestMapper.requestList();
+    public List<Request> requestList(Page page) throws Exception{
+        return requestMapper.requestList(page);
     }
     public Request requestDetail(int reqNo) throws Exception{
         return requestMapper.requestDetail(reqNo);
@@ -57,6 +58,10 @@ public class RequestService {
 
     public List<Request> getRequestListForMain() throws Exception {
         return requestMapper.getRequestListForMain();
+    }
+
+    public int getReqCount(Page page){
+        return requestMapper.getReqCount(page);
     }
 
 }

@@ -30,8 +30,8 @@ public class MarketService {
 
     }
 
-    public List<MainVO> mainVOList() throws Exception{
-       return marketMapper.mainVOList();
+    public List<MainVO> mainVOList(Page page) throws Exception{
+       return marketMapper.mainVOList(page);
     }
 
     public DetailVO detailVOList(int marketNo) throws Exception{

@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface MarketMapper {
     public void marketInsert(Market market) throws Exception;
-    public List<MainVO> mainVOList() throws Exception;
+    public List<MainVO> mainVOList(Page page) throws Exception;
     public Market marketDetail(int marketNo) throws Exception;
     public DetailVO detailVOList(int marketNo) throws Exception;
     public MainVO mainlistForDetailVOList(int marketNo) throws Exception;

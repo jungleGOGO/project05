@@ -137,9 +137,9 @@
 
     <!-- 탭 콘텐츠 -->
     <div class="tab-content col-9" id="myTabContent" style="margin: 0 auto; padding-top: 20px">
-        <div class="tab-pane fade col-9 show active" id="sell" role="tabpanel" aria-labelledby="sell-tab">
-
-                <div class="col-md-4 col-lg-4 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" style="width: 350px;height:430.58px;">
+        <div class="tab-pane fade col-12 show active" id="sell" role="tabpanel" aria-labelledby="sell-tab">
+                <div class="row g-4 mb-5">
+                <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" >
                     <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
                         <div class="overflow-hidden">
                             <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
@@ -151,7 +151,7 @@
                         </div>
                     </div>
                 </div>
-
+                </div>
         </div>
         <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">
             <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" style="width: 431.98px;height:430.58px;">
