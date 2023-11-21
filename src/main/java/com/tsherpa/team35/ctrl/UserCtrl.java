@@ -221,16 +221,22 @@ public class UserCtrl {
     public String findId(@RequestParam("email") String email, @RequestParam("tel") String tel, Model model) {
 
         User user = userService.findId(email, tel);
-        String firstId = user.getLoginId().substring(0,3);
+        if(user != null) {
+                String firstId = user.getLoginId().substring(0, 3);
 
-        String lastId ="";
-        for(int i =0; i< (user.getLoginId().length()-3); i++) {
-            lastId += "*";
+                String lastId = "";
+                for (int i = 0; i < (user.getLoginId().length() - 3); i++) {
+                    lastId += "*";
+                }
+
+                model.addAttribute("id", firstId + lastId);
+
+                return "user/findIdSuc";
+
+        } else  {
+                model.addAttribute("msg", "등록된 정보가 없습니다. ");
+                model.addAttribute("url", "/login");
+                return "layout/alert";
         }
-
-        model.addAttribute("id",firstId+lastId);
-
-        return "user/findIdSuc";
     }
-
 }

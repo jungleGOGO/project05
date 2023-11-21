@@ -44,12 +44,12 @@
     <!-- 가격 입력 -->
     <div class="mb-3">
       <label for="price" class="form-label">희망가격</label>
-      <input type="number" class="form-control" name="price" th:value="${detail.price}"  id="price" placeholder="가격을 입력하세요" required>
+      <input type="number" class="form-control" name="price" th:value="${detail.price}"  id="price" placeholder="가격을 입력하세요" max="9999999" required>
     </div>
 
     <div class="mb-3">
       <label for="addr" class="form-label">주소</label>
-      <input type="text" class="form-control" name="addr" th:value="${detail.addr}" id="addr" placeholder="가격을 입력하세요" required>
+      <input type="text" class="form-control" name="addr" th:value="${detail.addr}" id="addr" maxlength="8" placeholder="00도 00시까지만 입력해주세요" required>
     </div>
     <a th:href="@{/request/editSearch(reqNo=${detail.reqNo})}" class="btn btn-dark">책 정보 수정</a>
     <!-- 책 정보 입력 -->

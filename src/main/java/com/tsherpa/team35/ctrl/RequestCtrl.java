@@ -170,6 +170,7 @@ public class RequestCtrl {
             List<Request> requestList = requestService.allRequest();
             model.addAttribute("requestList", requestList);
             model.addAttribute("request", request);
+            model.addAttribute("sid", sid);
             return "request/reqDetail";
         }else {
             model.addAttribute("msg", "열람 불가능한 글입니다.");
