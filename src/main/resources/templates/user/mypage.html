@@ -165,8 +165,8 @@
         </div>
         <!-- ---------------------------------이하 삽니다 탭------------------------------------->
         <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">
-            <div class="row g-4 mb-5 border border-1 border-light sellInfo">
-                <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" >
+            <div class="row g-4 mb-5 border border-1 border-light">
+                <div class="col-md-6 col-lg-4 wow fadeInUp sellInfo" th:each="request: ${requestList}" data-wow-delay="0.1s" >
                     <div class="service-item">
                         <div class="overflow-hidden">
                             <a th:href="@{/request/reqDetail(reqNo=${request.reqNo})}"><img class="img-fluid" th:src="${request.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;"></a>
@@ -293,7 +293,7 @@
         let child = window.open("/chat/tradeInfo?marketNo=" + num, "child", "width=500, height=200");;
     }
     function trade2(num) {
-        let child = window.open("/chat/tradeInfo2?reqNo=" + num, "child", "width=500, height=200");;
+        let child = window.open("/chat/tradeReqInfo?reqNo=" + num, "child", "width=500, height=200");;
     }
 </script>
 </body>

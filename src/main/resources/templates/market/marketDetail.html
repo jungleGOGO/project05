@@ -55,12 +55,12 @@
 <!-- Page Header Start -->
 <div class="container-fluid page-header py-5 mb-0">
   <div class="container py-5">
-      <h1 class="display-3 text-white mb-3 animated slideInDown">삽니다</h1>
+      <h1 class="display-3 text-white mb-3 animated slideInDown">팝니다</h1>
       <nav aria-label="breadcrumb animated slideInDown">
           <ol class="breadcrumb">
               <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
               <li class="breadcrumb-item"><a class="text-white" href="#">장터</a></li>
-              <li class="breadcrumb-item text-white active" aria-current="page">삽니다</li>
+              <li class="breadcrumb-item text-white active" aria-current="page">팝니다</li>
           </ol>
       </nav>
   </div>
@@ -189,9 +189,10 @@
 
                     map.setCenter(point); //검색한 곳으로 지도 이동
                     // marker.setPosition(point); // 마커 표시
-<<<<<<< HEAD
-                });
-            }
+                  });
+                }
+
+
         </script>
     </div>
     <div class="row mt-5">
@@ -204,42 +205,6 @@
             </div>
         </th:block>
         <div class="col ms-2"><a class="btn btn-primary w-100 py-2" th:href="@{/market/marketList}" type="button">목록</a></div>
-=======
-                  });
-                }
-
-
-              </script>
-
-              <div class="col-12" th:if="${market.active == 0}">
-                <button class="btn btn-primary w-100 py-3" type="button" th:onclick="|location.href='@{/chat/chat(productNo=${market.marketNo}, productTable=market)}'|">대화하기</button>
-              </div>
-                <hr>
-              <div class="col-12" style="margin-left: 70px;">
-                <input type="hidden" id="marketNo" name="marketNo" th:value="${market.marketNo}">
-                <input type="hidden" class="form-control border-0" id="reporter" name="reporter" th:value="${market.loginId}" readonly style="height: 55px;">
-                <input type="hidden" class="form-control border-0" id="title" name="title" th:value="${market.title}" readonly style="height: 55px;">
-                  <button class="btn btn-primary w-25 py-3" type="button">
-                      찜하기
-                      <i class="fa-solid fa-heart" th:if="${chkLiked == 1}" th:onclick="|toggleLike()|" style="color: red"></i>
-                      <i class="fa-solid fa-heart" th:unless="${chkLiked == 1}" th:onclick="|toggleLike()|"></i>
-                  </button>
-                  <button class="btn btn-primary w-25 py-3" type="button">신고하기
-                      <img th:src="${'/image/siren5050.png'}"  id="ck_btn" onclick="repCheck()" style="width: 20px; height: 20px;" />
-                  </button>
-                  <a class="btn btn-primary w-25 py-3" th:href="@{/market/marketList}" type="button">목록</a>
-              </div>
-                <th:block sec:authorize="${hasRole('USER') || hasRole('ADMIN') }">
-                <div class="col-12" style="margin-left: 70px;">
-                    <a class="btn btn-primary w-25 py-3" th:if="${sid eq market.loginId}" th:href="@{/market/edit(marketNo=${market.marketNo})}" type="button">수정하기</a>
-                    <a class="btn btn-primary w-25 py-3" th:if="${sid eq market.loginId}" th:href="@{/market/delete(marketNo=${market.marketNo})}" type="button">삭제하기</a>
-                </div>
-                </th:block>
-            </div>
-          </form>
-        </div>
-      </div>
->>>>>>> 4937128cb95ca02a85a8f9f8c59d5033cba9753c
     </div>
 </div>
 <script>
@@ -290,11 +255,7 @@
                 } else {
                     alert("로그인 후 다시 시도해주세요.");
                 }
-            }, error(e,f,g) {
-                console.log(">>>>>>>>" + e);
-                console.log(">>>>>>>>" + f);
-                console.log(">>>>>>>>" + g);
-            }
+            },
         })
     }
 </script>

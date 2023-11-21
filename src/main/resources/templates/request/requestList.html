@@ -18,12 +18,12 @@
 <!-- Page Header Start -->
 <div class="container-fluid page-header py-5 mb-5">
   <div class="container py-5">
-    <h1 class="display-3 text-white mb-3 animated slideInDown">마켓</h1>
+    <h1 class="display-3 text-white mb-3 animated slideInDown">삽니다</h1>
     <nav aria-label="breadcrumb animated slideInDown">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-        <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-        <li class="breadcrumb-item text-white active" aria-current="page">마켓</li>
+        <li class="breadcrumb-item"><a class="text-white" href="#">장터</a></li>
+        <li class="breadcrumb-item text-white active" aria-current="page">삽니다</li>
       </ol>
     </nav>
   </div>
@@ -75,7 +75,7 @@
           </div>
           <div class="p-4 text-center">
             <h4 th:if="${request.active == '0'}" class="mb-3" th:text="${request.title}"></h4>
-            <h4 th:if="${request.active == '1'}" style="color:#555" class="mb-3" th:text="${'[판매완료]' + request.title}"></h4>
+            <h4 th:if="${request.active == '1'}" style="color:#555" class="mb-3" th:text="${'[거래완료]' + request.title}"></h4>
             <p><span id="addr" th:text="${'희망 가격 : ' + request.price + ' 원'}"></span></p><p>등록일: <span th:text="${#strings.substring(request.regdate.toString(), 0, 10)}"></span></p>
             <a class="fw-medium" th:href="@{/request/reqDetail(reqNo=${request.reqNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
           </div>
