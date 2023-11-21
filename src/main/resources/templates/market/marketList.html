@@ -125,22 +125,22 @@
 <!-- Template Javascript -->
 <th:block th:insert="~{layout/footer :: footer}"></th:block>
 <script th:src="@{/js/main.js}"></script>
-<script>
-    $(document).ready(function () {
-        // 첫 6개 이외의 모든 서비스 항목을 숨김
-        $('.service-item:gt(5)').hide();
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        // 첫 6개 이외의 모든 서비스 항목을 숨김-->
+<!--        $('.service-item:gt(5)').hide();-->
 
-        // "더 보기" 클릭 시 추가 항목을 표시
-        $('#loadMore').on('click', function (e) {
-            e.preventDefault();
-            $('.service-item:hidden:lt(6)').fadeIn();
-            // 모든 항목이 표시되었을 경우 "더 보기" 숨김
-            if ($('.service-item:hidden').length === 0) {
-                $('#loadMore').fadeOut('slow');
-            }
-        });
-    });
-</script>
+<!--        // "더 보기" 클릭 시 추가 항목을 표시-->
+<!--        $('#loadMore').on('click', function (e) {-->
+<!--            e.preventDefault();-->
+<!--            $('.service-item:hidden:lt(6)').fadeIn();-->
+<!--            // 모든 항목이 표시되었을 경우 "더 보기" 숨김-->
+<!--            if ($('.service-item:hidden').length === 0) {-->
+<!--                $('#loadMore').fadeOut('slow');-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 </body>
 
 </html>

@@ -48,11 +48,12 @@ public class RequestCtrl {
         int total = requestService.getReqCount(page);
         page.makeBlock(curPage, total);
         page.makeLastPageNum(total);
+        page.setPostCount(8);
         page.makePostStart(curPage, total);
 
         model.addAttribute("page", page);
         model.addAttribute("curPage", curPage);
-
+        
         List<Request> requestList = requestService.requestList(page);
         model.addAttribute("requestList",requestList);
 

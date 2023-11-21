@@ -67,6 +67,7 @@ public class MarketCtrl {
 
         int total = marketService.getMarCount(page);
         page.makeBlock(curPage, total);
+        page.setPostCount(8);
         page.makeLastPageNum(total);
         page.makePostStart(curPage, total);
 

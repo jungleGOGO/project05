@@ -5,6 +5,9 @@
   <th:block th:insert="~{layout/head :: head}"></th:block>
   <link rel="stylesheet" th:href="@{/css/main.css}">
   <title>T셀파</title>
+  <style>
+   #addr {display: block;  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:250px;}
+  </style>
 </head>
 <body>
 <th:block th:insert="~{layout/header :: header}"></th:block>
@@ -65,34 +68,34 @@
     </div>
 
     <div class="row g-4 mb-5" >
-      <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" >
+     <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" >
         <div class="service-item" style="border: 5px solid #000;">
           <div class="overflow-hidden">
             <img class="img-fluid" th:src="${request.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
           </div>
           <div class="p-4 text-center border border-5 border-light border-top-0">
             <h4 class="mb-3" th:text="${request.title}"></h4>
-            <p>거래희망장소: <span th:text="${request.addr}"></span></p><p>등록일: <span th:text="${request.regdate}"></span></p>
+            <p><span id="addr" th:text="'거래희망장소:'+${request.addr}"></span></p><p>등록일: <span th:text="${#strings.substring(request.regdate.toString(), 0, 10)}"></span></p>
             <a class="fw-medium" th:href="@{/request/reqDetail(reqNo=${request.reqNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
           </div>
         </div>
       </div>
-      </div>
+    </div>
 
     <div style="margin-top: 30px;" th:if="${!requestList.isEmpty()}">
       <ul class="pagination justify-content-center mb-0">
         <li th:if="${curPage > 1}" class="page-item">
-          <a th:href="@{|/market/marketList?page=${curPage - 1}|}" class="page-link">
+          <a th:href="@{|/request/reqList?page=${curPage - 1}|}" class="page-link">
             <i class="fa-solid fa-arrow-left"></i>
           </a>
         </li>
         <th:block th:each="i: ${#numbers.sequence(page.blockStartNum, page.blockLastNum)}">
           <li th:class="${i == curPage} ? 'page-item active' : 'page-item'">
-            <a th:href="@{|/market/marketList?page=${i}|}" class="page-link" aria-label="Page ${i}" aria-current="${i == curPage}" th:text="${i}"></a>
+            <a th:href="@{|/request/reqList?page=${i}|}" class="page-link" aria-label="Page ${i}" aria-current="${i == curPage}" th:text="${i}"></a>
           </li>
         </th:block>
         <li th:if="${curPage < page.totalPageCount}" class="page-item">
-          <a th:href="@{|/market/marketList?page=${curPage + 1}|}" class="page-link">
+          <a th:href="@{|/request/reqList?page=${curPage + 1}|}" class="page-link">
             <i class="fa-solid fa-arrow-right"></i>
           </a>
         </li>
@@ -124,21 +127,21 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <!-- Your existing script for the dynamic loading -->
-<script>
-  $(document).ready(function () {
-    // 첫 6개 이외의 모든 서비스 항목을 숨김
-    $('.service-item:gt(5)').hide();
-    // "더 보기" 클릭 시 추가 항목을 표시
-    $('#loadMore').on('click', function (e) {
-      e.preventDefault();
-      $('.service-item:hidden:lt(6)').fadeIn();
-      // 모든 항목이 표시되었을 경우 "더 보기" 숨김
-      if ($('.service-item:hidden').length === 0) {
-        $('#loadMore').fadeOut('slow');
-      }
-    });
-  });
-</script>
+<!--<script>-->
+<!--  $(document).ready(function () {-->
+<!--    // 첫 6개 이외의 모든 서비스 항목을 숨김-->
+<!--    $('.service-item:gt(5)').hide();-->
+<!--    // "더 보기" 클릭 시 추가 항목을 표시-->
+<!--    $('#loadMore').on('click', function (e) {-->
+<!--      e.preventDefault();-->
+<!--      $('.service-item:hidden:lt(6)').fadeIn();-->
+<!--      // 모든 항목이 표시되었을 경우 "더 보기" 숨김-->
+<!--      if ($('.service-item:hidden').length === 0) {-->
+<!--        $('#loadMore').fadeOut('slow');-->
+<!--      }-->
+<!--    });-->
+<!--  });-->
+<!--</script>-->
 </body>
 
 </html>
