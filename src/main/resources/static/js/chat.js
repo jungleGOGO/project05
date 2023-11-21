@@ -34,6 +34,10 @@ function disconnect() {
 
 //html 에서 입력값, roomId 를 받아서 Controller 로 전달
 function sendChat() {
+    if($("#message").val() === ''){
+        return false;
+    }
+
     stompClient.send("/chat/send/"+roomId, {},
         JSON.stringify({
             'message' : $("#message").val()
@@ -55,6 +59,7 @@ function loadChat(chatList){
             }
         }
     }
+    updateScroll();
 }
 
 //보낸 채팅 보기
@@ -72,6 +77,7 @@ function showChat(chatListVO) {
     //this.scrollTo(0, $("#chatting").height());
 
     $("#message").val("");
+    updateScroll();
 }
 
 $(function () {
@@ -90,4 +96,9 @@ window.onload = function (){
 
 window.BeforeUnloadEvent = function (){
     disconnect();
+}
+
+function updateScroll(){
+    var chattingDiv = document.getElementById('chatting');
+    chattingDiv.scrollTop = chattingDiv.scrollHeight;
 }
