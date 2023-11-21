@@ -25,6 +25,7 @@ public interface RequestMapper {
 
     public int getRequestCnt() throws Exception;
     public List<Request> getRequestListForMain() throws Exception;
+    public List<Request> likeRequestList(String loginId);
 
 
 }

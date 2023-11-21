@@ -83,5 +83,9 @@ public class MarketService {
     public List<MainVO> userMainVOList(String loginId) {
         return marketMapper.userMainVOList(loginId);
     }
+    public List<MainVO> likeMarketList(String loginId) {
+        return marketMapper.likeMarketList(loginId);
+    }
+
 
 }

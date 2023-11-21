@@ -50,7 +50,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                 .antMatchers("/admin/**").hasRole("ADMIN") // ADMIN 권한의 유저만 /home 에 접근가능
-                .antMatchers("/mypage","/pwEdit","/userEdit", "/market/marketLike", "/request/requestLike", "/report/**").hasAnyRole("USER", "TEACHER")
+                .antMatchers("/mypage","/pwEdit","/userEdit","/report/**",
+                        "/market/marketLike","/market/edit","/market/marketInsert","/market/delete",
+                        "/request/requestLike","/request/insert", "/request/delete","/request/edit",
+                        "/qna/questionInsert","/qna/edit","/qna/delete",
+                        "/chat/**")
+                    .hasAnyRole("USER", "TEACHER")
                 .antMatchers("/","/**","/login","/join").permitAll()
                 .mvcMatchers("/css/**","/js/**","/image/**","/fonts/**","/clEditor/**", "/lib/**").permitAll()
                 .anyRequest().authenticated()

@@ -29,5 +29,7 @@ public interface MarketMapper {
 
     public int getMarketCnt() throws Exception;
     public List<MainVO> getMarketListForMain() throws Exception;
+    public List<MainVO> likeMarketList(String loginId);
+
 
 }

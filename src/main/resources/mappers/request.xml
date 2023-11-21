@@ -62,4 +62,8 @@
         select * from request order by regdate desc limit 3
     </select>
 
+    <select id="likeRequestList" resultType="com.tsherpa.team35.entity.Request">
+        select r.* from request r join likes l on r.req_no =l.req_no where l.login_id = #{loginId}
+    </select>
+
 </mapper>

@@ -58,5 +58,8 @@ public class RequestService {
     public List<Request> getRequestListForMain() throws Exception {
         return requestMapper.getRequestListForMain();
     }
+    public List<Request> likeRequestList(String loginId) {
+        return requestMapper.likeRequestList(loginId);
+    }
 
 }
