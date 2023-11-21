@@ -76,6 +76,10 @@ public class MarketService {
 
     }
 
+    public List<MainVO> getInfo(String loginId) throws Exception {
+        return marketMapper.getInfo(loginId);
+    }
+
     public int cntSell(String loginId) {
         return marketMapper.cntSell(loginId);
     }

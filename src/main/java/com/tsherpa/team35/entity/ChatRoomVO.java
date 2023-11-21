@@ -13,6 +13,7 @@ public class ChatRoomVO {
     private Long roomId;
     private int productId;
     private String productTable;
+    private String productName = "";
     private String buyerId;
     private String buyerName;
     private int buyerActive;
