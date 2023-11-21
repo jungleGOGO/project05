@@ -164,7 +164,6 @@ public class RequestCtrl {
         likes.setReqNo(reqNo);
         int chkLiked = likesService.checkLikedReq(likes);
         model.addAttribute("chkLiked",chkLiked);
-        System.out.println("chkLiked : "+chkLiked);
 
         if(requestService.requestDetail(reqNo).getReadable() == 0){
             List<Request> requestList = requestService.allRequest();
@@ -194,7 +193,6 @@ public class RequestCtrl {
         int chkLiked = likesService.checkLikedReq(likes);
 
         model.addAttribute("chkLiked",chkLiked);
-        System.out.println("chkLiked : "+chkLiked);
 
         if(chkLiked==0) {
             likesService.addLikeReq(likes);
