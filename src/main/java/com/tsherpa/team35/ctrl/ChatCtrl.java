@@ -255,4 +255,10 @@ public class ChatCtrl {
         return chatService.getChatLast(roomId);
     }
 
+    @GetMapping("/tradeInfo")
+    public String trade(@RequestParam("roomId") Long roomId, Model model) throws Exception {
+
+        return "chat/trade";
+    }
+
 }
