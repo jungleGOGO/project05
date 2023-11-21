@@ -59,12 +59,19 @@ public class MarketCtrl {
     @GetMapping("/marketList")
     public String list(HttpServletRequest request, Model model)throws Exception{
 
+        int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+
         Page page = new Page();
         page.setType(request.getParameter("type"));
         page.setKeyword(request.getParameter("keyword"));
 
+        int total = marketService.getMarCount(page);
+        page.makeBlock(curPage, total);
+        page.makeLastPageNum(total);
+        page.makePostStart(curPage, total);
 
         model.addAttribute("page", page);
+        model.addAttribute("curPage", curPage);
 
         List<MainVO> mainList = marketService.mainVOList(page);
         model.addAttribute("mainList",mainList);

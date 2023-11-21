@@ -27,6 +27,7 @@ public interface MarketMapper {
     public List<MainVO> getMarketListForMain() throws Exception;
     public int mainListCount(Page page);
     public List<MainVO> likeMarketList(String loginId);
+    public int getMarCount(Page page);
 
 
 }

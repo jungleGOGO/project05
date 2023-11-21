@@ -27,33 +27,25 @@ public class MarketService {
         marketMapper.marketInsert(market);
         photosMapper.photosInsert(market);
         mainphotoMapper.mainphotoInsert(market);
-
     }
-
     public List<MainVO> mainVOList(Page page) throws Exception{
        return marketMapper.mainVOList(page);
     }
-
     public DetailVO detailVOList(int marketNo) throws Exception{
         return marketMapper.detailVOList(marketNo);
     }
-
     public MainVO mainlistForDetailVOList(int marketNo) throws Exception{
         return marketMapper.mainlistForDetailVOList(marketNo);
     }
-
     @Transactional
     public void marketDelete(int marketNo) throws Exception{
         marketMapper.marketDelete(marketNo);
         photosMapper.photosDelete(marketNo);
         mainphotoMapper.mainphotoDelete(marketNo);
     }
-
     public Market marketDetail(int marketNo) throws Exception {
         return marketMapper.marketDetail(marketNo);
-
     }
-
     public void readable(int readable,int marketNo){
         marketMapper.readable(readable, marketNo);
     }
@@ -61,7 +53,6 @@ public class MarketService {
     public int getMarketCnt() throws Exception {
         return marketMapper.getMarketCnt();
     }
-
     public List<MainVO> getMarketListForMain() throws Exception {
         return marketMapper.getMarketListForMain();
     }
@@ -76,22 +67,18 @@ public class MarketService {
         }
 
     }
-
     public List<MainVO> getInfo(String loginId) throws Exception {
         return marketMapper.getInfo(loginId);
     }
-
     public int cntSell(String loginId) {
         return marketMapper.cntSell(loginId);
     }
-
     public List<MainVO> userMainVOList(String loginId) {
         return marketMapper.userMainVOList(loginId);
     }
     public List<MainVO> likeMarketList(String loginId) {
         return marketMapper.likeMarketList(loginId);
     }
-
-
     public int mainListCount(Page page){ return marketMapper.mainListCount(page); }
+    public int getMarCount(Page page){ return marketMapper.getMarCount(page); }
 }
