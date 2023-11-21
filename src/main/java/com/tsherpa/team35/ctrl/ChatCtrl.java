@@ -155,9 +155,32 @@ public class ChatCtrl {
                 }
             }
 
+            // 구매자...
             //chatRoomAllListByBuyerId
             List<ChatRoomVO> buyerList = chatService.chatRoomAllListByBuyerId(sid);
-            if(buyerList != null) roomList.addAll(buyerList);
+            if(buyerList != null) {
+                for(ChatRoomVO chatRoomVO : buyerList) {
+                    User user = new User();
+                    if(chatRoomVO.getProductTable().equals("market")) {
+                        Market market = marketService.marketDetail(chatRoomVO.getProductId());
+                        user = userService.getUserByLoginId(market.getLoginId());
+                        chatRoomVO.setSellerName(user.getUserName());
+                        chatRoomVO.setBuyerActive(user.getActive());
+                        chatRoomVO.setBuyerId(user.getLoginId());
+                        chatRoomVO.setProductName(market.getTitle());
+                    }
+
+                    if(chatRoomVO.getProductTable().equals("request")) {
+                        Request request = requestService.requestDetail(chatRoomVO.getProductId());
+                        user = userService.getUserByLoginId(request.getLoginId());
+                        chatRoomVO.setSellerName(user.getUserName());
+                        chatRoomVO.setBuyerActive(user.getActive());
+                        chatRoomVO.setBuyerId(user.getLoginId());
+                        chatRoomVO.setProductName(request.getTitle());
+                    }
+                }
+                roomList.addAll(buyerList);
+            }
 
             model.addAttribute("myChat", true);
             model.addAttribute("roomList", roomList);

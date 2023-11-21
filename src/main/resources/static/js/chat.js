@@ -44,18 +44,30 @@ function sendChat() {
 function loadChat(chatList){
     if(chatList != null) {
         for(chat in chatList) {
-            $("#chatting").append(
-                "<tr><td>" + "[" + chatList[chat].userName + "]" + chatList[chat].message + "</td></tr>"
-            );
+            if(chatList[chat].senderId == loginId){
+                $("#chatting").append(
+                    "<div class='row right'><div class='col-md-auto align-self-end task-tooltip me-3 mt-3 p-3'>" + chatList[chat].message + "</div></div>"
+                );
+            } else {
+                $("#chatting").append(
+                    "<div class='row left'><div class='col-md-auto align-self-star task-tooltip ms-3 mt-3 p-3'>" + "[" + chatList[chat].userName + "] " + chatList[chat].message + "</div></div>"
+                );
+            }
         }
     }
 }
 
 //보낸 채팅 보기
 function showChat(chatListVO) {
-    $("#chatting").append(
-        "<tr><td>" + "[" + chatListVO.userName + "]" + chatListVO.message + "</td></tr>"
-    );
+    if(chatListVO.senderId == loginId){
+        $("#chatting").append(
+            "<div class='row right'><div class='col-md-auto align-self-end task-tooltip me-3 mt-3 p-3'>" + chatListVO.message + "</div></div>"
+        );
+    } else {
+        $("#chatting").append(
+            "<div class='row left'><div class='col-md-auto align-self-star task-tooltip ms-3 mt-3 p-3'>" + "[" + chatListVO.userName + "] " + chatListVO.message + "</div></div>"
+        );
+    }
     $("#message").val("");
 }
 

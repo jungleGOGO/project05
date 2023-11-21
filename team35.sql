@@ -158,4 +158,35 @@ CREATE TABLE report (
 SELECT * FROM report;
 
 
+CREATE TABLE chatRoom(
+	roomId BIGINT PRIMARY KEY AUTO_INCREMENT,			-- 채팅방 자동증가
+	productId INT NOT NULL,									-- 상품 아이디
+	productTable VARCHAR(20) NOT NULL,						-- 상품 테이블
+	buyerId VARCHAR(255) NOT NULL,							-- 구매자 희망자
+	regDate DATETIME DEFAULT CURRENT_TIMESTAMP()		-- 채팅방 생성일
+);
+
+CREATE VIEW chatRoomView AS (
+	SELECT 
+		r.roomId AS roomId, 
+		r.productId AS productId, 
+		r.productTable AS productTable,
+		r.buyerId AS buyerId, 
+		u.user_name AS buyerName, 
+		u.active AS buyerActive,
+		r.regDate AS regDate
+	FROM chatRoom r 
+	LEFT JOIN user u ON r.buyerId = u.login_id
+);
+
+CREATE TABLE chatList(
+	chatId BIGINT PRIMARY KEY AUTO_INCREMENT,			-- 채팅 내역 번호 자동 증가
+	senderId VARCHAR(255) NOT NULL,							-- 채팅 보내는 사람 아이디
+	sendDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,		-- 채팅 보낸 일자
+	message TEXT NOT NULL,										-- 채팅 내역
+	readYn BOOLEAN DEFAULT FALSE,							-- 읽음 여부
+	roomId BIGINT NOT NULL										-- 채팅방 번호
+);
+
+CREATE VIEW chatListView AS (SELECT r.chatId AS chatId, r.sendDate AS sendDate, r.message AS message, r.readYn AS readYn, r.roomId AS roomId, r.senderId AS senderId, u.user_name AS userName FROM chatList r LEFT JOIN user u ON r.senderId = u.login_id);
 
