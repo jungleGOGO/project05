@@ -218,4 +218,10 @@ public class UserCtrl {
     public String findId() {
         return "user/findId";
     }
+
+    @GetMapping("/findPw")
+    public String findPw() {
+        return "user/findPw";
+    }
+
 }

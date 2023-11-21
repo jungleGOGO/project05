@@ -140,10 +140,10 @@
     <div class="tab-content col-9" id="myTabContent" style="margin: 0 auto; padding-top: 20px">
         <div class="tab-pane fade col-12 show active" id="sell" role="tabpanel" aria-labelledby="sell-tab">
                 <div class="row g-4 mb-5">
-                <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" >
+                <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" >
                     <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
                         <div class="overflow-hidden">
-                            <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
+                            <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px; object-fit: contain; object-position: center center;">
                         </div>
                         <div class="p-4 text-center border border-5 border-light border-top-0">
                             <h4 class="mb-3" th:text="${market.title}"></h4>
