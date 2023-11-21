@@ -98,5 +98,4 @@ public class BookCtrl {
         model.addAttribute("book",book);
         return "market/marketInsert";
     }
-
 }
