@@ -106,4 +106,10 @@
         select login_id from user where email=#{email} and tel=#{tel}
     </select>
 
+    <select id="cntDeal" resultType="integer">
+        SELECT
+                (SELECT COUNT(*) FROM market WHERE active=1 AND login_id=#{loginId}) +
+                (SELECT COUNT(*) FROM request WHERE active=1 AND login_id=#{loginId}) AS cntDeal;
+    </select>
+
 </mapper>

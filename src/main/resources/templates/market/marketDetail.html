@@ -218,7 +218,7 @@
 
               </script>
 
-              <div class="col-12" th:if="${market.active == 0}">
+              <div class="col-12" th:if="${market.active == '0'}">
                 <button class="btn btn-primary w-100 py-3" type="button" th:onclick="|location.href='@{/chat/chat(productNo=${market.marketNo}, productTable=market)}'|">대화하기</button>
               </div>
                 <hr>

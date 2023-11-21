@@ -107,5 +107,7 @@ public class UserService implements UserDetailsService {
        return userMapper.findId(email, tel);
     }
 
-
+    public int cntDeal(String loginId) {
+        return userMapper.cntDeal(loginId);
+    }
 }

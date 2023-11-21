@@ -59,6 +59,7 @@ public class ChatCtrl {
                 // 로그인한 아이디가 판매자 아이디가 같을 때
                 path += "myProList?productId=" + productNo + "&productTable=" + productTable;
             } else {
+                System.out.println("구매자");
                 // 로그인한 아이디가 판매자 아이디가 아닐 때
                 ChatRoomVO chatRoomVO = chatService.chatRoomAllList(productNo, productTable, sid);
                 Long roomId;

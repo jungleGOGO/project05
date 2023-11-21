@@ -114,8 +114,8 @@ public class MarketCtrl {
         String sid = principal != null ? principal.getName() : "";
         System.out.println("대표사진 값들:"+repImage);
         System.out.println("상세사진 값들:"+detailImages);
-        String realPath = "C://upload/";
-//        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
+//        String realPath = "C://upload/";
+        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
 
 
 
@@ -335,8 +335,8 @@ public class MarketCtrl {
         String sid = principal != null ? principal.getName() : "";
         System.out.println("대표사진 값들:"+repImage);
         System.out.println("상세사진 값들:"+detailImages);
-        String realPath = "C://upload/";
-//        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
+//        String realPath = "C://upload/";
+        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
 
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
         String repImageSaveFolder = "rep_images/" + today;
