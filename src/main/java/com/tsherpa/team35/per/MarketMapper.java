@@ -20,6 +20,7 @@ public interface MarketMapper {
     public void marketDelete(int marketNo) throws Exception;
     public void marketEdit(Market market) throws Exception;
     public void readable(int readable,int marketNo);
+    public void updateActive(int active,int marketNo);
     public int cntSell(String loginId);
     public List<MainVO> userMainVOList(String loginId);
     public List<MainVO> getInfo(String loginId) throws Exception;

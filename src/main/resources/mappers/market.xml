@@ -67,6 +67,10 @@
         UPDATE market SET readable=#{readable} WHERE marketNo=#{marketNo}
     </update>
 
+    <update id="updateActive">
+        UPDATE market SET active=#{active} WHERE marketNo=#{marketNo}
+    </update>
+
     <select id="cntSell" resultType="int">
         select count(*) from market where login_id = #{loginId}
     </select>

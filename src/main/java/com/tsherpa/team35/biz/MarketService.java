@@ -50,6 +50,10 @@ public class MarketService {
         marketMapper.readable(readable, marketNo);
     }
 
+    public void updateActive(int active,int marketNo) {
+        marketMapper.updateActive(active, marketNo);
+    }
+
     public int getMarketCnt() throws Exception {
         return marketMapper.getMarketCnt();
     }
