@@ -36,11 +36,41 @@
         <div class="section-title text-center">
             <h1 class="display-5 mb-5">당신의 추억을 소중히 하겠습니다.</h1>
         </div>
-        <th:block sec:authorize="hasRole('USER') || hasRole('TEACHER') || hasRole('EMP')">
-            <button type="button" class="btn btn-info"><a th:href="@{/market/bookSearch}">요청하기</a></button>
-        </th:block>
-        <div class="row g-4" >
-            <div class="col-md-6 col-lg-4 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" style="width: 431.98px;height:430.58px;">
+        <div class="d-flex justify-content-end">
+            <form th:action="@{/market/marketList}" method="get" class="w-50 mb-5">
+                <div class="row">
+                    <div class="col mt-2">
+                        <select class="form-select" id="type" name="type">
+                            <option th:value="T"> 제목 </option>
+                            <option th:value="C"> 내용 </option>
+                            <option th:value="Y"> 아이디 </option>
+                        </select>
+                    </div>
+                    <div class="col-xl-8 col-lg-12 col-md-12 mt-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="keyword" name="keyword"
+                                   placeholder="검색어를 입력해주세요" autocomplete="off" aria-label="검색어를 입력해주세요"
+                                   aria-describedby="button-addon2" th:value="${page.keyword}">
+                            <div class="input-group-append">
+                                <button class="btn btn-dark" type="submit" id="button-addon2"> 검색</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div style="margin: 8px;">
+                <th:block sec:authorize="isAnonymous()">
+                    <a class="btn btn-primary px-4"   th:href="@{/login}">글쓰기</a>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <th:block sec:authorize="hasRole('USER') || hasRole('ADMIN')">
+                        <a class="btn btn-primary px-4"  th:href="@{/market/marketInsert}">글쓰기</a>
+                    </th:block>
+                </th:block>
+            </div>
+        </div>
+        <div class="row g-4 mb-5" >
+            <div class="col-md-6 col-lg-3 wow fadeInUp" th:each="market: ${mainList}" data-wow-delay="0.1s" >
                 <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
                     <div class="overflow-hidden">
                         <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
@@ -53,23 +83,34 @@
                 </div>
             </div>
         </div>
-        <div id="loadMore" class="text-center mt-4">
-            <a href="#" class="btn btn-primary">더 보기</a>
+
+        <div style="margin-top: 30px;" th:if="${!mainList.isEmpty()}">
+            <ul class="pagination justify-content-center mb-0">
+                <li th:if="${curPage > 1}" class="page-item">
+                    <a th:href="@{|/request/reqList?page=${curPage - 1}|}" class="page-link">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </li>
+                <th:block th:each="i: ${#numbers.sequence(page.blockStartNum, page.blockLastNum)}">
+                    <li th:class="${i == curPage} ? 'page-item active' : 'page-item'">
+                        <a th:href="@{|/request/reqList?page=${i}|}" class="page-link" aria-label="Page ${i}" aria-current="${i == curPage}" th:text="${i}"></a>
+                    </li>
+                </th:block>
+                <li th:if="${curPage < page.totalPageCount}" class="page-item">
+                    <a th:href="@{|/request/reqList?page=${curPage + 1}|}" class="page-link">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </li>
+            </ul>
         </div>
+<!--        <div id="loadMore" class="text-center mt-4">-->
+<!--            <a href="#" class="btn btn-primary">더 보기</a>-->
+<!--        </div>-->
     </div>
 </div>
 </div>
 
-<div>
-    <th:block sec:authorize="isAnonymous()">
-  <a class="btn btn-primary px-4"   th:href="@{/login}">글쓰기</a>
-    </th:block>
-    <th:block sec:authorize="isAuthenticated()">
-        <th:block sec:authorize="hasRole('USER') || hasRole('ADMIN')">
-  <a class="btn btn-primary px-4"  th:href="@{/market/marketInsert}">글쓰기</a>
-        </th:block>
-    </th:block>
-</div>
+
 <!-- Service End -->
 
 
@@ -84,22 +125,22 @@
 <!-- Template Javascript -->
 <th:block th:insert="~{layout/footer :: footer}"></th:block>
 <script th:src="@{/js/main.js}"></script>
-<script>
-    $(document).ready(function () {
-        // 첫 6개 이외의 모든 서비스 항목을 숨김
-        $('.service-item:gt(5)').hide();
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        // 첫 6개 이외의 모든 서비스 항목을 숨김-->
+<!--        $('.service-item:gt(5)').hide();-->
 
-        // "더 보기" 클릭 시 추가 항목을 표시
-        $('#loadMore').on('click', function (e) {
-            e.preventDefault();
-            $('.service-item:hidden:lt(6)').fadeIn();
-            // 모든 항목이 표시되었을 경우 "더 보기" 숨김
-            if ($('.service-item:hidden').length === 0) {
-                $('#loadMore').fadeOut('slow');
-            }
-        });
-    });
-</script>
+<!--        // "더 보기" 클릭 시 추가 항목을 표시-->
+<!--        $('#loadMore').on('click', function (e) {-->
+<!--            e.preventDefault();-->
+<!--            $('.service-item:hidden:lt(6)').fadeIn();-->
+<!--            // 모든 항목이 표시되었을 경우 "더 보기" 숨김-->
+<!--            if ($('.service-item:hidden').length === 0) {-->
+<!--                $('#loadMore').fadeOut('slow');-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 </body>
 
 </html>

@@ -7,6 +7,7 @@ import com.tsherpa.team35.biz.LikesService;
 import com.tsherpa.team35.biz.ReportService;
 import com.tsherpa.team35.biz.RequestService;
 import com.tsherpa.team35.entity.*;
+import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -36,10 +37,28 @@ public class RequestCtrl {
     private LikesService likesService;
 
     @GetMapping("/reqList")
-    public String reqList(Model model)throws Exception{
-        List<Request> requestList = requestService.requestList();
+    public String reqList(HttpServletRequest request, Model model)throws Exception{
+
+        int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+
+        Page page = new Page();
+        page.setType(request.getParameter("type"));
+        page.setKeyword(request.getParameter("keyword"));
+
+        int total = requestService.getReqCount(page);
+        page.makeBlock(curPage, total);
+        page.makeLastPageNum(total);
+        page.setPostCount(8);
+        page.makePostStart(curPage, total);
+
+        model.addAttribute("page", page);
+        model.addAttribute("curPage", curPage);
+        
+        List<Request> requestList = requestService.requestList(page);
         model.addAttribute("requestList",requestList);
-        return "request/requestList";}
+
+        return "request/requestList";
+    }
 
     @GetMapping("/bookSearch")
     public String list(){

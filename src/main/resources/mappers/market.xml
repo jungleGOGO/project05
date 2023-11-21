@@ -12,7 +12,6 @@
         </selectKey>
     </insert>
 
-
     <select id="marketList" resultType="com.tsherpa.team35.entity.Market">
         select * from market order by regdate desc
     </select>
@@ -23,7 +22,26 @@
 
 
     <select id="mainVOList" resultType="com.tsherpa.team35.entity.MainVO">
-        select * from mainlist where readable = 0 order by regdate desc
+        select * from mainlist
+        <where>
+        <if test="type != null">
+            <trim prefixOverrides="OR">
+                <choose>
+                    <when test="type == 'T'.toString()">
+                        title LIKE concat('%', #{keyword}, '%')
+                    </when>
+                    <when test="type == 'R'.toString()">
+                        content LIKE concat('%', #{keyword}, '%')
+                    </when>
+                    <when test="type == 'Y'.toString()">
+                        login_id LIKE contcat('%', #{keyword}, '%')
+                    </when>
+                </choose>
+            </trim>
+         </if>
+           AND readable = 0
+        </where>
+        order by regdate desc limit #{postStart}, #{postCount}
     </select>
 
     <select id="detailVOList" resultType="com.tsherpa.team35.entity.DetailVO">
@@ -49,8 +67,6 @@
         UPDATE market SET readable=#{readable} WHERE marketNo=#{marketNo}
     </update>
 
-
-
     <select id="cntSell" resultType="int">
         select count(*) from market where login_id = #{loginId}
     </select>
@@ -67,12 +83,37 @@
         select * from mainlist order by regdate desc limit 3
     </select>
 
+    <select id="mainListCount" resultType="integer">
+        SELECT COUNT(*) FROM mainlist
+    </select>
 
     <select id="likeMarketList" resultType="com.tsherpa.team35.entity.MainVO">
         select m.* from mainlist m join likes l on m.marketNo  = l.marketNo where l.login_id = #{loginId}
     </select>
+
     <select id="getInfo" resultType="com.tsherpa.team35.entity.MainVO">
         select * from mainlist where login_id = #{loginId}
     </select>
 
+    <select id="getMarCount" resultType="Integer">
+        select COUNT(*) from market
+        <where>
+            <if test="type != null">
+                <trim prefixOverrides="OR">
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            title LIKE concat('%', #{keyword}, '%')
+                        </when>
+                        <when test="type == 'R'.toString()">
+                            content LIKE concat('%', #{keyword}, '%')
+                        </when>
+                        <when test="type == 'Y'.toString()">
+                            login_id LIKE contcat('%', #{keyword}, '%')
+                        </when>
+                    </choose>
+                </trim>
+            </if>
+            AND readable = 0
+        </where>
+    </select>
 </mapper>

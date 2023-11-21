@@ -106,8 +106,8 @@
               <div class="col-12" style="margin-left: 70px;">
                 <button class="btn btn-primary w-25 py-3" type="button">
                   찜하기
-                  <i class="fa-solid fa-heart" th:if="${chkLiked == 1}" th:onclick="|toggleLike()|" style="color: red"></i>
-                  <i class="fa-solid fa-heart" th:unless="${chkLiked == 1}" th:onclick="|toggleLike()|"></i>
+                  <i class="fa-solid fa-heart" th:if="${chkLiked == 1 }" th:onclick="|toggleLike()|" style="color: red"></i>
+                  <i class="fa-solid fa-heart" th:unless="${chkLiked == 1 }" th:onclick="|toggleLike()|"></i>
                 </button>
                 <button class="btn btn-primary w-25 py-3" type="button">신고하기
                 <img th:src="${'/image/siren5050.png'}"  id="ck_btn" onclick="repCheck()" style="width: 20px; height: 20px;" />
@@ -126,7 +126,7 @@
   </div>
 </div>
 <div class="row g-4" >
-  <div class="col-md-10 col-lg-6 wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" style="width: 431.98px;height:430.58px;">
+  <div class="col-md-10 col-lg-6  wow fadeInUp" th:each="request: ${requestList}" data-wow-delay="0.1s" style="width: 431.98px;height:430.58px;">
     <div class="service-item" style="border-color: #000; border-width: 5px; border-style: solid;">
       <div class="overflow-hidden">
         <img class="img-fluid" th:src="${request.bookImage}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
