@@ -16,6 +16,7 @@ public class ChatRoomVO {
     private String productName = "";
     private String buyerId;
     private String buyerName;
+    private String sellerName = "";
     private int buyerActive;
     private String regDate;
 

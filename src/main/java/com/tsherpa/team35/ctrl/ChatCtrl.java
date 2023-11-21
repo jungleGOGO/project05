@@ -95,6 +95,20 @@ public class ChatCtrl {
             List<ChatRoomVO> roomList = chatService.chatRoomAllListByProduct(productId, productTable);
             model.addAttribute("roomList", roomList);
 
+            String productNm = "";
+            if(productTable.equals("market")) {
+                Market market = marketService.marketDetail(productId);
+                productNm = market.getTitle();
+            }
+
+            if(productTable.equals("request")) {
+                Request request = requestService.requestDetail(productId);
+                productNm = request.getTitle();
+            }
+
+            model.addAttribute("myChat", false);
+            model.addAttribute("productNm", productNm);
+
             return "chat/list";
         } else {
             String path = "redirect:/";
@@ -119,7 +133,12 @@ public class ChatCtrl {
             if(marketList != null) {
                 for(MainVO market : marketList) {
                     List<ChatRoomVO> marketChat = chatService.chatRoomAllListByProduct(market.getMarketNo(), "market");
-                    if(marketChat != null) roomList.addAll(marketChat);
+                    if(marketChat != null) {
+                        for(ChatRoomVO marketPro : marketChat) {
+                            marketPro.setProductName(market.getTitle());
+                        }
+                        roomList.addAll(marketChat);
+                    }
                 }
             }
 
@@ -127,14 +146,43 @@ public class ChatCtrl {
             if(requestList != null) {
                 for(Request req : requestList) {
                     List<ChatRoomVO> requestChat = chatService.chatRoomAllListByProduct(req.getReqNo(), "request");
-                    if(requestChat != null) roomList.addAll(requestChat);
+                    if(requestChat != null) {
+                        for(ChatRoomVO requestPro : requestChat) {
+                            requestPro.setProductName(req.getTitle());
+                        }
+                        roomList.addAll(requestChat);
+                    }
                 }
             }
 
+            // 구매자...
             //chatRoomAllListByBuyerId
             List<ChatRoomVO> buyerList = chatService.chatRoomAllListByBuyerId(sid);
-            if(buyerList != null) roomList.addAll(buyerList);
+            if(buyerList != null) {
+                for(ChatRoomVO chatRoomVO : buyerList) {
+                    User user = new User();
+                    if(chatRoomVO.getProductTable().equals("market")) {
+                        Market market = marketService.marketDetail(chatRoomVO.getProductId());
+                        user = userService.getUserByLoginId(market.getLoginId());
+                        chatRoomVO.setSellerName(user.getUserName());
+                        chatRoomVO.setBuyerActive(user.getActive());
+                        chatRoomVO.setBuyerId(user.getLoginId());
+                        chatRoomVO.setProductName(market.getTitle());
+                    }
 
+                    if(chatRoomVO.getProductTable().equals("request")) {
+                        Request request = requestService.requestDetail(chatRoomVO.getProductId());
+                        user = userService.getUserByLoginId(request.getLoginId());
+                        chatRoomVO.setSellerName(user.getUserName());
+                        chatRoomVO.setBuyerActive(user.getActive());
+                        chatRoomVO.setBuyerId(user.getLoginId());
+                        chatRoomVO.setProductName(request.getTitle());
+                    }
+                }
+                roomList.addAll(buyerList);
+            }
+
+            model.addAttribute("myChat", true);
             model.addAttribute("roomList", roomList);
 
             return "chat/list";
@@ -151,24 +199,33 @@ public class ChatCtrl {
 
         if(principal != null) {
             String id = "";
+            String productNm = "";
+            String productTable = "";
+            Integer productId = 0;
 
             if(chatRoomVO.getProductTable().equals("market")) {
-                Market market = new Market();
-                market.setLoginId("kim");
-
+                Market market = marketService.marketDetail(chatRoomVO.getProductId());
                 id = market.getLoginId();
+                productNm = market.getTitle();
+                productTable = "market";
+                productId = market.getMarketNo();
 
             } else if (chatRoomVO.getProductTable().equals("request")) {
-                Request request = new Request();
-                request.setLoginId("kim");
-
+                Request request = requestService.requestDetail(chatRoomVO.getProductId());
                 id = request.getLoginId();
+                productNm = request.getTitle();
+                productTable = "request";
+                productId = request.getReqNo();
             }
 
             if(chatRoomVO != null && (id.equals(sid) || chatRoomVO.getBuyerId().equals(sid))) {
                 List<ChatListVO> chatList = chatService.getChat(roomId);
                 model.addAttribute("roomId", roomId);
                 model.addAttribute("chatList", chatList);
+                model.addAttribute("loginId", sid);
+                model.addAttribute("productNm", productNm);
+                model.addAttribute("productTable", productTable);
+                model.addAttribute("productId", productId);
                 return "chat/get";
             }
         }
@@ -196,6 +253,12 @@ public class ChatCtrl {
         int cnt = chatService.insertChatList(chatList);
 
         return chatService.getChatLast(roomId);
+    }
+
+    @GetMapping("/tradeInfo")
+    public String trade(@RequestParam("roomId") Long roomId, Model model) throws Exception {
+
+        return "chat/trade";
     }
 
 }
