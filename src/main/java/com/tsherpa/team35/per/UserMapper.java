@@ -23,4 +23,5 @@ public interface UserMapper {
     void userEdit(User user);
     //비번 변경
     void pwEdit(User user);
+    User findId(String email, String tel);
 }
