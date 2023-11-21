@@ -30,7 +30,7 @@ CREATE TABLE user(
                      role_id INT NOT NULL DEFAULT 99						-- 회원 권한 등급
 );
 
-CREATE VIEW userList AS(
+CREATE VIEW userlist AS(
                        SELECT u.user_id AS user_id, u.active AS ACTIVE, u.login_id AS login_id, u.user_name AS user_name, u.password AS PASSWORD, u.role_id AS role_id, r.role AS roleNm
                        FROM user u
                                 LEFT JOIN role r ON u.role_id = r.role_id
