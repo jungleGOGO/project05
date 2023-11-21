@@ -14,13 +14,16 @@
         <div class="container text-center my-5">
             <div class="row my-5">
                 <div class="col">
-                    <h2>채팅방</h2>
+                    <h2 th:if="${myChat}">내 채팅방</h2>
+                    <h2 th:unless="${myChat}" th:text="'[ ' + ${productNm} + ' ] 제품 채팅방'"></h2>
+
                     <table class="table mt-5">
                         <tbody>
                         <tr th:each="room : ${roomList}">
-                            <td><a class="text-lg-start" th:href="@{/chat/getChat/{roomId}(roomId=${room.getRoomId()})}" th:text="${room.getBuyerId() + '님과의 채팅'}"></a></td>
-                            <!--<td class="text-start"><a class="text-start" th:href="${path} + @{?(roomId=${room.roomId}, productId=${room.productId}, productTable=${room.productTable})}" th:text="${room.productName + room.getBuyerId() + '님과의 채팅'}"></a></td>-->
-                            <!--<a th:href="${listUrl} + @{?(page=${page-1})}" th:text="${page}"></a></li>-->
+                            <td class="text-start">
+                                <a th:if="${myChat}" th:href="@{/chat/getChat/{roomId}(roomId=${room.getRoomId()})}" th:text="${'[ ' + room.productName + ' ] ' + room.getBuyerId() + '님과의 채팅'}"></a>
+                                <a th:unless="${myChat}" th:href="@{/chat/getChat/{roomId}(roomId=${room.getRoomId()})}" th:text="${'[ ' + productNm + ' ] ' + room.getBuyerId() + '님과의 채팅'}"></a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
