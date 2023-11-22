@@ -43,5 +43,67 @@
 <br><br>
 
 ### 📂DATABASE - 테이블 구현
+#### ROLE
+<p align="center"><img alt="role" src="https://github.com/jungleGOGO/project05/assets/138674233/592cbffb-6b54-4f19-806e-c3ad35e2dd6c"></p>
+
+#### USER
+<p align="center"><img alt="user" src="https://github.com/jungleGOGO/project05/assets/138674233/b549dd7b-8436-49a7-96e2-c3d119d1ca89"></p>
+
+#### MARKET
+<p align="center"><img alt="market" src="https://github.com/jungleGOGO/project05/assets/138674233/3ef78077-e62d-4a24-a77a-fced6ae39250"></p>
+
+#### REQUEST
+<p align="center"><img alt="request" src="https://github.com/jungleGOGO/project05/assets/138674233/f704b58a-f36b-4097-bb50-99bb044fba2e"></p>
+
+#### CHATROOM
+<p align="center"><img alt="chatroom" src="https://github.com/jungleGOGO/project05/assets/138674233/3631dcbf-f457-45d5-94e9-1ad587b94fc1"></p>
+
+#### CHATLIST
+<p align="center"><img alt="chatlist" src="https://github.com/jungleGOGO/project05/assets/138674233/7a1cdd40-4144-449e-855d-c55c54fe2ad9"></p>
+
+#### MAINPHOTO
+<p align="center"><img alt="mainphoto" src="https://github.com/jungleGOGO/project05/assets/138674233/83b4caec-d3e9-4d53-ab79-5e394e37d77b"></p>
+
+#### PHOTOS
+<p align="center"><img alt="photos" src="https://github.com/jungleGOGO/project05/assets/138674233/f6da2984-7d7f-406c-9f5a-a8805c5cd138"></p>
+
+#### LIKES
+<p align="center"><img alt="likes" src="https://github.com/jungleGOGO/project05/assets/138674233/203e0f6e-84a7-468e-b1ba-d27432d2e5a5"></p>
+
+#### REPORT
+<p align="center"><img alt="report" src="https://github.com/jungleGOGO/project05/assets/138674233/e74523d0-a01c-4bf3-9361-6265f8ca088c"></p>
+
+#### FAQ
+<p align="center"><img alt="faq" src="https://github.com/jungleGOGO/project05/assets/138674233/6d1aeaad-dee1-43c4-93b2-3f126f3ab778"></p>
+                    
+#### NOTICE
+<p align="center"><img alt="notice" src="https://github.com/jungleGOGO/project05/assets/138674233/a6e8e90b-dc24-4126-9aad-30222026de27"></p>
+                    
+#### QNA
+<p align="center"><img alt="qna" src="https://github.com/jungleGOGO/project05/assets/138674233/2b9371c2-96c9-45b1-976b-c41a4355158f"></p>
+
+<br><br>
+
+### 📂CLASS DIAGRAM
+![classdiagram](https://github.com/jungleGOGO/project05/assets/138674233/044fddb5-5700-4e73-aec5-548ae8f89199)
+<br><br>
+
+### 📂시퀀스 다이어그램 (Sequence Diagram)
+
+#### 관리자
+<p align="center"><img alt="시퀀스다이아그램1" src="https://github.com/jungleGOGO/project05/assets/138674233/f165e11f-2686-4908-a960-003fff962211"></p>
+
+#### 삽니다 
+<p align="center"><img alt="시퀀스다이아그램2" src="https://github.com/jungleGOGO/project05/assets/138674233/99a55430-6226-4209-b842-6270164ac581"></p>
+
+#### 팝니다
+<p align="center"><img alt="시퀀스다이아그램1" src="https://github.com/jungleGOGO/project05/assets/138674233/757831e9-1cfc-42d9-9fa6-53f0a9f9e8f1"></p>
+<br><br>
+
+# 📎기능 구현
+## 🗂 메인 페이지
+<br>
+<br><br>
+
 
 
