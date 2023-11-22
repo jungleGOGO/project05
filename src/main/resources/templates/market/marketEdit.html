@@ -70,12 +70,12 @@
 
     <div class="mb-3">
       <label for="title" class="form-label">제목</label>
-      <input type="text" class="form-control" th:value="${market.title}" id="title" name="title" placeholder="제목을 입력하세요" required>
+      <input type="text" class="form-control" th:value="${market.title}" id="title" name="title" placeholder="제목을 입력하세요" maxlength="90" required>
     </div>
 
     <div class="mb-3">
       <label for="price" class="form-label">가격</label>
-      <input type="number" class="form-control" th:value="${market.price}" id="price" name="price" placeholder="가격을 입력하세요" required>
+      <input type="number" class="form-control" th:value="${market.price}" id="price" name="price" placeholder="가격을 입력하세요" max="99999900" required>
     </div>
 
     <div class="mb-3">
@@ -90,7 +90,7 @@
     <!-- 내용 입력 -->
     <div class="mb-3">
       <label for="content" class="form-label">내용</label>
-      <textarea class="form-control" th:text="${market.content}" id="content" name="content" rows="4" placeholder="내용을 입력하세요" required></textarea>
+      <textarea class="form-control" th:text="${market.content}" id="content" name="content" rows="4" placeholder="내용을 입력하세요" maxlength="2000" required></textarea>
     </div>
 
     <!-- 위치 입력 -->
