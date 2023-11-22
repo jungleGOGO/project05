@@ -98,7 +98,7 @@
         <div class="col-6">
             <div class="product_info pt-4 px-1">
                 <h3 th:if="${market.active == '0'}" class="mb-3" th:text="${market.title}"></h3>
-                <h3 th:if="${market.active == '1'}" style="color:#555" class="mb-3" th:text="${'[판매완료]' + market.title}"></h3>
+                <h3 th:if="${market.active == '1'}" style="color:#555" class="mb-3" th:text="${'[판매완료] ' + market.title}"></h3>
                 <h2 class="fw-bold" th:text="${market.price + '원'}"></h2>
                 <hr>
                 <dl>

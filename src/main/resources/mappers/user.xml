@@ -112,4 +112,12 @@
                 (SELECT COUNT(*) FROM request WHERE active=1 AND login_id=#{loginId}) AS cntDeal;
     </select>
 
+    <update id="addPt">
+        update user set pt=pt+5 where login_id=#{loginId} and pt &lt; 100
+    </update>
+
+    <update id="minusPt">
+        update user set pt=pt-5 where login_id=#{loginId} and pt &gt; 0
+    </update>
+
 </mapper>

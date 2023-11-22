@@ -110,4 +110,8 @@ public class UserService implements UserDetailsService {
     public int cntDeal(String loginId) {
         return userMapper.cntDeal(loginId);
     }
+
+    public void addPt(String loginId) {
+        userMapper.addPt(loginId);
+    }
 }

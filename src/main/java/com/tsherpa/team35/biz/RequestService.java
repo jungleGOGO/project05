@@ -3,9 +3,11 @@ package com.tsherpa.team35.biz;
 import com.tsherpa.team35.entity.MainVO;
 import com.tsherpa.team35.entity.Request;
 import com.tsherpa.team35.per.RequestMapper;
+import com.tsherpa.team35.per.UserMapper;
 import com.tsherpa.team35.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,7 +16,8 @@ public class RequestService {
     @Autowired
     private RequestMapper requestMapper;
 
-
+    @Autowired
+    private UserMapper userMapper;
 
     public void reqInsert(Request request) throws Exception{
         requestMapper.requestInsert(request);
@@ -72,8 +75,14 @@ public class RequestService {
         return requestMapper.getReqCount(page);
     }
 
-    public void updateActive(int active,int reqNo) {
+    @Transactional
+    public void updateActive(int active,int reqNo,String loginId) {
         requestMapper.updateActive(active, reqNo);
+        if(active == 1) {
+            userMapper.addPt(loginId);
+        } else if(active == 0) {
+            userMapper.minusPt(loginId);
+        }
     }
 
 }

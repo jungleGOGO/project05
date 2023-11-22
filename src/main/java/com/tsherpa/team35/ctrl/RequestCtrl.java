@@ -46,9 +46,9 @@ public class RequestCtrl {
         page.setKeyword(request.getParameter("keyword"));
 
         int total = requestService.getReqCount(page);
+        page.setPostCount(8);
         page.makeBlock(curPage, total);
         page.makeLastPageNum(total);
-        page.setPostCount(8);
         page.makePostStart(curPage, total);
 
         model.addAttribute("page", page);

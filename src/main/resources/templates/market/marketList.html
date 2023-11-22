@@ -92,17 +92,17 @@
         <div style="margin-top: 30px;" th:if="${!mainList.isEmpty()}">
             <ul class="pagination justify-content-center mb-0">
                 <li th:if="${curPage > 1}" class="page-item">
-                    <a th:href="@{|/request/reqList?page=${curPage - 1}|}" class="page-link">
+                    <a th:href="@{|/market/marketList?page=${curPage - 1}|}" class="page-link">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
                 </li>
                 <th:block th:each="i: ${#numbers.sequence(page.blockStartNum, page.blockLastNum)}">
                     <li th:class="${i == curPage} ? 'page-item active' : 'page-item'">
-                        <a th:href="@{|/request/reqList?page=${i}|}" class="page-link" aria-label="Page ${i}" aria-current="${i == curPage}" th:text="${i}"></a>
+                        <a th:href="@{|/market/marketList?page=${i}|}" class="page-link" aria-label="Page ${i}" aria-current="${i == curPage}" th:text="${i}"></a>
                     </li>
                 </th:block>
                 <li th:if="${curPage < page.totalPageCount}" class="page-item">
-                    <a th:href="@{|/request/reqList?page=${curPage + 1}|}" class="page-link">
+                    <a th:href="@{|/market/marketList?page=${curPage + 1}|}" class="page-link">
                         <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </li>

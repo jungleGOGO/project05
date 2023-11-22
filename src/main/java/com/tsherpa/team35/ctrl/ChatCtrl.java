@@ -263,11 +263,11 @@ public class ChatCtrl {
     @ResponseBody
     public boolean activeUpdatePro(@RequestParam("active") int active, @RequestParam("marketNo") int marketNo, Principal principal) throws Exception {
         boolean pass = false;
-
+        String sid = principal != null ? principal.getName() : "";
         String loginId = principal.getName();
         Market market = marketService.marketDetail(marketNo);
         if(market.getLoginId().equals(loginId)) {
-            marketService.updateActive(active, marketNo);
+            marketService.updateActive(active, marketNo,sid);
             pass = true;
         }
 
@@ -286,11 +286,11 @@ public class ChatCtrl {
     @ResponseBody
     public boolean activeUpdatePro2(@RequestParam("active") int active, @RequestParam("reqNo") int reqNo, Principal principal) throws Exception {
         boolean pass = false;
-
+        String sid = principal != null ? principal.getName() : "";
         String loginId = principal.getName();
         Request request = requestService.requestDetail(reqNo);
         if(request.getLoginId().equals(loginId)) {
-            requestService.updateActive(active, reqNo);
+            requestService.updateActive(active, reqNo, sid);
             pass = true;
         }
 
