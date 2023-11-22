@@ -48,7 +48,7 @@ public class ChatCtrl {
 
             // 상품에 판매자 정보 가져오기
             if(productTable.equals("market")) {
-                DetailVO market = marketService.detailVOList(productNo);
+                DetailVO market = marketService.chatVOList(productNo);
                 id = market.getLoginId();
             } else if (productTable.equals("request")) {
                 Request request = requestService.requestDetail(productNo);

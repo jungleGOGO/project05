@@ -26,7 +26,7 @@
   </div>
 </div>
 <div class="container mt-5">
-  <img src="/image/001.png" style="margin-left: 200px;">
+  <img th:src="@{/image/001.png}"  style="margin-left: 200px;">
   <h2 class="mb-4">삽니다 게시글 작성</h2>
   <form th:action="@{/request/requestInsert}" method="post" enctype="multipart/form-data" >
     <!-- 제목 입력 -->

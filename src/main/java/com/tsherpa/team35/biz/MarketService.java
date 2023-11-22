@@ -34,6 +34,9 @@ public class MarketService {
     public DetailVO detailVOList(int marketNo) throws Exception{
         return marketMapper.detailVOList(marketNo);
     }
+    public DetailVO chatVOList(int marketNo) throws Exception{
+        return marketMapper.chatVOList(marketNo);
+    }
     public MainVO mainlistForDetailVOList(int marketNo) throws Exception{
         return marketMapper.mainlistForDetailVOList(marketNo);
     }
