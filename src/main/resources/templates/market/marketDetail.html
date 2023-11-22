@@ -73,7 +73,7 @@
                 <div class="carousel-inner">
                     <div th:each="photo, status : ${photosList}" class="carousel-item" th:classappend="${status.index == 0} ? 'active'">
                         <div class="d-flex" style="width: 423.98px; height: 300px; overflow: hidden;margin:0 auto;">
-                            <img th:src="${'/market/detailImage?saveFile='+photo.getSaveFile()+'&originFile='+photo.getOriginFile()+'&saveFolder='+photo.getSaveFolder()}" class="img-fluid" style="object-fit: cover; max-width: 100%; max-height: 100%;" alt="">
+                            <img th:src="@{/market/detailImage(saveFile=${photo.getSaveFile()}, originFile=${photo.getOriginFile()}, saveFolder=${photo.getSaveFolder()})}" class="img-fluid" style="object-fit: cover; max-width: 100%; max-height: 100%;" alt="">
                         </div>
                     </div>
                 </div>

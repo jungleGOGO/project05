@@ -74,7 +74,7 @@
                 <div class="service-item border border-1 border-light">
                     <div class="overflow-hidden">
                         <a th:href="@{/market/detail(marketNo=${market.marketNo})}">
-                            <img class="img-fluid" th:src="${'/market/mainImage?saveFile='+market.getSaveFile()+'&originFile='+market.getOriginFile()+'&saveFolder='+market.getSaveFolder()}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
+                            <img class="img-fluid" th:src="@{/market/mainImage(saveFile = ${market.getSaveFile()}, originFile = ${market.getOriginFile()}, saveFolder = ${market.getSaveFolder()})}" alt="bookImage" style="width: 407.98px; height: 244.78px;">
                         </a>
                     </div>
 
