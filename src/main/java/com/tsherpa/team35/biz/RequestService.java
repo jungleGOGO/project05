@@ -72,4 +72,8 @@ public class RequestService {
         return requestMapper.getReqCount(page);
     }
 
+    public void updateActive(int active,int reqNo) {
+        requestMapper.updateActive(active, reqNo);
+    }
+
 }

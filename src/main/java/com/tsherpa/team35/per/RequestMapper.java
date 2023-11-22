@@ -18,6 +18,7 @@ public interface RequestMapper {
     public void requestEdit(Request request) throws Exception;
     public void requestDelete(int reqNo) throws Exception;
     public List<Request> allRequest() throws Exception;
+    public void updateActive(int active,int reqNo);
     public void requestEditAll(Request request) throws Exception;
     public void readable(int readable,int reqNo);
     public List<Request> userRequestList(String loginId);

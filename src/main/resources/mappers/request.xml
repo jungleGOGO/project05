@@ -56,6 +56,10 @@
         update request set title=#{title}, content=#{content}, price=#{price},addr=#{addr},bookTitle=#{bookTitle},bookAuthor=#{bookAuthor},publisher=#{publisher},isbn=#{isbn},pubdate=#{pubdate},discount=#{discount},bookImage=#{bookImage} where req_no=#{reqNo}
     </update>
 
+    <update id="updateActive">
+        UPDATE request SET active=#{active} WHERE req_no=#{reqNo}
+    </update>
+
     <delete id="requestDelete">
         delete from request where req_no=#{reqNo}
     </delete>

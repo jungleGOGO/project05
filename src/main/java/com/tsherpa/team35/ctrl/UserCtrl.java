@@ -127,7 +127,6 @@ public class UserCtrl {
 
         //판매 목록
         List<MainVO> mainList = marketService.userMainVOList(sid);
-        System.out.println(mainList.toString());
         model.addAttribute("mainList",mainList);
 
         //삽니다 목록
@@ -136,7 +135,6 @@ public class UserCtrl {
 
         //신고 목록
         List<Report> reportList = reportService.userReportList(sid);
-        System.out.println("-------"+reportList.toString());
         model.addAttribute("reportList",reportList);
 
         //좋아요 목록
@@ -148,8 +146,8 @@ public class UserCtrl {
         model.addAttribute("likeRequestList",likeRequestList);
 
         // 거래 누적 수
-
-
+        int cntDeal = userService.cntDeal(sid);
+        model.addAttribute("cntDeal",cntDeal);
 
         return "user/mypage";
     }
@@ -161,11 +159,8 @@ public class UserCtrl {
     public String userEdit(Model model, Principal principal) {
         String sid = principal != null ? principal.getName() : "";
 
-        System.out.println("따란");
-
         User user = userService.getUserByLoginId(sid);
         model.addAttribute("user",user);
-        System.out.println("user >>> " + user.toString());
 
         return "user/userEdit";
     }
@@ -206,10 +201,6 @@ public class UserCtrl {
 
         //현재 비밀번호 일치여부 확인
         boolean chk = bCryptPasswordEncoder.matches(user.getNowPassword(),userInfo.getPassword());
-//        System.out.println("user.getNowPassword() " + user.getNowPassword());
-//        System.out.println("userInfo.getPassword() " + userInfo.getPassword());
-//        System.out.println("chk : "+chk);
-//        System.out.println("chkEditPw : "+chkEditPw);
 
         //변경할 비밀번호로 업데이트
         if (chk && chkEditPw){
@@ -255,15 +246,12 @@ public class UserCtrl {
     }
 
 
+    //비밀번호 찾기
     @PostMapping("/findPw")
     @ResponseBody
     public String findPassword(@RequestParam String name, @RequestParam String email, @RequestParam String id, Model model) {
         User user = userService.getUserByLoginId(id);
-        System.out.println("name : "+name+" email : "+email+" id : "+id);
-        System.out.println("User : "+user.toString());
-
         String result = "fail";
-
         if(name.equals(user.getUserName()) && email.equals(user.getEmail()) && id.equals(user.getLoginId())){
             //임시비밀번호 암호화해서 DB에 저장
             String tempPassword = userService.getRamdomPassword(8);

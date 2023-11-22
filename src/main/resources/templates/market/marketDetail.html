@@ -2,40 +2,47 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <th:block th:insert="~{layout/head :: head}"></th:block>
-  <link rel="stylesheet" th:href="@{/css/main.css}">
-  <title>T셀파::상품 상세페이지</title>
+    <th:block th:insert="~{layout/head :: head}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <title>T셀파::상품 상세페이지</title>
 
-  <style>
-    .quote-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center; /* 수직 중앙 정렬 */
-      align-items: center; /* 수평 중앙 정렬 */
-      /*height: 100vh; !* 화면 전체 높이만큼 사용 *!*/
-    }
+    <style>
+        .quote-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 수직 중앙 정렬 */
+            align-items: center; /* 수평 중앙 정렬 */
+            /*height: 100vh; !* 화면 전체 높이만큼 사용 *!*/
+        }
 
-    .quote-text form {
-      width: 100%; /* 폼의 너비를 100%로 설정 */
-    }
+        .quote-text form {
+            width: 100%; /* 폼의 너비를 100%로 설정 */
+        }
 
-    .col-lg-6 {
-      position: relative;
-    }
+        .col-lg-6 {
+            position: relative;
+        }
 
-    .col-lg-6 img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+        .col-lg-6 img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    @media (max-width: 992px) {
-      .quote-text,
-      .col-lg-6 {
-        width: 100%;
-      }
-    }
-  </style>
+        @media (max-width: 992px) {
+            .quote-text,
+            .col-lg-6 {
+                width: 100%;
+            }
+        }
+
+        .product_info dt, .product_info dd {display:inline-block;vertical-align:middle;}
+        .product_info dt {width:100px;font-family:"Open Sans",sans-serif !important;}
+        .product_info dd {width:calc(100% - 110px);}
+        .product_info dd span {font-family:"Open Sans",sans-serif !important;}
+
+        #addr, #detailAddr {font-family:"Open Sans",sans-serif !important;}
+    </style>
 </head>
 
 
@@ -47,20 +54,20 @@
 
 <!-- Page Header Start -->
 <div class="container-fluid page-header py-5 mb-0">
-  <div class="container py-5">
-    <h1 class="display-3 text-white mb-3 animated slideInDown">마켓</h1>
-    <nav aria-label="breadcrumb animated slideInDown">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-        <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-        <li class="breadcrumb-item text-white active" aria-current="page">마켓</li>
-      </ol>
-    </nav>
-  </div>
+    <div class="container py-5">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">팝니다</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                <li class="breadcrumb-item"><a class="text-white" href="#">장터</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">팝니다</li>
+            </ol>
+        </nav>
+    </div>
 </div>
 
 <div class="container py-5">
-    <div class="row my-5">
+    <div class="row my-5 border-bottom border-top py-5">
         <div class="col-6 wow fadeIn" data-wow-delay="0.5s">
             <div id="myCarousel" class="carousel slide" data-ride="false">
                 <div class="carousel-inner">
@@ -89,122 +96,92 @@
             </div>
         </div>
         <div class="col-6">
-            <div class="product_info">
+            <div class="product_info pt-4 px-1">
                 <h3 th:if="${market.active == '0'}" class="mb-3" th:text="${market.title}"></h3>
                 <h3 th:if="${market.active == '1'}" style="color:#555" class="mb-3" th:text="${'[판매완료]' + market.title}"></h3>
-                <h2 class="fw-bold" th:text="${market.price + ' 원'}"></h2>
+                <h2 class="fw-bold" th:text="${market.price + '원'}"></h2>
+                <hr>
+                <dl>
+                    <dt>상품상태</dt>
+                    <dd class="mb-0"><span th:text="${market.conditions == '0' ? '상' : (market.conditions == '1' ? '중' : '하')}"></span></dd>
+                </dl>
+                <dl>
+                    <dt>거래지역</dt>
+                    <dd class="mb-0"><i class="fas fa-map-marker-alt pe-2"></i><span th:text="${market.selectedAddress}"></span></dd>
+                </dl>
+                <div class="row">
+                    <input type="hidden" id="marketNo" name="marketNo" th:value="${market.marketNo}">
+                    <input type="hidden" class="form-control border-0" id="reporter" name="reporter" th:value="${market.loginId}" readonly style="height: 55px;">
+                    <input type="hidden" class="form-control border-0" id="title" name="title" th:value="${market.title}" readonly style="height: 55px;">
+                    <div class="col me-2">
+                        <button class="btn btn-primary w-100 py-2" type="button">
+                            찜하기
+                            <i class="fa-solid fa-heart" th:if="${chkLiked == 1}" th:onclick="|toggleLike()|" style="color: red"></i>
+                            <i class="fa-solid fa-heart" th:unless="${chkLiked == 1}" th:onclick="|toggleLike()|"></i>
+                        </button>
+                    </div>
+                    <div class="col me-2">
+                        <button class="btn btn-outline-primary w-100 py-2" type="button">신고하기
+                            <img th:src="${'/image/siren5050.png'}"  id="ck_btn" onclick="repCheck()" style="width: 20px; height: 20px;" />
+                        </button>
+                    </div>
+                    <div class="col me-2" th:if="${market.active == '0'}">
+                        <button class="btn btn-primary w-100 py-2" type="button" th:onclick="|location.href='@{/chat/chat(productNo=${market.marketNo}, productTable=market)}'|">대화하기</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="container quote px-lg-0">
-    <div class="row g-0 mx-lg-0">
-      <div class="col-lg-6 quote-text py-5 wow fadeIn" data-wow-delay="0.5s" style="margin-left: 600px;">
-          <div id="myCarousel1" class="carousel slide" data-ride="false">
-              <div class="carousel-inner">
-                  <div th:each="photo, status : ${photosList}" class="carousel-item" th:classappend="${status.index == 0} ? 'active'">
-                      <div class="d-flex align-items-center justify-content-center" style="width: 423.98px; height: 300px; overflow: hidden;">
-                          <img th:src="${'/market/detailImage?saveFile='+photo.getSaveFile()+'&originFile='+photo.getOriginFile()+'&saveFolder='+photo.getSaveFolder()}" class="img-fluid" style="object-fit: cover; max-width: 100%; max-height: 100%;" alt="">
-                      </div>
-                  </div>
-              </div>
-              <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"><i class="fas fa-chevron-left" style="color:#333;"></i></span>
-                  <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"><i class="fas fa-chevron-right" style="color:#333;"></i></span>
-                  <span class="sr-only">Next</span>
-              </a>
-              <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"><i class="fas fa-chevron-left" style="color:#333;"></i></span>
-                  <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"><i class="fas fa-chevron-right" style="color:#333;"></i></span>
-                  <span class="sr-only">Next</span>
-              </a>
-          </div>
-        <div class="p-lg-5 pe-lg-0">
-          <div class="section-title text-start">
-            <h1 class="display-5 mb-4">상세보기</h1>
-          </div>
-          <form>
-            <div class="row g-3">
-              <div class="col-12 col-sm-6">
-                  <label for="titles" class="form-label">제목</label>
-<!--                <input type="text" th:value="${market.title}" class="form-control border-0" placeholder="상품이름" style="height: 55px;">-->
-                <p class="form-control border-1" th:text="${market.title}" id="titles"></p>
-              </div>
-              <div class="col-12 col-sm-6">
-                  <label for="price" class="form-label">희망가격</label>
-<!--                <input type="text" class="form-control border-0" placeholder="상품 가격" style="height: 55px;">-->
-                  <p class="form-control border-1"  th:text="${market.price+' 원'}" id="price"></p>
-              </div>
-              <div class="col-12 col-sm-6">
-                  <label for="loginId" class="form-label">작성자</label>
-<!--                <input type="text" class="form-control border-0" placeholder="작성자" style="height: 55px;">-->
-                  <p class="form-control border-1"  th:text="${market.loginId}" id="loginId"></p>
-              </div>
-                <div class="col-12 col-sm-6">
-                    <label for="conditions" class="form-label">상품 상태</label>
-                    <p class="form-control border-1"  id="conditions" th:text="${market.conditions == '0' ? '상' : (market.conditions == '1' ? '중' : '하')}"></p>
-                </div>
-              <div class="col-12">
-                  <label for="content" class="form-label">내용</label>
-<!--                <textarea class="form-control border-0" placeholder="상품설명" style="height: 150px;"></textarea>-->
-                  <p class="form-control border-4"  id="content" th:text="${market.content}"></p>
-              </div>
+    <div class="row pt-3">
+        <h3>상품 정보</h3>
+        <hr>
+        <p th:text="${market.content}"></p>
+    </div>
+    <div class="row pt-3 border-bottom">
+        <h3>거래 위치</h3>
+        <hr>
+        <p>
+            <i class="fas fa-map-marker-alt pe-2"></i>
+            <span th:text="${market.selectedAddress}" id="addr"></span>
+            <span th:text="${market.detailAddress}" id="detailAddr"></span>
+        </p>
+        <div id="map" style="width:100%;height:400px; position: relative; overflow: hidden; background: rgb(248, 249, 250);" tabindex="0"></div>
+        <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9rw0o1zqhd&submodules=geocoder"></script>
+        <script th:inline="javascript">
 
-              <div id="map" style="width:100%;height:400px; position: relative; overflow: hidden; background: rgb(248, 249, 250);" tabindex="0">
+            var map = new naver.maps.Map('map', {
+                center: new naver.maps.LatLng([[${market.ydata}]], [[${market.xdata}]]),
+                zoom: 17
+            });
 
-              </div>
-              <div>
-                  <label for="addr" class="form-label">거래희망지역</label>
-                  <p th:text="${market.selectedAddress}" id="addr"></p>
-                  <p th:text="${market.detailAddress}"></p>
-<!--                  <input type="text" th:value="${market.selectedAddress}" placeholder="선택 위치" id="selectedAddress" name="selectedAddress" style="width: 300px" readonly>-->
-<!--                <input type="text" th:value="${market.detailAddress}" placeholder="상세 위치" id="detailAddress" name="detailAddress"><br>-->
-              </div>
+            var marker = new naver.maps.Marker({
+                position: new naver.maps.LatLng([[${market.ydata}]], [[${market.xdata}]]),
+                map: map
+            });
 
-              <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9rw0o1zqhd&submodules=geocoder"></script>
-              <script th:inline="javascript">
-
-                var map = new naver.maps.Map('map', {
-                  center: new naver.maps.LatLng([[${market.ydata}]], [[${market.xdata}]]),
-                  zoom: 17
-                });
-
-                var marker = new naver.maps.Marker({
-                  position: new naver.maps.LatLng([[${market.ydata}]], [[${market.xdata}]]),
-                  map: map
-
-                });
-
-
-
-                // '주소 검색' 버튼 클릭
-                document.getElementById('submit').addEventListener('click', function() {
-                  var address = document.getElementById('address').value;
-                  searchAddressToCoordinate(address);
-                });
-                // 주소 검색시 엔터 눌렀을때 처리
-                document.getElementById('address').addEventListener('keydown', function(e) {
-                  if (e.keyCode === 13) { // Enter Key
+            // '주소 검색' 버튼 클릭
+            document.getElementById('submit').addEventListener('click', function() {
+                var address = document.getElementById('address').value;
+                searchAddressToCoordinate(address);
+            });
+            // 주소 검색시 엔터 눌렀을때 처리
+            document.getElementById('address').addEventListener('keydown', function(e) {
+                if (e.keyCode === 13) { // Enter Key
                     e.preventDefault();
                     searchAddressToCoordinate(this.value);
-                  }
-                });
-                function searchAddressToCoordinate(address) {
-                  naver.maps.Service.geocode({
+                }
+            });
+            function searchAddressToCoordinate(address) {
+                naver.maps.Service.geocode({
                     query: address
-                  }, function(status, response) {
+                }, function(status, response) {
                     if (status !== naver.maps.Service.Status.OK) {
-                      console.error('Geocode Error:', status);
-                      return alert('주소 검색 결과가 없습니다.');
+                        console.error('Geocode Error:', status);
+                        return alert('주소 검색 결과가 없습니다.');
                     }
 
                     if (response.v2.meta.totalCount === 0) {
-                      return alert('검색된 주소가 없습니다.');
+                        return alert('검색된 주소가 없습니다.');
                     }
 
                     var item = response.v2.addresses[0];
@@ -212,42 +189,23 @@
 
                     map.setCenter(point); //검색한 곳으로 지도 이동
                     // marker.setPosition(point); // 마커 표시
-                  });
-                }
+                });
+            }
 
 
-              </script>
-
-              <div class="col-12" th:if="${market.active == 0}">
-                <button class="btn btn-primary w-100 py-3" type="button" th:onclick="|location.href='@{/chat/chat(productNo=${market.marketNo}, productTable=market)}'|">대화하기</button>
-              </div>
-                <hr>
-              <div class="col-12" style="margin-left: 70px;">
-                <input type="hidden" id="marketNo" name="marketNo" th:value="${market.marketNo}">
-                <input type="hidden" class="form-control border-0" id="reporter" name="reporter" th:value="${market.loginId}" readonly style="height: 55px;">
-                <input type="hidden" class="form-control border-0" id="title" name="title" th:value="${market.title}" readonly style="height: 55px;">
-                  <button class="btn btn-primary w-25 py-3" type="button">
-                      찜하기
-                      <i class="fa-solid fa-heart" th:if="${chkLiked == 1}" th:onclick="|toggleLike()|" style="color: red"></i>
-                      <i class="fa-solid fa-heart" th:unless="${chkLiked == 1}" th:onclick="|toggleLike()|"></i>
-                  </button>
-                  <button class="btn btn-primary w-25 py-3" type="button">신고하기
-                      <img th:src="${'/image/siren5050.png'}"  id="ck_btn" onclick="repCheck()" style="width: 20px; height: 20px;" />
-                  </button>
-                  <a class="btn btn-primary w-25 py-3" th:href="@{/request/requestList}" type="button">목록</a>
-              </div>
-                <th:block sec:authorize="${hasRole('USER') || hasRole('ADMIN') }">
-                <div class="col-12" style="margin-left: 70px;">
-                    <a class="btn btn-primary w-25 py-3" th:if="${sid eq market.loginId}" th:href="@{/market/edit(marketNo=${market.marketNo})}" type="button">수정하기</a>
-                    <a class="btn btn-primary w-25 py-3" th:if="${sid eq market.loginId}" th:href="@{/market/delete(marketNo=${market.marketNo})}" type="button">삭제하기</a>
-                </div>
-                </th:block>
-            </div>
-          </form>
-        </div>
-      </div>
+        </script>
     </div>
-  </div>
+    <div class="row mt-5">
+        <th:block sec:authorize="${hasRole('USER') || hasRole('ADMIN') }">
+            <div class="col">
+                <a class="btn btn-primary w-100 py-3" th:if="${sid eq market.loginId}" th:href="@{/market/edit(marketNo=${market.marketNo})}" type="button">수정하기</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-primary w-100 py-3" th:if="${sid eq market.loginId}" th:href="@{/market/delete(marketNo=${market.marketNo})}" type="button">삭제하기</a>
+            </div>
+        </th:block>
+        <div class="col ms-2"><a class="btn btn-primary w-100 py-2" th:href="@{/market/marketList}" type="button">목록</a></div>
+    </div>
 </div>
 <script>
 
@@ -297,11 +255,7 @@
                 } else {
                     alert("로그인 후 다시 시도해주세요.");
                 }
-            }, error(e,f,g) {
-                console.log(">>>>>>>>" + e);
-                console.log(">>>>>>>>" + f);
-                console.log(">>>>>>>>" + g);
-            }
+            },
         })
     }
 </script>

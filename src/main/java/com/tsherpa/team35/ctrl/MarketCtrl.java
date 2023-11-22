@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,9 +81,10 @@ public class MarketCtrl {
         String sid = principal != null ? principal.getName() : "";
         model.addAttribute("sid",sid);
         model.addAttribute("msg", msg);
-        System.out.println(msg);
+
         return "market/marketInsert";
     }
+
 
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     public String write(Market market, @RequestParam("upfile") MultipartFile[] repImage,@RequestParam("detailFile") MultipartFile[] detailImages ,HttpServletRequest req, Model model, RedirectAttributes rttr, Principal principal) throws Exception {
@@ -102,11 +100,9 @@ public class MarketCtrl {
         String sid = principal != null ? principal.getName() : "";
         System.out.println("대표사진 값들:"+repImage);
         System.out.println("상세사진 값들:"+detailImages);
-        ServletContext application = req.getSession().getServletContext();
-        String realPath = "src/main/resources/static/upload/";
+        String realPath = req.getSession().getServletContext().getRealPath("/resources/static/upload/");
+        System.out.println("realpath:"+realPath);
 //        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
-
-
 
 
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
@@ -138,7 +134,7 @@ public class MarketCtrl {
                 main.setSaveFile(savemainName);
                 main.setOriginFile(originalmainName);
                 main.setSaveFolder(repImageSaveFolder);
-                mainphoto.transferTo(new File(repImageSaveFolder, savemainName));
+                mainphoto.transferTo(new File(repImageFolder, savemainName));
             }
             mainphotoList.add(main);
         }
@@ -203,7 +199,6 @@ public class MarketCtrl {
         likes.setMarketNo(marketNo);
         int chkLiked = likesService.checkLikedMar(likes);
         model.addAttribute("chkLiked",chkLiked);
-        System.out.println("chkLiked : "+chkLiked);
 
 
 
@@ -234,7 +229,6 @@ public class MarketCtrl {
         likes.setMarketNo(marketNo);
         int chkLiked = likesService.checkLikedMar(likes);
         model.addAttribute("chkLiked",chkLiked);
-        System.out.println("chkLiked : "+chkLiked);
 
         if(chkLiked==0) {
             likesService.addLikeMar(likes);
@@ -248,8 +242,9 @@ public class MarketCtrl {
     }
 
     @GetMapping("/mainImage")
-    public ResponseEntity<Resource> download1(@ModelAttribute MainVO dto) throws IOException {
-        Path path = Paths.get(uploadFolder + "/" + dto.getSaveFolder()+"/"+dto.getSaveFile());
+    public ResponseEntity<Resource> download1(@ModelAttribute MainVO dto, HttpServletRequest req) throws IOException {
+        String realPath = req.getSession().getServletContext().getRealPath("/resources/static/upload/");
+        Path path = Paths.get(realPath + dto.getSaveFolder()+"/"+dto.getSaveFile());
         String contentType = Files.probeContentType(path);
         // header를 통해서 다운로드 되는 파일의 정보를 설정한다.
         HttpHeaders headers = new HttpHeaders();
@@ -263,8 +258,9 @@ public class MarketCtrl {
     }
 
     @GetMapping("/totalImage")
-    public ResponseEntity<Resource> download3(@ModelAttribute TotalVO dto) throws IOException {
-        Path path = Paths.get(uploadFolder + "/" + dto.getMainSaveFolder()+"/"+dto.getMainSaveFile());
+    public ResponseEntity<Resource> download3(@ModelAttribute TotalVO dto,HttpServletRequest req) throws IOException {
+        String realPath = req.getSession().getServletContext().getRealPath("/resources/static/upload/");
+        Path path = Paths.get(realPath + dto.getMainSaveFolder()+"/"+dto.getMainSaveFile());
         String contentType = Files.probeContentType(path);
         // header를 통해서 다운로드 되는 파일의 정보를 설정한다.
         HttpHeaders headers = new HttpHeaders();
@@ -278,8 +274,9 @@ public class MarketCtrl {
     }
 
     @GetMapping("/detailImage")
-    public ResponseEntity<Resource> download2(@ModelAttribute DetailVO dto) throws IOException {
-        Path path = Paths.get(uploadFolder + "/" + dto.getSaveFolder()+"/"+dto.getSaveFile());
+    public ResponseEntity<Resource> download2(@ModelAttribute DetailVO dto,HttpServletRequest req) throws IOException {
+        String realPath = req.getSession().getServletContext().getRealPath("/resources/static/upload/");
+        Path path = Paths.get(realPath + dto.getSaveFolder()+"/"+dto.getSaveFile());
         String contentType = Files.probeContentType(path);
         // header를 통해서 다운로드 되는 파일의 정보를 설정한다.
         HttpHeaders headers = new HttpHeaders();
@@ -293,10 +290,18 @@ public class MarketCtrl {
     }
 
     @GetMapping("/delete")
-    public String marketDelete(@RequestParam int marketNo)throws Exception{
+    public String marketDelete(@RequestParam("marketNo") int marketNo, Principal principal)throws Exception{
+
+        String sid = principal != null ? principal.getName() : "";
 
         marketService.marketDelete(marketNo);
-        return "redirect:/market/marketList";
+
+        if(sid.equals("admin")){
+            return "redirect:/admin/reportList";
+        } else {
+            return "redirect:/market/marketList";
+        }
+
     }
 
 
@@ -324,8 +329,8 @@ public class MarketCtrl {
         String sid = principal != null ? principal.getName() : "";
         System.out.println("대표사진 값들:"+repImage);
         System.out.println("상세사진 값들:"+detailImages);
-        String realPath = "C://upload/";
-//        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
+
+        String realPath = req.getSession().getServletContext().getRealPath("/resources/static/upload/");
 
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
         String repImageSaveFolder = "rep_images/" + today;
@@ -343,11 +348,9 @@ public class MarketCtrl {
         }
         if(repImage[0].getSize() != 0){
             List<Mainphoto> mainphotoList = mainphotoService.mainphotoList(market.getMarketNo());
-            System.out.println("메인사진:"+mainphotoList);
             ServletContext application = req.getSession().getServletContext();
             for (Mainphoto mainphoto : mainphotoList) {
                 File oldFile = new File(realPath+mainphoto.getSaveFolder()+"/"+mainphoto.getSaveFile());
-                System.out.println("경로확인"+realPath+mainphoto.getSaveFolder()+"/"+mainphoto.getSaveFile());
                 if(oldFile.exists()){
                     oldFile.delete();
                 }
@@ -356,11 +359,9 @@ public class MarketCtrl {
 
         if(detailImages[0].getSize() != 0){
             List<Photos> photosList = photosService.photosList(market.getMarketNo());
-            System.out.println("상세사진:"+photosList);
             ServletContext application = req.getSession().getServletContext();
             for (Photos photos : photosList) {
                 File oldFile = new File(realPath+photos .getSaveFolder()+"/"+photos .getSaveFile());
-                System.out.println(realPath+photos .getSaveFolder()+"/"+photos.getSaveFile());
                 if(oldFile.exists()){
                     oldFile.delete();
                 }
