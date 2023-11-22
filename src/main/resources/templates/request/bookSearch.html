@@ -32,7 +32,7 @@
         </nav>
     </div>
 </div>
-<img src="/image/002.png" style="margin-left: 500px;">
+<img th:src="@{/image/002.png}" style="margin-left: 500px;">
 <div class="container">
     <h3>도서찾기</h3>
 <form th:action="@{/request/list}" method="post" id="searchForm">
@@ -154,7 +154,7 @@ columnDefs: [
         document.getElementById("selectedDiscount").value = discount;
 
         // 폼의 action 속성 설정
-        document.getElementById("selectedBookForm").action = "/request/bookInsert";
+        document.getElementById("selectedBookForm").action = "/team35/request/bookInsert";
 
         // 폼 전송
         document.getElementById("selectedBookForm").submit();

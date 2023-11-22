@@ -98,12 +98,7 @@ public class MarketCtrl {
         }
 
         String sid = principal != null ? principal.getName() : "";
-        System.out.println("대표사진 값들:"+repImage);
-        System.out.println("상세사진 값들:"+detailImages);
         String realPath = req.getSession().getServletContext().getRealPath("/resources/static/upload/");
-        System.out.println("realpath:"+realPath);
-//        String realPath = "/Users/juncheol/Desktop/file";    // 업로드 경로 설정
-
 
         String today = new SimpleDateFormat("yyMMdd").format(new Date());
         String repImageSaveFolder = "rep_images/" + today;
@@ -304,7 +299,6 @@ public class MarketCtrl {
 
     }
 
-
     @GetMapping("/edit")
     public String marketEdit(@RequestParam int marketNo,MainVO mainVO, Model model,Principal principal) throws Exception{
         MainVO market = marketService.mainlistForDetailVOList(marketNo);
@@ -327,8 +321,6 @@ public class MarketCtrl {
     public String edit(Market market, @RequestParam("upfile") MultipartFile[] repImage,@RequestParam("detailFile") MultipartFile[] detailImages ,HttpServletRequest req, Model model, RedirectAttributes rttr, Principal principal) throws Exception {
 
         String sid = principal != null ? principal.getName() : "";
-        System.out.println("대표사진 값들:"+repImage);
-        System.out.println("상세사진 값들:"+detailImages);
 
         String realPath = req.getSession().getServletContext().getRealPath("/resources/static/upload/");
 

@@ -16,6 +16,7 @@ public interface MarketMapper {
     public List<MainVO> mainVOList(Page page) throws Exception;
     public Market marketDetail(int marketNo) throws Exception;
     public DetailVO detailVOList(int marketNo) throws Exception;
+    public DetailVO chatVOList(int marketNo) throws Exception;
     public MainVO mainlistForDetailVOList(int marketNo) throws Exception;
     public void marketDelete(int marketNo) throws Exception;
     public void marketEdit(Market market) throws Exception;

@@ -48,6 +48,10 @@
         select * from detaillist where marketNo = #{marketNo}
     </select>
 
+    <select id="chatVOList" resultType="com.tsherpa.team35.entity.MainVO">
+        select * from mainlist where marketNo = #{marketNo}
+    </select>
+
     <select id="mainlistForDetailVOList" resultType="com.tsherpa.team35.entity.MainVO">
         select * from mainlist where marketNo = #{marketNo}
     </select>

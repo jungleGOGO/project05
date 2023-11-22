@@ -73,7 +73,7 @@
                 <div class="carousel-inner">
                     <div th:each="photo, status : ${photosList}" class="carousel-item" th:classappend="${status.index == 0} ? 'active'">
                         <div class="d-flex" style="width: 423.98px; height: 300px; overflow: hidden;margin:0 auto;">
-                            <img th:src="${'/market/detailImage?saveFile='+photo.getSaveFile()+'&originFile='+photo.getOriginFile()+'&saveFolder='+photo.getSaveFolder()}" class="img-fluid" style="object-fit: cover; max-width: 100%; max-height: 100%;" alt="">
+                            <img th:src="@{/market/detailImage(saveFile=${photo.getSaveFile()}, originFile=${photo.getOriginFile()}, saveFolder=${photo.getSaveFolder()})}" class="img-fluid" style="object-fit: cover; max-width: 100%; max-height: 100%;" alt="">
                         </div>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
                     </div>
                     <div class="col me-2">
                         <button class="btn btn-outline-primary w-100 py-2" type="button">신고하기
-                            <img th:src="${'/image/siren5050.png'}"  id="ck_btn" onclick="repCheck()" style="width: 20px; height: 20px;" />
+                            <img th:src="@{/image/siren5050.png}"  id="ck_btn" onclick="repCheck()" style="width: 20px; height: 20px;" />
                         </button>
                     </div>
                     <div class="col me-2" th:if="${market.active == '0'}">
@@ -198,10 +198,10 @@
     <div class="row mt-5">
         <th:block sec:authorize="${hasRole('USER') || hasRole('ADMIN') }">
             <div class="col">
-                <a class="btn btn-primary w-100 py-3" th:if="${sid eq market.loginId}" th:href="@{/market/edit(marketNo=${market.marketNo})}" type="button">수정하기</a>
+                <a class="btn btn-primary w-100 py-2" th:if="${sid eq market.loginId}" th:href="@{/market/edit(marketNo=${market.marketNo})}" type="button">수정하기</a>
             </div>
             <div class="col">
-                <a class="btn btn-primary w-100 py-3" th:if="${sid eq market.loginId}" th:href="@{/market/delete(marketNo=${market.marketNo})}" type="button">삭제하기</a>
+                <a class="btn btn-primary w-100 py-2" th:if="${sid eq market.loginId}" th:href="@{/market/delete(marketNo=${market.marketNo})}" type="button">삭제하기</a>
             </div>
         </th:block>
         <div class="col ms-2"><a class="btn btn-primary w-100 py-2" th:href="@{/market/marketList}" type="button">목록</a></div>
