@@ -41,7 +41,7 @@
     </select>
 
     <insert id="answerInsert">
-        insert into qna values (default, #{title}, #{content}, '관리자' , default, 1, #{par})
+        insert into qna values (default, #{title}, #{content}, 'admin' , default, 1, #{par})
     </insert>
 
     <update id="parUpdate">

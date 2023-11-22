@@ -26,4 +26,7 @@ public interface UserMapper {
     User findId(String email, String tel);
     int cntDeal(String loginId);
 
+    void addPt(String loginId);
+    void minusPt(String loginId);
+
 }

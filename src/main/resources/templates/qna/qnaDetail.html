@@ -49,7 +49,7 @@
                 <th:block sec:authorize="${hasRole('USER')}">
                     <a th:if="${sid ne detail.author}" th:href="@{/qna/list}" style="background-color: #9a683b;" class="btn btn-dark" th:text="목록"></a>
                 </th:block>
-                <th:block sec:authorize="${hasRole('USER')}">
+                <th:block sec:authorize="${hasRole('USER') || hasRole('ADMIN')}">
                     <a th:if="${sid eq detail.author}" th:href="@{/qna/list}" style="background-color: #9a683b;" class="btn btn-dark" th:text="목록"></a>
                     <a th:if="${sid eq detail.author}" th:href="@{/qna/edit(qno=${detail.qno})}" class="btn btn-secondary" th:text="수정"></a>
                     <a th:if="${sid eq detail.author}" th:href="@{/qna/delete(qno=${detail.qno})}" class="btn btn-dark" th:text="삭제"></a>

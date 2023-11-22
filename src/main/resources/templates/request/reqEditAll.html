@@ -31,14 +31,14 @@
     <!-- 제목 입력 -->
     <div class="mb-3">
       <label for="title" class="form-label">제목</label>
-      <input type="text" class="form-control" id="title"  name="title" placeholder="제목을 입력하세요" required>
+      <input type="text" class="form-control" id="title"  name="title" placeholder="제목을 입력하세요" maxlength="90" required>
       <input type="hidden" name="reqNo" id="reqNo" th:value="${reqNo}">
     </div>
 
     <!-- 내용 입력 -->
     <div class="mb-3">
       <label for="content" class="form-label">내용</label>
-      <textarea class="form-control" id="content" rows="4"  name="content" placeholder="내용을 입력하세요" required></textarea>
+      <textarea class="form-control" id="content" rows="4"  name="content" placeholder="내용을 입력하세요" maxlength="2000" required></textarea>
     </div>
 
     <!-- 가격 입력 -->

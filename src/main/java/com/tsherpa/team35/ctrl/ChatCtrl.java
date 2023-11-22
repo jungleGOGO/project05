@@ -37,7 +37,7 @@ public class ChatCtrl {
     private RequestService requestService;
 
     @GetMapping("/chat")
-    public String chatHome(@RequestParam(value = "productNo", required = false) int productNo, @RequestParam("productTable") String productTable, Principal principal) throws Exception {
+    public String chatHome(@RequestParam(value = "productNo") int productNo, @RequestParam("productTable") String productTable, Principal principal) throws Exception {
         String path = "redirect:/";
 
         if(principal != null) {
@@ -48,7 +48,7 @@ public class ChatCtrl {
 
             // 상품에 판매자 정보 가져오기
             if(productTable.equals("market")) {
-                DetailVO market = marketService.chatVOList(productNo);
+                MainVO market = marketService.chatVOList(productNo);
                 id = market.getLoginId();
             } else if (productTable.equals("request")) {
                 Request request = requestService.requestDetail(productNo);
@@ -59,6 +59,7 @@ public class ChatCtrl {
                 // 로그인한 아이디가 판매자 아이디가 같을 때
                 path += "myProList?productId=" + productNo + "&productTable=" + productTable;
             } else {
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>없음");
                 // 로그인한 아이디가 판매자 아이디가 아닐 때
                 ChatRoomVO chatRoomVO = chatService.chatRoomAllList(productNo, productTable, sid);
                 Long roomId;
@@ -263,11 +264,11 @@ public class ChatCtrl {
     @ResponseBody
     public boolean activeUpdatePro(@RequestParam("active") int active, @RequestParam("marketNo") int marketNo, Principal principal) throws Exception {
         boolean pass = false;
-
+        String sid = principal != null ? principal.getName() : "";
         String loginId = principal.getName();
         Market market = marketService.marketDetail(marketNo);
         if(market.getLoginId().equals(loginId)) {
-            marketService.updateActive(active, marketNo);
+            marketService.updateActive(active, marketNo,sid);
             pass = true;
         }
 
@@ -286,11 +287,11 @@ public class ChatCtrl {
     @ResponseBody
     public boolean activeUpdatePro2(@RequestParam("active") int active, @RequestParam("reqNo") int reqNo, Principal principal) throws Exception {
         boolean pass = false;
-
+        String sid = principal != null ? principal.getName() : "";
         String loginId = principal.getName();
         Request request = requestService.requestDetail(reqNo);
         if(request.getLoginId().equals(loginId)) {
-            requestService.updateActive(active, reqNo);
+            requestService.updateActive(active, reqNo, sid);
             pass = true;
         }
 

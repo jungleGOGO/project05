@@ -149,6 +149,8 @@
                             <a th:href="@{/market/detail(marketNo=${market.marketNo})}"><img class="img-fluid" th:src="@{/market/mainImage(saveFile = ${market.getSaveFile()}, originFile = ${market.getOriginFile()}, saveFolder = ${market.getSaveFolder()})}" alt="bookImage" style="width: 407.98px; height: 244.78px; object-fit: contain; object-position: center center;"></a>
                         </div>
                         <div class="p-4 text-center">
+                            <h4 th:if="${market.active == '1'}" class="mb-3" th:text="${'[판매완료] ' + market.title}"></h4>
+                            <h4 th:if="${market.active == '0'}" class="mb-3" th:text="${market.title}"></h4>
                             <h4 class="mb-3" th:text="${market.title}"></h4>
                             <p>가격: <span th:text="${market.price + ' 원'}"></span></p>
                             <a class="fw-medium" th:href="@{/market/detail(marketNo=${market.marketNo})}">상세보기<i class="fa fa-arrow-right ms-2"></i></a>
@@ -285,7 +287,7 @@
 <!-- content 영역 종료 -->
 
 <th:block th:insert="~{layout/footer :: footer}"></th:block>
-<script src="/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{/js/common.js}"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script th:inline="javascript">

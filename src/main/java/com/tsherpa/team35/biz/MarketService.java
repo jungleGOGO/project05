@@ -6,6 +6,7 @@ import com.tsherpa.team35.entity.Market;
 import com.tsherpa.team35.per.MainphotoMapper;
 import com.tsherpa.team35.per.MarketMapper;
 import com.tsherpa.team35.per.PhotosMapper;
+import com.tsherpa.team35.per.UserMapper;
 import com.tsherpa.team35.util.Page;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class MarketService {
     private PhotosMapper photosMapper;
     @Autowired
     private MainphotoMapper mainphotoMapper;
+    @Autowired
+    private UserMapper userMapper;
     @Transactional
     public void marketInsert(Market market) throws Exception {
         marketMapper.marketInsert(market);
@@ -34,7 +37,7 @@ public class MarketService {
     public DetailVO detailVOList(int marketNo) throws Exception{
         return marketMapper.detailVOList(marketNo);
     }
-    public DetailVO chatVOList(int marketNo) throws Exception{
+    public MainVO chatVOList(int marketNo) throws Exception{
         return marketMapper.chatVOList(marketNo);
     }
     public MainVO mainlistForDetailVOList(int marketNo) throws Exception{
@@ -53,8 +56,15 @@ public class MarketService {
         marketMapper.readable(readable, marketNo);
     }
 
-    public void updateActive(int active,int marketNo) {
+    @Transactional
+    public void updateActive(int active,int marketNo,String loginId) {
         marketMapper.updateActive(active, marketNo);
+        if(active == 1) {
+            userMapper.addPt(loginId);
+        } else if(active == 0) {
+            userMapper.minusPt(loginId);
+        }
+
     }
 
     public int getMarketCnt() throws Exception {
