@@ -103,6 +103,8 @@
 # 📎기능 구현
 ## 🗂 메인 페이지
 <br>
+
+![메인페이지](https://github.com/jungleGOGO/project05/assets/138674233/d083ff83-7aff-4deb-b5e7-3b0b2fc61233)
 <br><br>
 
 ## 🗂 회원 기능
@@ -130,13 +132,76 @@
 ### 4. 비밀번호 찾기
 - 가입한 이메일로 임시 비밀번호 발급
 - 발급된 비밀번호 암호화 되어 DB에 저장
+ <br>
+ 
 ![join](https://github.com/jungleGOGO/project05/assets/138674233/5b4415ca-f87a-4b13-9d53-b1eb3e8b730a)
 <br><br>
 
-![메인페이지](https://github.com/jungleGOGO/project05/assets/138674233/d083ff83-7aff-4deb-b5e7-3b0b2fc61233)
+## 🗂 팝니다/삽니다 기능
+### 1. 팝니다
+- 비회원 : 열람 가능
+- 회원 : 글쓰기/ 채팅 / 신고 / 찜하기 가능
+- 네이버 지도 API 적용하여 상세주소 구현
+  <br>
+  <br><br>
+  
+### 2. 삽니다
+- 비회원 : 열람 가능
+- 회원 : 글쓰기/ 채팅 / 신고 / 찜하기 가능
+- 네이버 도서 API 적용하여 목록 구현
+  <br>
+  <br><br>
+
+### 3. 채팅
+- stomp.js / socket.js 활용하여 구현
+- 1 대 1 채팅 
+- DB에 채팅 내용 실시간 반영
+  <br>
+  <br><br>
+
 ![팝니다](https://github.com/jungleGOGO/project05/assets/138674233/a7a59405-a1aa-4232-8308-041c71cf5ff3)
 ![삽니다](https://github.com/jungleGOGO/project05/assets/138674233/a598c487-e028-4a40-bf7a-a9dffd807870)
 ![채팅](https://github.com/jungleGOGO/project05/assets/138674233/6e80c55f-76b1-4baa-8d60-7ff100250eae)
+
+## 🗂 신고/ 찜하기 기능
+- 회원만 신고 및 찜하기 가능
+- 신고 : 이미 신고한 회원 중복 신고 방지
+- AJAX 활용하여 찜하기 기능 구현
+  <br>
+  <br><br>
 ![신고찜하기](https://github.com/jungleGOGO/project05/assets/138674233/3d08b55f-141c-430c-a06b-7bf07283304b)
-![고객센터](https://github.com/jungleGOGO/project05/assets/138674233/560d1131-353c-43e8-bea3-fae9a6c45e3b)
+
+## 🗂 Q & A
+### 1. 비로그인 및 회원 로그인 시
+- 비로그인 시 Q & A 목록만 확인 가능하도록 구현
+- 회원 로그인 시 질문글만 작성 가능
+- 질문글을 작성한 사용자만 글 수정, 삭제 가능
+  <br>
+  <br><br>
+  
+### 2. 관리자 로그인 시
+- 관리자 로그인 시 전체 게시글 CRUD 가능하도록 구현
+- 관리자 페이지에서 미답변 질문 글 목록을 확인 후 바로 답변할 수 있도록 구현
+  <br>
+  <br><br>
+  
+## 🗂 공지사항
+- 관리자만 공지사항 글 쓰기, 수정, 삭제 가능하도록 구현
+- 회원은 공지사항 글 상세 보기만 가능하도록 구현
+  <br>
+  <br><br>
+
+## 🗂 FAQ
+- FAQ 글 목록 화면 및 기능 구현
+  <br>
+  <br><br>
+  
+  ![고객센터](https://github.com/jungleGOGO/project05/assets/138674233/560d1131-353c-43e8-bea3-fae9a6c45e3b)
+
+## 🗂 관리자페이지
+- 회원관리
+- 커뮤니티 관리 : 공지사항 CRUD / 미답변 질문글 답변하기
+- AJAX를 활요하여 신고된 회원 상태 변경
+- 신고된 글 삭제 가능 
+
 ![관리자페이지](https://github.com/jungleGOGO/project05/assets/138674233/b7ecd584-4bdf-43d3-ac60-f9c626a90f2c)
