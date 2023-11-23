@@ -133,5 +133,10 @@
 ![join](https://github.com/jungleGOGO/project05/assets/138674233/5b4415ca-f87a-4b13-9d53-b1eb3e8b730a)
 <br><br>
 
-
-- 
+![메인페이지](https://github.com/jungleGOGO/project05/assets/138674233/d083ff83-7aff-4deb-b5e7-3b0b2fc61233)
+![팝니다](https://github.com/jungleGOGO/project05/assets/138674233/a7a59405-a1aa-4232-8308-041c71cf5ff3)
+![삽니다](https://github.com/jungleGOGO/project05/assets/138674233/a598c487-e028-4a40-bf7a-a9dffd807870)
+![채팅](https://github.com/jungleGOGO/project05/assets/138674233/6e80c55f-76b1-4baa-8d60-7ff100250eae)
+![신고찜하기](https://github.com/jungleGOGO/project05/assets/138674233/3d08b55f-141c-430c-a06b-7bf07283304b)
+![고객센터](https://github.com/jungleGOGO/project05/assets/138674233/560d1131-353c-43e8-bea3-fae9a6c45e3b)
+![관리자페이지](https://github.com/jungleGOGO/project05/assets/138674233/b7ecd584-4bdf-43d3-ac60-f9c626a90f2c)
